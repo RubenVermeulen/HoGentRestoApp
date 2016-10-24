@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 require('./models/Users');
+require('./models/Restaurants');
 
 require('./config/passport');
 
