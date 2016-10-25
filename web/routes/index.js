@@ -112,4 +112,37 @@ router.post('/restaurants', function(req, res, next) {
 
 });
 
+router.put('/restaurants/:restaurant', function(req, res, next) {
+
+    var restaurant = req.restaurant;
+    var body = req.body;
+
+    restaurant.name = body.hasOwnProperty('name') ? body.name : restaurant.name;
+    restaurant.address = body.hasOwnProperty('address') ? body.address : restaurant.address;
+    restaurant.coordinates.lat = body.hasOwnProperty('lat') ? body.lat : restaurant.coordinates.lat;
+    restaurant.coordinates.long = body.hasOwnProperty('long') ? body.long : restaurant.coordinates.long;
+    restaurant.openingHours = body.hasOwnProperty('openingHours') ? body.openingHours : restaurant.openingHours;
+
+    restaurant.save(function(err, restaurant) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(restaurant);
+    });
+
+});
+
+router.delete('/restaurants/:restaurant', function(req, res, next) {
+
+    req.restaurant.remove(function(err, restaurant) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(restaurant);
+    });
+
+});
+
 module.exports = router;
