@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HoGent Resto</string>
+    <string name="title_homescreen">Restaurants</string>
 </resources>
