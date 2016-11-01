@@ -7,7 +7,8 @@ var RestaurantSchema = new mongoose.Schema({
         lat: {type: Number, default: 0},
         long: {type: Number, default: 0}
     },
-    openingHours: String
+    openingHours: String,
+    menus: [{type: mongoose.Schema.Types.ObjectId, ref: 'Menu'}]
 });
 
 mongoose.model('Restaurant', RestaurantSchema);
