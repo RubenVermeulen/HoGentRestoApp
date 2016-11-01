@@ -10,7 +10,13 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+
+    <script src="javascripts/angular.module.js"></script>
     <script src="javascripts/angularApp.js"></script>
+    <script src="javascripts/auth.factory.js"></script>
+    <script src="javascripts/main.controller.js"></script>
+    <script src="javascripts/auth.controller.js"></script>
+    <script src="javascripts/nav.controller.js"></script>
 
     <style>
         .glyphicon-thumbs-up {
@@ -20,12 +26,12 @@
 </head>
 
 <body ng-app="hogentResto">
-    <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
+    <nav class="navbar navbar-default pull-right" ng-controller="NavController as vm">
         <ul class="nav navbar-nav">
-            <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
-            <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-            <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-            <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+            <li ng-show="vm.isLoggedIn()"><a>{{ vm.currentUser() }}</a></li>
+            <li ng-show="vm.isLoggedIn()"><a href="" ng-click="vm.logOut()">Log Out</a></li>
+            <li ng-hide="vm.isLoggedIn()"><a href="/#/login">Log In</a></li>
+            <li ng-hide="vm.isLoggedIn()"><a href="/#/register">Register</a></li>
         </ul>
     </nav>
 
@@ -48,11 +54,11 @@
             <h1>Hogent Resto</h1>
         </div>
 
-        <div ng-show="error" class="alert alert-danger row">
-            <span>{{ error.message }}</span>
+        <div ng-show="vm.error" class="alert alert-danger row">
+            <span>{{ vm.error.message }}</span>
         </div>
 
-        <form ng-submit="register()"
+        <form ng-submit="vm.register()"
               style="margin-top:30px;">
             <h3>Register</h3>
 
@@ -60,13 +66,13 @@
                 <input type="text"
                        class="form-control"
                        placeholder="Username"
-                       ng-model="user.username"></input>
+                       ng-model="vm.user.username"></input>
             </div>
             <div class="form-group">
                 <input type="password"
                        class="form-control"
                        placeholder="Password"
-                       ng-model="user.password"></input>
+                       ng-model="vm.user.password"></input>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
@@ -77,11 +83,11 @@
             <h1>HoGent Resto</h1>
         </div>
 
-        <div ng-show="error" class="alert alert-danger row">
-            <span>{{ error.message }}</span>
+        <div ng-show="vm.error" class="alert alert-danger row">
+            <span>{{ vm.error.message }}</span>
         </div>
 
-        <form ng-submit="logIn()"
+        <form ng-submit="vm.logIn()"
               style="margin-top:30px;">
             <h3>Log In</h3>
 
@@ -89,13 +95,13 @@
                 <input type="text"
                        class="form-control"
                        placeholder="Username"
-                       ng-model="user.username"></input>
+                       ng-model="vm.user.username"></input>
             </div>
             <div class="form-group">
                 <input type="password"
                        class="form-control"
                        placeholder="Password"
-                       ng-model="user.password"></input>
+                       ng-model="vm.user.password"></input>
             </div>
             <button type="submit" class="btn btn-primary">Log In</button>
         </form>

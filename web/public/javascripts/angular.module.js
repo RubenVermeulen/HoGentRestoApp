@@ -1,0 +1,1 @@
+angular.module('hogentResto', ['ui.router']);
