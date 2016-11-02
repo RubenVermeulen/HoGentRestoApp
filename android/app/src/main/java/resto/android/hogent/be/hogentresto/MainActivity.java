@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +19,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class MainActivity extends AppCompatActivity {
+
 
     TextView txtJson;
     @Override
@@ -27,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         txtJson = (TextView) findViewById(R.id.activity_json);
         TestAsyncTask asyncTask = new TestAsyncTask(MainActivity.this);
         asyncTask.execute();
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -37,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
 public class TestAsyncTask extends AsyncTask<Void, Void, String> {
 
-
+    JSONObject jsonObject= new JSONObject();
+    String jsonString = "";
     private Context myContext;
     private HttpURLConnection myUrl;
     private BufferedReader reader;
@@ -53,40 +60,46 @@ public class TestAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        try{
-            URL url = new URL("http://ec2-54-93-95-178.eu-central-1.compute.amazonaws.com:3000/restaurants");
-            myUrl = (HttpURLConnection) url.openConnection();
-            try {
-                InputStream in = new BufferedInputStream(myUrl.getInputStream());
-                reader = new BufferedReader(new InputStreamReader(in));
+        HttpsURLConnection connection = null;
+        BufferedReader reader = null;
 
-                StringBuffer buffer = new StringBuffer();
-                String line = "";
+        try {
+            URL url = new URL("https://ec2-54-93-95-178.eu-central-1.compute.amazonaws.com:3000/restaurants");
 
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line+"\n");
-                }
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.connect();
 
-                return buffer.toString();
-            } finally {
-                myUrl.disconnect();
+            InputStream stream = connection.getInputStream();
+
+            reader = new BufferedReader(new InputStreamReader(stream));
+            StringBuffer buffer = new StringBuffer();
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line);
             }
 
+            jsonString = buffer.toString();
+            jsonObject = new JSONObject(jsonString);
 
+            // makes sure the swipe to refresh icon is show (prevents flickering)
+            Thread.sleep(1000);
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (myUrl != null) {
-                myUrl.disconnect();
+        } catch (IOException | JSONException | InterruptedException e) {
+
+                    } finally {
+            if (connection != null) {
+                connection.disconnect();
             }
-            try {
-                if (reader != null) {
+
+            if (reader != null) {
+                try {
                     reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
         return null;
@@ -95,8 +108,9 @@ public class TestAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-
-        txtJson.setText(result);
+        if (jsonString.isEmpty()){txtJson.setText("tis leeg");}
+        else{
+        txtJson.setText(jsonString);}
     }
 }
 }
