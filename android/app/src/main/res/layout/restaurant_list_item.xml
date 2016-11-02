@@ -9,9 +9,9 @@
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:text="Default resto 420"
-        android:textSize="20sp"
+        android:layout_weight="5"
+        android:text="Default resto"
+        android:textSize="18sp"
         android:gravity="center_vertical"
         />
 
@@ -26,7 +26,7 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Keuken"/>
+                android:text="@string/kitchen"/>
 
             <ImageView
                 android:id="@+id/trafficKitchen"
@@ -44,7 +44,7 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Zaal"/>
+                android:text="@string/eating_area"/>
 
             <ImageView
                 android:id="@+id/trafficEatingArea"
