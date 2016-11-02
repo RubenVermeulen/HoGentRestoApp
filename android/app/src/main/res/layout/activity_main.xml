@@ -10,8 +10,5 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="resto.android.hogent.be.hogentresto.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_json"/>
+    <include layout="@layout/restaurant_list" />
 </RelativeLayout>
