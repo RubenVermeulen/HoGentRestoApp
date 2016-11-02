@@ -1,9 +1,12 @@
 package resto.android.hogent.be.hogentresto;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -23,14 +26,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-/**
- * Created by jonas on 2/11/2016.
- */
+
 
 public class RestaurantTask extends AsyncTask<String, Void, JSONArray> {
 
     private MainActivity context;
+    private Map<String, Restaurant> restaurants;
 
     public RestaurantTask(MainActivity context) {
         this.context = context;
@@ -110,7 +113,8 @@ public class RestaurantTask extends AsyncTask<String, Void, JSONArray> {
                 JSONObject jsonCoordinates = object.getJSONObject("coordinates");
                 double coordinates[] = {jsonCoordinates.getDouble("lat"), jsonCoordinates.getDouble("lat")};
 
-                r.setName(object.getString("name"))
+                r.setId(object.getString("_id"))
+                        .setName(object.getString("name"))
                         .setAddress(object.getString("address"))
                         .setCoordinates(coordinates)
                         .setOpeningHours(object.getString("openingHours"));
@@ -124,6 +128,18 @@ public class RestaurantTask extends AsyncTask<String, Void, JSONArray> {
         RestaurantAdapter adapter = new RestaurantAdapter(context, values);
 
         context.getListView().setAdapter(adapter);
+
+        context.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Restaurant r = (Restaurant) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(context, RestaurantActivity.class);
+                intent.putExtra("restaurant", r);
+
+                context.startActivity(intent);
+            }
+        });
     }
 }
 

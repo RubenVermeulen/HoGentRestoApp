@@ -83,4 +83,6 @@ public class RestaurantAdapter extends BaseAdapter {
         GradientDrawable drawableTwo = (GradientDrawable) imageView.getDrawable();
         drawableTwo.setColor(convertView.getResources().getColor(color));
     }
+
+
 }
