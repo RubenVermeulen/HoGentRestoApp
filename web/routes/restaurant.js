@@ -47,7 +47,13 @@ router.get('/', function(req, res, next) {
 
 router.get('/:restaurant', function(req, res, next) {
 
-    res.json(req.restaurant);
+    req.restaurant.populate('menus', function(err, post) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(req.restaurant);
+    });
 
 });
 
