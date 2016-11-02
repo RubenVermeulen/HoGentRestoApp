@@ -1,16 +1,9 @@
 package resto.android.hogent.be.hogentresto;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,30 +16,24 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Created by alexa on 2/11/2016.
+ */
 
+public class RestaurantTask extends AsyncTask<String, Void, JSONObject> {
+    private RestaurantActivity context;
 
-public class RestaurantTask extends AsyncTask<String, Void, JSONArray> {
-
-    private MainActivity context;
-    private Map<String, Restaurant> restaurants;
-
-    public RestaurantTask(MainActivity context) {
+    public RestaurantTask(RestaurantActivity context) {
         this.context = context;
     }
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        //..... ids ophalen
-    }
-
-    @Override
-    protected JSONArray doInBackground(String... params) {
+    protected JSONObject doInBackground(String... params) {
         HttpURLConnection connection = null;
         BufferedReader reader = null;
 
@@ -69,9 +56,9 @@ public class RestaurantTask extends AsyncTask<String, Void, JSONArray> {
 
             String jsonString = buffer.toString();
 
-            JSONArray jsonArray = new JSONArray(jsonString);
+            JSONObject jsonObject = new JSONObject(jsonString);
 
-            return jsonArray;
+            return jsonObject;
 
 
         } catch (MalformedURLException e) {
@@ -98,49 +85,59 @@ public class RestaurantTask extends AsyncTask<String, Void, JSONArray> {
     }
 
     @Override
-    protected void onPostExecute(JSONArray s) {
+    protected void onPostExecute(JSONObject s) {
         super.onPostExecute(s);
 
-        /// List view
-        List<Restaurant> values = new ArrayList<>();
+        Restaurant r = new Restaurant();
 
-        for (int i = 0; i < s.length(); i++) {
-            try {
-                JSONObject object = s.getJSONObject(i);
+        try {
+            JSONObject jsonCoordinates = s.getJSONObject("coordinates");
+            double coordinates[] = {jsonCoordinates.getDouble("lat"), jsonCoordinates.getDouble("lat")};
 
-                Restaurant r = new Restaurant();
+            r.setId(s.getString("_id"))
+                    .setName(s.getString("name"))
+                    .setAddress(s.getString("address"))
+                    .setCoordinates(coordinates)
+                    .setOpeningHours(s.getString("openingHours"));
 
-                JSONObject jsonCoordinates = object.getJSONObject("coordinates");
-                double coordinates[] = {jsonCoordinates.getDouble("lat"), jsonCoordinates.getDouble("lat")};
+            JSONArray jsonMenus = s.getJSONArray("menus");
+            List<Menu> menus = r.getMenus();
 
-                r.setId(object.getString("_id"))
-                        .setName(object.getString("name"))
-                        .setAddress(object.getString("address"))
-                        .setCoordinates(coordinates)
-                        .setOpeningHours(object.getString("openingHours"));
+            for (int i = 0; i < jsonMenus.length(); i++) {
+                JSONObject menuObject = jsonMenus.getJSONObject(i);
 
-                values.add(r);
-            } catch (JSONException e) {
-                e.printStackTrace();
+                Menu m = new Menu();
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                m.setId(menuObject.getString("_id"))
+                        .setTitle(menuObject.getString("title"))
+                        .setDescription(menuObject.getString("description"))
+                        .setPrice(menuObject.getDouble("price"))
+                        .setAvailableAt(simpleDateFormat.parse(menuObject.getString("availableAt")));
+
+                menus.add(m);
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
-        RestaurantAdapter adapter = new RestaurantAdapter(context, values);
+        MenusAdapter adapter = new MenusAdapter(context, r.getMenus());
 
         context.getListView().setAdapter(adapter);
 
-        context.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Restaurant r = (Restaurant) parent.getItemAtPosition(position);
-
-                Intent intent = new Intent(context, RestaurantActivity.class);
-                intent.putExtra("restaurant", r);
-
-                context.startActivity(intent);
-            }
-        });
+//        context.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Restaurant r = (Restaurant) parent.getItemAtPosition(position);
+//
+//                Intent intent = new Intent(context, RestaurantActivity.class);
+//                intent.putExtra("restaurant", r);
+//
+//                context.startActivity(intent);
+//            }
+//        });
     }
 }
-
-

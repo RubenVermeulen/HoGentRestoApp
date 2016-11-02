@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.list);
 
-        RestaurantTask asyncTask = new RestaurantTask(MainActivity.this);
+        RestaurantsTask asyncTask = new RestaurantsTask(MainActivity.this);
         asyncTask.execute(url);
     }
 

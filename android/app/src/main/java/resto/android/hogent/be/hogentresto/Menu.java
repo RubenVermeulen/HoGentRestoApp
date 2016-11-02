@@ -11,10 +11,13 @@ public class Menu implements Serializable {
     String id;
     String title;
     String description;
-    Number price;
+    double price;
     Date availableAt;
 
-    public Menu(String id, String title, String description, Number price, Date availableAt) {
+    public Menu() {
+    }
+
+    public Menu(String id, String title, String description, double price, Date availableAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -26,8 +29,9 @@ public class Menu implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
+    public Menu setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
@@ -49,11 +53,11 @@ public class Menu implements Serializable {
         return this;
     }
 
-    public Number getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public Menu setPrice(Number price) {
+    public Menu setPrice(double price) {
         this.price = price;
         return this;
     }

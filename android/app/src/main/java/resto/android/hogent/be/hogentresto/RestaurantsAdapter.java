@@ -18,13 +18,13 @@ import java.util.List;
  * Created by alexa on 2/11/2016.
  */
 
-public class RestaurantAdapter extends BaseAdapter {
+public class RestaurantsAdapter extends BaseAdapter {
 
     private Context ctx;
     private LayoutInflater inflater;
     private List<Restaurant> objects;
 
-    public RestaurantAdapter(Context ctx, List<Restaurant> objects) {
+    public RestaurantsAdapter(Context ctx, List<Restaurant> objects) {
         this.ctx = ctx;
         this.objects = objects;
         inflater = LayoutInflater.from(ctx);

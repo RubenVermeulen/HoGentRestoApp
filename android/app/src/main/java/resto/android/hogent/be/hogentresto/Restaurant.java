@@ -1,6 +1,8 @@
 package resto.android.hogent.be.hogentresto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexa on 2/11/2016.
@@ -12,12 +14,13 @@ public class Restaurant implements Serializable {
     private String address;
     private double[] coordinates;
     private String openingHours;
-    private Menu[] menus;
+    private List<Menu> menus;
 
     public Restaurant() {
+        menus = new ArrayList<>();
     }
 
-    public Restaurant(String id, String name, String address, double[] coordinates, String openingHours, Menu[] menus) {
+    public Restaurant(String id, String name, String address, double[] coordinates, String openingHours, List<Menu> menus) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -76,11 +79,11 @@ public class Restaurant implements Serializable {
         return this;
     }
 
-    public Menu[] getMenus(){
+    public List<Menu> getMenus(){
         return menus;
     }
 
-    public Restaurant setMenus(Menu[] menus){
+    public Restaurant setMenus(List<Menu> menus){
         this.menus= menus;
 
         return this;
