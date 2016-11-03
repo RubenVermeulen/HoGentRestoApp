@@ -11,6 +11,8 @@ var passport = require('passport');
 require('./models/Users');
 require('./models/Restaurants');
 require('./models/Menus');
+require('./models/Sensors');
+require('./models/SensorReports');
 
 require('./config/passport');
 
@@ -18,6 +20,7 @@ mongoose.connect('mongodb://localhost/hogent');
 
 var routes = require('./routes/index');
 var restaurant = require('./routes/restaurant');
+var sensorReport = require('./routes/sensor')
 
 var app = express();
 
@@ -37,6 +40,7 @@ app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/restaurants', restaurant);
+app.use('/restaurants', sensorReport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
