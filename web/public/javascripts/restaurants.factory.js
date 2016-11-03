@@ -4,7 +4,7 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         restaurants: [],
         getAll: getAll,
         create: create,
-        // edit: edit,
+        edit: edit,
         get: get,
         addMenu: addMenu
     };
@@ -25,8 +25,8 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         });
     }
 
-    function edit(restaurant){
-        return $http.put('/restaurants/' + restaurant._id, null).success(function(data){
+    function edit(id, restaurant){
+        return $http.put('/restaurants/' + id, restaurant).success(function(data){
             o.restaurants.push(data);
         })
     }

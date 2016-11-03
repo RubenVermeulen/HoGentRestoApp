@@ -13,18 +13,13 @@ angular.module('hogentResto').controller('RestaurantsController',
                 return;
             }
             
-            restaurants.edit({
+            restaurants.edit(restaurant._id, {
                 name: vm.restaurant.name,
                 address: vm.restaurant.address,
                 openingHours: vm.restaurant.openingHours,
                 lat: vm.restaurant.coordinates.lat,
                 long: vm.restaurant.coordinates.long
             });
-
-            // vm.title = '';
-            // vm.link = '';
-
-            vm.restaurant.name = '';
         }
 
         function addMenu() {
@@ -41,8 +36,11 @@ angular.module('hogentResto').controller('RestaurantsController',
             }).success(function(menu) {
                 vm.restaurant.menus.push(menu);
             });
+
             vm.title = '';
             vm.description = '';
+            vm.price = '';
+            vm.availableAt = '';
 
         }
 
