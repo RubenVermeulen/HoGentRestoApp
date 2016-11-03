@@ -6,15 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Angular App!</title>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 
     <script src="javascripts/angular.module.js"></script>
     <script src="javascripts/angularApp.js"></script>
+    <script src="javascripts/restaurants.factory.js"></script>
     <script src="javascripts/auth.factory.js"></script>
     <script src="javascripts/main.controller.js"></script>
+    <script src="javascripts/restaurants.controller.js"></script>
     <script src="javascripts/auth.controller.js"></script>
     <script src="javascripts/nav.controller.js"></script>
 
@@ -46,6 +48,104 @@
     <script type="text/ng-template" id="/home.html">
         <div class="page-header">
             <h1>HoGent Resto</h1>
+        </div>
+
+        <h2> Resto's <a href=""><small class="">Voeg resto toe</small></a> </h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Adres</th>
+                    <th>Openingsuren</th>
+                    <th>Maaltijden</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="restaurant in vm.restaurants | orderBy: '-name'">
+                    <td><a href="#/restaurants/{{restaurant._id}}">{{restaurant.name}}</td>
+                    <td>{{restaurant.address}}</td>
+                    <td>{{restaurant.openingHours}}</td>
+                    <td><a href="#/menus/{{restaurant._id}}">Menu's</td>
+                </tr>
+            </tbody>
+			</table>
+
+    </script>
+
+    <script type="text/ng-template" id="/restaurants.html">
+        <div class="page-header">
+            <h3>
+                {{vm.restaurant.name}} <small class="">Details</small>
+            </h3>
+            <form ng-submit="vm.editRestaurant()"  class="form-horizontal">
+                <div class="form-group">
+                    <label for="naam" class="col-sm-2 control-label">Naam</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="naam" ng-model="vm.restaurant.name" placeholder="Naam">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-sm-2 control-label">Adres</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="address" ng-model="vm.restaurant.address" placeholder="Adres">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="hours" class="col-sm-2 control-label">Openingsuren</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="hours" ng-model="vm.restaurant.openingHours" placeholder="Openingsuren">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lat" class="col-sm-2 control-label">Lat</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="lat" ng-model="vm.restaurant.coordinates.lat" placeholder="Lat">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="long" class="col-sm-2 control-label">Lng</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="long" ng-model="vm.restaurant.coordinates.long" placeholder="Long">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/menus.html">
+        <div class="page-header">
+            <h3>
+                {{vm.restaurant.name}} <small class="">Menu's</small>
+            </h3>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Gerecht</th>
+                        <th>Beschrijving</th>
+                        <th>Prijs</th>
+                        <th>Datum</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-title'">
+                        <td>{{menu.title}}</td>
+                        <td>{{menu.description}}</td>
+                        <td>{{menu.price}}</td>
+                        <td>{{menu.availableAt}}</td>
+                        <td><a href="#/menus/{{restaurant._id}}">Bewerk</td>
+                        <td><a href="#/menus/{{restaurant._id}}">Verwijder</td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </script>
 

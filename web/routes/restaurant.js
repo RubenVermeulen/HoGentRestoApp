@@ -59,9 +59,9 @@ router.get('/:restaurant', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-    if (!req.body.name || !req.body.address || !req.body.coordinates || !req.body.openingHours) {
-        return res.status(400).json({message: 'Please fill out all fields'});
-    }
+    // if (!req.body.name || !req.body.address || !req.body.coordinates || !req.body.openingHours) {
+    //     return res.status(400).json({message: 'Please fill out all fields'});
+    // }
 
     var restaurant = new Restaurant(req.body);
 
