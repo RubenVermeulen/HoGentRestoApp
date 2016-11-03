@@ -25,7 +25,7 @@ angular.module('hogentResto').controller('RestaurantsController',
             // vm.link = '';
 
             vm.restaurant.name = '';
-        };
+        }
 
         function addMenu() {
 
@@ -35,14 +35,16 @@ angular.module('hogentResto').controller('RestaurantsController',
 
             restaurants.addMenu(restaurant._id, {
                 title: vm.title,
-                description: vm.description
+                description: vm.description,
+                price: vm.price,
+                availableAt: vm.availableAt
             }).success(function(menu) {
                 vm.restaurant.menus.push(menu);
             });
             vm.title = '';
             vm.description = '';
-            alert('test');
-        };
+
+        }
 
 
         // function incrementUpvotes(comment) {
