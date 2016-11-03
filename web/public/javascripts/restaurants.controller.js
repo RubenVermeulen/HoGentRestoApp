@@ -15,7 +15,10 @@ angular.module('hogentResto').controller('RestaurantsController',
             
             restaurants.edit({
                 name: vm.restaurant.name,
-                address: vm.restaurant.address
+                address: vm.restaurant.address,
+                openingHours: vm.restaurant.openingHours,
+                lat: vm.restaurant.coordinates.lat,
+                long: vm.restaurant.coordinates.long
             });
 
             // vm.title = '';

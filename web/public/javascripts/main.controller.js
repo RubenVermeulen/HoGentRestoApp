@@ -14,12 +14,20 @@ angular.module('hogentResto').controller('MainController',
 
             restaurants.create({
                 name: vm.name,
-                address: vm.address
+                address: vm.address,
+                openingHours: vm.openingHours,
+                coordinates: {
+                    lat: vm.coordinates.lat,
+                    long: vm.coordinates.long
+                }
             });
 
             vm.name = '';
             vm.address = '';
-        };
+            vm.openingHours = '';
+            vm.coordinates.lat = '';
+            vm.coordinates.long = '';
+        }
 
     }
 );
