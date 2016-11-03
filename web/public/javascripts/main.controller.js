@@ -5,6 +5,7 @@ angular.module('hogentResto').controller('MainController',
         vm.isLoggedIn = auth.isLoggedIn;
 
         vm.restaurants = restaurants.restaurants;
+        vm.addRestaurant = addRestaurant;
 
         function addRestaurant() {
             if (!vm.name || vm.name === '') {

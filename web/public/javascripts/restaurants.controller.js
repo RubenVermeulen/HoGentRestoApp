@@ -6,6 +6,7 @@ angular.module('hogentResto').controller('RestaurantsController',
         vm.restaurant = restaurant;
         
         vm.editRestaurant = editRestaurant;
+        vm.addMenu = addMenu;
 
         function editRestaurant() {
             if (!vm.restaurant.name || vm.restaurant.name === '') {
@@ -22,6 +23,24 @@ angular.module('hogentResto').controller('RestaurantsController',
 
             vm.restaurant.name = '';
         };
+
+        function addMenu() {
+
+            if (!vm.title || vm.title === '') {
+                return;
+            }
+
+            restaurants.addMenu(restaurant._id, {
+                title: vm.title,
+                description: vm.description
+            }).success(function(menu) {
+                vm.restaurant.menus.push(menu);
+            });
+            vm.title = '';
+            vm.description = '';
+            alert('test');
+        };
+
 
         // function incrementUpvotes(comment) {
         //     posts.upvoteComment(post, comment);

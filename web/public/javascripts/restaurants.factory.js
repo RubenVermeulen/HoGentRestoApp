@@ -23,7 +23,7 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         });
     };
     function edit(restaurant){
-        return $http.put(restaurant._id, null).success(function(data){
+        return $http.put(restaurant._id, restaurant).success(function(data){
             o.restaurants.push(data);
         })
     };

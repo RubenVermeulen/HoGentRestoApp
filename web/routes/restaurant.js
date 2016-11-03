@@ -152,9 +152,9 @@ router.get('/:restaurant/menus/:menu', function(req, res, next) {
 
 router.post('/:restaurant/menus', function(req, res, next) {
 
-    if (!req.body.title || !req.body.description || !req.body.price || !req.body.availableAt) {
-        return res.status(400).json({message: 'Please fill out all fields'});
-    }
+    // if (!req.body.title || !req.body.description || !req.body.price || !req.body.availableAt) {
+    //     return res.status(400).json({message: 'Please fill out all fields'});
+    // }
 
     var menu = new Menu(req.body);
 
