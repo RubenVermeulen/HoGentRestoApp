@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#1e88e5</color>
+    <color name="colorPrimaryDark">#1870c7</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorTrafficCalm">#38df3d</color>
+    <color name="colorTrafficBusy">#ffac40</color>
+    <color name="colorTrafficFull">#ff2d2d</color>
 </resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:text="Default resto"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        />
+
+    <TableLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.5"
+        android:layout_gravity="center_vertical">
+
+        <TableRow android:paddingBottom="2dp">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/kitchen"/>
+
+            <ImageView
+                android:id="@+id/trafficKitchen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:src="@drawable/circle"
+                android:layout_gravity="center_vertical"
+                />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/eating_area"/>
+
+            <ImageView
+                android:id="@+id/trafficEatingArea"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:src="@drawable/circle"
+                android:layout_gravity="center_vertical"
+                />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:src="@drawable/ic_info"
+        android:layout_gravity="center_vertical"
+        />
+
+</LinearLayout>

@@ -1,52 +1,92 @@
 package resto.android.hogent.be.hogentresto;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by alexa on 2/11/2016.
  */
 
-public class Restaurant {
+public class Restaurant implements Serializable {
+    private String id;
+    private String name;
     private String address;
     private double[] coordinates;
     private String openingHours;
-    private Menu[] menus;
+    private List<Menu> menus;
 
-    public Restaurant(String address, double[] coordinates, String openingHours, Menu[] menus) {
+    public Restaurant() {
+        menus = new ArrayList<>();
+    }
+
+    public Restaurant(String id, String name, String address, double[] coordinates, String openingHours, List<Menu> menus) {
+        this.id = id;
+        this.name = name;
         this.address = address;
         this.coordinates = coordinates;
         this.openingHours = openingHours;
         this.menus = menus;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public Restaurant setId(String id) {
+        this.id = id;
+
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Restaurant setName(String name) {
+        this.name = name;
+
+        return this;
+    }
+
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address){
+    public Restaurant setAddress(String address){
         this.address=address;
+
+        return this;
     }
 
     public double[] getCoordinates(){
         return coordinates;
     }
 
-    public void setCoordinates(double[] coordinates){
+    public Restaurant setCoordinates(double[] coordinates){
         this.coordinates= coordinates;
+
+        return this;
     }
 
     public String getOpeningHours(){
         return openingHours;
     }
 
-    public void setOpeningHours(String openingHours){
+    public Restaurant setOpeningHours(String openingHours){
         this.openingHours=openingHours;
+
+        return this;
     }
 
-    public Menu[] getMenus(){
+    public List<Menu> getMenus(){
         return menus;
     }
 
-    public void setMenus(Menu[] menus){
+    public Restaurant setMenus(List<Menu> menus){
         this.menus= menus;
+
+        return this;
     }
 
 
