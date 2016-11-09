@@ -180,7 +180,7 @@
                         <td>{{menu.title}}</td>
                         <td>{{menu.description}}</td>
                         <td>{{menu.price}}</td>
-                        <td>{{menu.availableAt}}</td>
+                        <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
                         <td><a href="#/menus/{{restaurant._id}}">Bewerk</td>
                         <td><a href="#/menus/{{restaurant._id}}">Verwijder</td>
                     </tr>
