@@ -6,7 +6,8 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         create: create,
         edit: edit,
         get: get,
-        addMenu: addMenu
+        addMenu: addMenu,
+        deleteRestaurant: deleteRestaurant
     };
 
     function getAll() {
@@ -44,6 +45,13 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
             }
         });
     }
+
+    function deleteRestaurant(id, restaurant) {
+        return $http.delete('/restaurants/' + id, restaurant).success(function(data){
+            o.restaurants.push(data);
+        })
+    }
+
     // o.upvoteComment = function(restaurant, comment) {
     //     return $http.put('/restaurants/' + restaurant._id + '/comments/' + comment._id + '/upvote', null, {
     //         headers: {

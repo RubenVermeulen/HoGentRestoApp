@@ -12,6 +12,11 @@ angular.module('hogentResto').controller('RestaurantsController',
             if (!vm.restaurant.name || vm.restaurant.name === '') {
                 return;
             }
+
+            if(vm.delete){
+                restaurants.deleteRestaurant(restaurant._id);
+                return;
+            }
             
             restaurants.edit(restaurant._id, {
                 name: vm.restaurant.name,
