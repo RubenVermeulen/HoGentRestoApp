@@ -6,6 +6,7 @@ var jwt = require('express-jwt');
 // models
 var Restaurant = mongoose.model('Restaurant');
 var Sensor = mongoose.model('Sensor');
+var SensorReport = mongoose.model('SensorReport');
 
 // middlewares
 var auth = jwt({
@@ -90,16 +91,28 @@ router.get('/:restaurant/sensors/:sensor', function(req, res, next) {
 
 });
 
-router.post('/:restaurant/sensors/:sensor/report ', function(req, res, next) {
+router.get('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
-    if (!req.body.timestamp || !req.body.occupancy) {
+   req.sensor.populate('reports', function(err, post) {
+      if (err) {
+           return next(err);
+      }
+
+      res.json(req.sensor.reports);
+   });
+
+});
+
+router.post('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
+
+    if (!req.body.time || !req.body.occupancy) {
         return res.status(400).json({message: 'Report incomplete'});
     }
 
     var report = new SensorReport();
 
-    report.time = new Date(req.body.timestamp); //convert unix timestamp to Date
-    report.occupancy = req.body.occupancy;
+    report.time = new Date(parseInt(req.body.time)); //convert unix timestamp to Date
+    report.occupancy = parseFloat(req.body.occupancy);
 
     report.save(function(err, report) {
         if (err) {
