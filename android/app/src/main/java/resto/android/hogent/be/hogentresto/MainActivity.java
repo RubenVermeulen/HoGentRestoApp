@@ -1,22 +1,12 @@
 package resto.android.hogent.be.hogentresto;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,8 +16,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-
-    ListView listView;
 
     private List<Restaurant> dataset;
     private RecyclerView recyclerView;

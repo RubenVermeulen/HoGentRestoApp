@@ -1,15 +1,8 @@
 package resto.android.hogent.be.hogentresto;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by alexa on 2/11/2016.
- */
 
 public class Restaurant {
     @SerializedName("_id")
