@@ -14,13 +14,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/thumbnail"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/resto_d"
-            />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/resto_d"
+                />
+
+            <ImageView
+                android:id="@+id/trafficIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/circle_doable"
+                android:layout_gravity="center"
+                />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                >
+                <TableRow
+                    android:gravity="center_horizontal"
+                    >
+
+                    <TextView
+                        android:id="@+id/trafficGrade"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:layout_gravity="center"
+                        />
+
+                </TableRow>
+                <TableRow
+                    android:gravity="center_horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/traffic"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        />
+
+                </TableRow>
+            </TableLayout>
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/name"

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,11 +21,15 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         TextView textView;
+        TextView trafficGrade;
+        ImageView trafficIndicator;
 
         ViewHolder(View itemView) {
             super(itemView);
 
             textView = (TextView) itemView.findViewById(R.id.name);
+            trafficGrade = (TextView) itemView.findViewById(R.id.trafficGrade);
+            trafficIndicator = (ImageView) itemView.findViewById(R.id.trafficIndicator);
         }
     }
 
@@ -49,6 +54,20 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.textView.setText(dataset.get(position).getName());
+
+        switch (position % 3) {
+            case 0:
+                holder.trafficGrade.setText(R.string.calm);
+                holder.trafficIndicator.setImageResource(R.drawable.circle_calm);
+                break;
+            case 1:
+                holder.trafficGrade.setText(R.string.doable);
+                holder.trafficIndicator.setImageResource(R.drawable.circle_doable);
+                break;
+            case 2:
+                holder.trafficGrade.setText(R.string.full);
+                holder.trafficIndicator.setImageResource(R.drawable.circle_full);
+        }
     }
 
     @Override

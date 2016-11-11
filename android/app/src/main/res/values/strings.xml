@@ -5,4 +5,7 @@
     <string name="eating_area">Zaal</string>
     <string name="traffic">Drukte</string>
     <string name="default_resto">Default resto</string>
+    <string name="calm">Rustig</string>
+    <string name="doable">Doenbaar</string>
+    <string name="full">Vol</string>
 </resources>
