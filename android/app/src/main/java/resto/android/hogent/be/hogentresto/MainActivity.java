@@ -9,6 +9,10 @@ import android.view.Menu;
 
 import java.util.List;
 
+import resto.android.hogent.be.hogentresto.adapters.RestaurantsAdapter;
+import resto.android.hogent.be.hogentresto.config.Config;
+import resto.android.hogent.be.hogentresto.models.Restaurant;
+import resto.android.hogent.be.hogentresto.services.HoGentRestoService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

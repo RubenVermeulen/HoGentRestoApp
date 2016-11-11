@@ -1,4 +1,4 @@
-package resto.android.hogent.be.hogentresto;
+package resto.android.hogent.be.hogentresto.models;
 
 import com.google.gson.annotations.SerializedName;
 

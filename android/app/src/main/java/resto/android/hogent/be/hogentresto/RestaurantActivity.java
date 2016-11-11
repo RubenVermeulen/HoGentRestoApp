@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import resto.android.hogent.be.hogentresto.models.Restaurant;
+
 public class RestaurantActivity extends AppCompatActivity {
 
     private ListView listView;

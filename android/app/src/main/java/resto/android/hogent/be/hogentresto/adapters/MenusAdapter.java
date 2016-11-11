@@ -1,15 +1,16 @@
-package resto.android.hogent.be.hogentresto;
+package resto.android.hogent.be.hogentresto.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import resto.android.hogent.be.hogentresto.R;
+import resto.android.hogent.be.hogentresto.models.Menu;
 
 /**
  * Created by alexa on 2/11/2016.

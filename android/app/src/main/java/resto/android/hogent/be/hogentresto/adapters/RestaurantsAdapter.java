@@ -1,4 +1,4 @@
-package resto.android.hogent.be.hogentresto;
+package resto.android.hogent.be.hogentresto.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import resto.android.hogent.be.hogentresto.R;
+import resto.android.hogent.be.hogentresto.models.Restaurant;
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.ViewHolder> {
     private List<Restaurant> dataset;
