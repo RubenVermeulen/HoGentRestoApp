@@ -8,7 +8,9 @@ var RestaurantSchema = new mongoose.Schema({
         long: {type: Number, default: 0}
     },
     openingHours: String,
-    menus: [{type: mongoose.Schema.Types.ObjectId, ref: 'Menu'}]
+    menus: [{type: mongoose.Schema.Types.ObjectId, ref: 'Menu'}],
+    occupation: {type: Number, default: 0},
+    urlImage: String
 });
 
 mongoose.model('Restaurant', RestaurantSchema);
