@@ -3,4 +3,6 @@
     <string name="title_homescreen">Restaurants</string>
     <string name="kitchen">Keuken</string>
     <string name="eating_area">Zaal</string>
+    <string name="traffic">Drukte</string>
+    <string name="default_resto">Default resto</string>
 </resources>

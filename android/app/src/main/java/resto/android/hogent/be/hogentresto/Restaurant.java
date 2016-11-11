@@ -1,5 +1,8 @@
 package resto.android.hogent.be.hogentresto;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,103 +11,64 @@ import java.util.List;
  * Created by alexa on 2/11/2016.
  */
 
-public class Restaurant implements Serializable {
+public class Restaurant {
+    @SerializedName("_id")
     private String id;
     private String name;
     private String address;
-    private double[] coordinates;
+    private Coordinate coordinates;
     private String openingHours;
-    private List<Menu> menus;
+    private transient List<Menu> menus;
 
     public Restaurant() {
-        menus = new ArrayList<>();
-    }
 
-    public Restaurant(String id, String name, String address, double[] coordinates, String openingHours, List<Menu> menus) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.coordinates = coordinates;
-        this.openingHours = openingHours;
-        this.menus = menus;
     }
 
     public String getId() {
         return id;
     }
 
-    public Restaurant setId(String id) {
+    public void setId(String id) {
         this.id = id;
-
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public Restaurant setName(String name) {
+    public void setName(String name) {
         this.name = name;
-
-        return this;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public Restaurant setAddress(String address){
+    public void setAddress(String address){
         this.address=address;
-
-        return this;
     }
 
-    public double[] getCoordinates(){
+    public Coordinate getCoordinates(){
         return coordinates;
     }
 
-    public Restaurant setCoordinates(double[] coordinates){
+    public void setCoordinates(Coordinate coordinates){
         this.coordinates= coordinates;
-
-        return this;
     }
 
     public String getOpeningHours(){
         return openingHours;
     }
 
-    public Restaurant setOpeningHours(String openingHours){
+    public void setOpeningHours(String openingHours){
         this.openingHours=openingHours;
-
-        return this;
     }
 
     public List<Menu> getMenus(){
         return menus;
     }
 
-    public Restaurant setMenus(List<Menu> menus){
+    public void setMenus(List<Menu> menus){
         this.menus= menus;
-
-        return this;
     }
-
-
-
-
-
-
-
 }
-
-/*
-name: String,
-        address: String,
-        coordinates: {
-        lat: {type: Number, default: 0},
-        long: {type: Number, default: 0}
-        },
-        openingHours: String,
-        menus: [{type: mongoose.Schema.Types.ObjectId, ref: 'Menu'}]
-
-        */

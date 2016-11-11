@@ -10,5 +10,5 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="resto.android.hogent.be.hogentresto.MainActivity">
 
-    <include layout="@layout/list" />
+    <include layout="@layout/recycler_list" />
 </RelativeLayout>

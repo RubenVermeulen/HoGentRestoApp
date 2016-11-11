@@ -27,8 +27,8 @@ public class RestaurantActivity extends AppCompatActivity {
 
         url += r.getId();
 
-        RestaurantTask asyncTask = new RestaurantTask(this);
-        asyncTask.execute(url);
+//        RestaurantTask asyncTask = new RestaurantTask(this);
+//        asyncTask.execute(url);
     }
 
     public ListView getListView() {
