@@ -2,9 +2,10 @@ package resto.android.hogent.be.hogentresto.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Restaurant {
+public class Restaurant implements Serializable {
     @SerializedName("_id")
     private String id;
     private String name;
