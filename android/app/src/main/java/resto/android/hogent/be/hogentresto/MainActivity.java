@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import resto.android.hogent.be.hogentresto.adapters.RestaurantsAdapter;
@@ -57,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
                 dataset = response.body();
+
+                Collections.sort(dataset, new Comparator<Restaurant>() {
+                    @Override
+                    public int compare(Restaurant o1, Restaurant o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+
                 adapter = new RestaurantsAdapter(dataset);
 
                 recyclerView.setAdapter(adapter);

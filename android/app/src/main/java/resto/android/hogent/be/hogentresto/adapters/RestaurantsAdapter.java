@@ -39,8 +39,6 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.restaurant_list_item, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        // TODO
 
         return new ViewHolder(v);
     }
