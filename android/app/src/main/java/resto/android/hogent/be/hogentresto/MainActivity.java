@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                adapter = new RestaurantsAdapter(dataset);
+                adapter = new RestaurantsAdapter(MainActivity.this, dataset);
 
                 recyclerView.setAdapter(adapter);
             }

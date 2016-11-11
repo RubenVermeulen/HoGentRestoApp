@@ -13,6 +13,8 @@ public class Restaurant implements Serializable {
     private Coordinate coordinates;
     private String openingHours;
     private transient List<Menu> menus;
+    private String urlImage;
+    private double occupation;
 
     public Restaurant() {
 
@@ -64,5 +66,21 @@ public class Restaurant implements Serializable {
 
     public void setMenus(List<Menu> menus){
         this.menus= menus;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public double getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(double occupation) {
+        this.occupation = occupation;
     }
 }
