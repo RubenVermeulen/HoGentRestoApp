@@ -16,6 +16,7 @@ import java.util.List;
 
 import resto.android.hogent.be.hogentresto.R;
 import resto.android.hogent.be.hogentresto.RestaurantActivity;
+import resto.android.hogent.be.hogentresto.helpers.Traffic;
 import resto.android.hogent.be.hogentresto.models.Restaurant;
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.ViewHolder> {
@@ -73,18 +74,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         holder.openingHours.setText(restaurant.getOpeningHours());
         Picasso.with(context).load(restaurant.getUrlImage()).into(holder.thumbnail);
 
-        if (restaurant.getOccupation() < 0.5) {
-            holder.trafficGrade.setText(R.string.calm);
-            holder.trafficIndicator.setImageResource(R.drawable.circle_calm);
-        }
-        else if (restaurant.getOccupation() < 0.8) {
-            holder.trafficGrade.setText(R.string.doable);
-            holder.trafficIndicator.setImageResource(R.drawable.circle_doable);
-        }
-        else {
-            holder.trafficGrade.setText(R.string.full);
-            holder.trafficIndicator.setImageResource(R.drawable.circle_full);
-        }
+        Traffic.setTraffic(restaurant.getOccupation(), holder.trafficGrade, holder.trafficIndicator);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

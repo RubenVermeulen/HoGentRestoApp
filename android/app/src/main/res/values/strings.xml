@@ -8,4 +8,6 @@
     <string name="calm">Rustig</string>
     <string name="doable">Doenbaar</string>
     <string name="full">Vol</string>
+    <string name="menus">Menu\'s</string>
+    <string name="lipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc porttitor placerat ipsum eget lobortis. Maecenas dolor leo, posuere sed tortor quis, lobortis bibendum turpis. Fusce vestibulum nisl sem, ut molestie magna tincidunt non.</string>
 </resources>
