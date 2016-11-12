@@ -19,7 +19,8 @@ angular.module('hogentResto').controller('MainController',
                 coordinates: {
                     lat: vm.coordinates.lat,
                     long: vm.coordinates.long
-                }
+                },
+                urlImage: vm.restaurant.urlImage
             });
 
             vm.name = '';
