@@ -29,7 +29,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         // each data item is just a string in this case
         CardView cardView;
         ImageView thumbnail;
-        TextView textView;
+        TextView name;
+        TextView openingHours;
         TextView trafficGrade;
         ImageView trafficIndicator;
 
@@ -38,7 +39,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 
             cardView = (CardView) itemView.findViewById(R.id.cardView);
             thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
-            textView = (TextView) itemView.findViewById(R.id.name);
+            name = (TextView) itemView.findViewById(R.id.name);
+            openingHours = (TextView) itemView.findViewById(R.id.openingHours);
             trafficGrade = (TextView) itemView.findViewById(R.id.trafficGrade);
             trafficIndicator = (ImageView) itemView.findViewById(R.id.trafficIndicator);
         }
@@ -67,7 +69,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(restaurant.getName());
+        holder.name.setText(restaurant.getName());
+        holder.openingHours.setText(restaurant.getOpeningHours());
         Picasso.with(context).load(restaurant.getUrlImage()).into(holder.thumbnail);
 
         if (restaurant.getOccupation() < 0.5) {

@@ -1,5 +1,6 @@
 package resto.android.hogent.be.hogentresto;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
-        layoutManager = new GridLayoutManager(this, 1);
+        // set layout manager
+        setLayoutManager();
 
         recyclerView.setLayoutManager(layoutManager);
 
@@ -77,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("CallBack", " Throwable is " +t);
             }
         });
+    }
+
+    private void setLayoutManager() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager = new GridLayoutManager(this, 1);
+        }
+        else{
+            layoutManager = new GridLayoutManager(this, 2);
+        }
     }
 
     @Override
