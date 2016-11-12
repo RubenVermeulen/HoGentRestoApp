@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ public class RestaurantActivity extends AppCompatActivity {
     @BindView(R.id.trafficIndicator)
     ImageView trafficIndicator;
     @BindView(R.id.stats)
-    CardView stats;
+    TableLayout stats;
     @BindView(R.id.expand)
     ImageView expand;
     @BindView(R.id.menus)
