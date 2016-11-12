@@ -185,7 +185,8 @@
                     android:textSize="24sp"
                     android:paddingTop="8dp"/>
 
-                <!--<include layout="@layout/recycler_list" />-->
+                <include layout="@layout/progress_bar" />
+                <include layout="@layout/refresh" />
 
             </LinearLayout>
 

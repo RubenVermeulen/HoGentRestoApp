@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestaurantActivity extends AppCompatActivity {
 
     private List<Menu> dataset;
+    private Restaurant r;
 
     @BindView(R.id.cardView)
     CardView cardView;
@@ -49,6 +52,10 @@ public class RestaurantActivity extends AppCompatActivity {
     ImageView expand;
     @BindView(R.id.menus)
     LinearLayout menus;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.refresh)
+    TextView refresh;
 
     TextView title;
     TextView description;
@@ -63,7 +70,7 @@ public class RestaurantActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        Restaurant r = (Restaurant) getIntent().getSerializableExtra("restaurant");
+        r = (Restaurant) getIntent().getSerializableExtra("restaurant");
 
         setTitle(r.getName());
 
@@ -71,6 +78,10 @@ public class RestaurantActivity extends AppCompatActivity {
 
         setRestaurant(r);
 
+        getMenus();
+    }
+
+    private void getMenus() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -83,26 +94,41 @@ public class RestaurantActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Menu>>() {
             @Override
             public void onResponse(Call<List<Menu>> call, Response<List<Menu>> response) {
+                progressBar.setVisibility(View.GONE);
+                refresh.setVisibility(View.GONE);
+
                 dataset = response.body();
 
-                for (Menu m : dataset) {
-                    View child = getLayoutInflater().inflate(R.layout.menus_list_item, null);
-
-                    title = (TextView) child.findViewById(R.id.title);
-                    description = (TextView) child.findViewById(R.id.description);
-                    price = (TextView) child.findViewById(R.id.price);
-
-                    title.setText(m.getTitle());
-                    description.setText(m.getDescription());
-                    price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
-
+                if (dataset.isEmpty()) {
+                    View child = getLayoutInflater().inflate(R.layout.menus_no_results, null);
                     menus.addView(child);
+                }
+                else {
+                    View child;
+
+                    for (Menu m : dataset) {
+                        child = getLayoutInflater().inflate(R.layout.menus_list_item, null);
+
+                        title = (TextView) child.findViewById(R.id.title);
+                        description = (TextView) child.findViewById(R.id.description);
+                        price = (TextView) child.findViewById(R.id.price);
+
+                        title.setText(m.getTitle());
+                        description.setText(m.getDescription());
+                        price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+
+                        menus.addView(child);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Menu>> call, Throwable t) {
-                Log.d("CallBack", " Throwable is " +t);
+                progressBar.setVisibility(View.GONE);
+                refresh.setVisibility(View.VISIBLE);
+
+                Toast toast = Toast.makeText(RestaurantActivity.this, R.string.not_connected, Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }
@@ -125,5 +151,10 @@ public class RestaurantActivity extends AppCompatActivity {
             stats.setVisibility(View.GONE);
             expand.setImageResource(R.drawable.ic_expand_more_black_32dp);
         }
+    }
+
+    public void refresh(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        getMenus();
     }
 }

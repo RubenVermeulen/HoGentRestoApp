@@ -7,11 +7,17 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import resto.android.hogent.be.hogentresto.adapters.RestaurantsAdapter;
 import resto.android.hogent.be.hogentresto.config.Config;
 import resto.android.hogent.be.hogentresto.models.Restaurant;
@@ -29,11 +35,18 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.refresh)
+    TextView refresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle(R.string.title_homescreen);
+
+        ButterKnife.bind(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerList);
 
@@ -47,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // API
+        getRestaurants();
+    }
+
+    private void getRestaurants() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -59,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Restaurant>>() {
             @Override
             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
+                progressBar.setVisibility(View.GONE);
+                refresh.setVisibility(View.GONE);
+
                 dataset = response.body();
 
                 Collections.sort(dataset, new Comparator<Restaurant>() {
@@ -75,7 +95,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Restaurant>> call, Throwable t) {
-                Log.d("CallBack", " Throwable is " +t);
+                progressBar.setVisibility(View.GONE);
+
+                Toast toast = Toast.makeText(MainActivity.this, R.string.not_connected, Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }
@@ -93,5 +116,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    public void refresh(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        getRestaurants();
     }
 }
