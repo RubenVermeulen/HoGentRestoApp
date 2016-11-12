@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Restaurant>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
+                refresh.setVisibility(View.VISIBLE);
 
                 Toast toast = Toast.makeText(MainActivity.this, R.string.not_connected, Toast.LENGTH_LONG);
                 toast.show();
