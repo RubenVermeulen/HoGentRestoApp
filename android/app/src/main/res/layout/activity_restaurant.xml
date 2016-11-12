@@ -57,27 +57,25 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         >
-                        <TableRow
-                            android:gravity="center_horizontal"
-                            >
+                        <TableRow>
 
                             <TextView
                                 android:id="@+id/trafficGrade"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:textStyle="bold"
                                 android:textColor="#FFFFFF"
-                                android:layout_gravity="center"
+                                android:gravity="center_horizontal"
                                 />
 
                         </TableRow>
-                        <TableRow
-                            android:gravity="center_horizontal"
-                            >
+                        <TableRow>
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/traffic"
                                 android:textColor="#FFFFFF"
                                 android:gravity="center"
