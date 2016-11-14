@@ -4,7 +4,7 @@ var FeedbackSchema = new mongoose.Schema({
     comfortScore: Number,
     eetScore: Number,
     drukteScore: Number,
-    description: String,
+    description: String
 });
 
 mongoose.model('Feedback', FeedbackSchema);
