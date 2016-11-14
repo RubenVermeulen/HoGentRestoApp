@@ -77,6 +77,19 @@ router.get('/:restaurant/feedbacks', function(req, res, next) {
 
 });
 
+router.get('/:restaurant/feedbacks/:feedback', function(req, res, next) {
+
+    req.restaurant.populate('feedbacks', function(err, post) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(req.restaurant.feedbacks);
+    });
+
+});
+
+
 router.post('/:restaurant/feedbacks', function(req, res, next) {
 
     if (!req.body.comfortScore || !req.body.eetScore || !req.body.drukteScore || !req.body.description) {
@@ -84,8 +97,9 @@ router.post('/:restaurant/feedbacks', function(req, res, next) {
     }
 
     var feedback = new Feedback(req.body);
-
     req.restaurant.feedbacks.push(feedback);
+
+    req.restaurant.save();
 
     feedback.save(function(err, feedback) {
         if (err) {
