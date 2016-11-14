@@ -84,7 +84,7 @@ router.get('/:restaurant/feedbacks/:feedback', function(req, res, next) {
             return next(err);
         }
 
-        res.json(req.feedbacks);
+        res.json(req.feedback);
     });
 
 });
