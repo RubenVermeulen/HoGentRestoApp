@@ -28,6 +28,7 @@ angular.module('hogentResto').controller('MainController',
             vm.openingHours = '';
             vm.coordinates.lat = '';
             vm.coordinates.long = '';
+            vm.restaurant.urlImage = '';
         }
 
     }
