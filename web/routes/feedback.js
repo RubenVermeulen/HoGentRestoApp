@@ -80,7 +80,7 @@ router.get('/:restaurant/feedbacks/:feedback', function(req, res, next) {
 
 router.post('/:restaurant/feedbacks', function(req, res, next) {
 
-    if (!req.body.comfortScore || !req.body.eetScore || !req.body.drukteScore || !req.body.description) {
+    if (!req.body.comfortScore || !req.body.foodScore || !req.body.trafficScore || !req.body.description) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
 
