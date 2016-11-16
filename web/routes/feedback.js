@@ -111,7 +111,7 @@ router.post('/:restaurant/feedbacks', function(req, res, next) {
 
 });
 
-router.delete('/:feedback', function(req, res, next) {
+router.delete('/:restaurant/feedbacks/:feedback', function(req, res, next) {
 
     req.feedback.remove(function(err, feedback) {
         if (err) {
