@@ -12,13 +12,19 @@ angular.module('hogentResto').controller('RestaurantsController',
             if (!vm.restaurant.name || vm.restaurant.name === '') {
                 return;
             }
+
+            if(vm.delete){
+                restaurants.deleteRestaurant(restaurant._id);
+                return;
+            }
             
             restaurants.edit(restaurant._id, {
                 name: vm.restaurant.name,
                 address: vm.restaurant.address,
                 openingHours: vm.restaurant.openingHours,
                 lat: vm.restaurant.coordinates.lat,
-                long: vm.restaurant.coordinates.long
+                long: vm.restaurant.coordinates.long,
+                urlImage: vm.restaurant.urlImage
             });
         }
 

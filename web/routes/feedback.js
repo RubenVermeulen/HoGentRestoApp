@@ -53,18 +53,6 @@ router.param('feedback', function(req, res, next, id) {
     });
 });
 
-router.get('/', function(req, res, next) {
-
-    Restaurant.find(function(err, restaurants) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(restaurants)
-    });
-
-});
-
 router.get('/:restaurant/feedbacks', function(req, res, next) {
 
     req.restaurant.populate('feedbacks', function(err, post) {
@@ -77,6 +65,19 @@ router.get('/:restaurant/feedbacks', function(req, res, next) {
 
 });
 
+router.get('/:restaurant/feedbacks/:feedback', function(req, res, next) {
+
+    req.restaurant.populate('feedbacks', function(err, post) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(req.feedback);
+    });
+
+});
+
+
 router.post('/:restaurant/feedbacks', function(req, res, next) {
 
     if (!req.body.comfortScore || !req.body.eetScore || !req.body.drukteScore || !req.body.description) {
@@ -84,8 +85,9 @@ router.post('/:restaurant/feedbacks', function(req, res, next) {
     }
 
     var feedback = new Feedback(req.body);
-
     req.restaurant.feedbacks.push(feedback);
+
+    req.restaurant.save();
 
     feedback.save(function(err, feedback) {
         if (err) {
@@ -97,7 +99,7 @@ router.post('/:restaurant/feedbacks', function(req, res, next) {
 
 });
 
-router.delete('/:feedback', function(req, res, next) {
+router.delete('/:restaurant/feedbacks/:feedback', function(req, res, next) {
 
     req.feedback.remove(function(err, feedback) {
         if (err) {
