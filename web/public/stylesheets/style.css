@@ -1,8 +1,192 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9fb;
 }
 
-a {
-  color: #00B7FF;
+
+/* NAVIGATIE */
+
+/* Makes navbar bigger */
+
+.navbar-brand,
+.navbar-nav li a {
+    line-height: 120px;
+    height: 120px;
+    padding-top: 0;
+}
+
+.navbar-toggle{
+    margin-top: 44px;
+}
+
+
+.navbar-default{
+    background-color: #1e88e5;
+    border-color: #BBDEFB;
+}
+
+.navbar-default .navbar-nav>li>a {
+    font-size: 1.2em;
+    color: #E3F2FD;
+    padding-top: 0.3em;
+}
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus{
+    color: white;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
+    color: #BBDEFB
+}
+
+.navbar-default .navbar-nav>li>a::visited, .navbar-default .navbar-brand:visited{
+    color: inherit;
+}
+
+.navbar-default .navbar-brand{
+    font-size: 2.25em;
+    font-family: 'Roboto';
+    font-weight: 300;
+    color: white;
+}
+
+.navbar-brand small{
+    font-size: 70%;
+    color: #E3F2FD;
+}
+
+.navbar-default .navbar-toggle .icon-bar{
+    background-color: white;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
+    background-color: #2196F3;
+}
+
+
+
+/* MAIN PAGE */
+
+.main {
+    padding-top: 10em;
+}
+
+/* Breadcrumbs */
+
+.breadcrumb>li{
+    font-size: 1.2em;
+    font-weight: 300;
+}
+
+
+/* Title */
+
+.titleflex{
+    display: flex;
+    align-items: center;
+    padding: 1.5em 0 1em 0;
+}
+
+.titleflexattr{
+    flex: 1;
+}
+
+.titleflex h1, .titleflex p{
+    margin: 0;
+}
+
+.titleadd{
+    text-align: right;
+}
+
+.btn-primary{
+    text-transform: uppercase;
+    background-color: #2196F3;
+    border-color: transparent;
+    border-radius: 2px;
+    padding-top: 0.6em;
+}
+
+.btn-default{
+    text-transform: uppercase;
+    background-color: none;
+    border: #E0E0E0 1px solid;
+    border-radius: 2px;
+    padding-top: 0.6em;
+}
+
+.btn-danger{
+    text-transform: uppercase;
+    border-color: transparent;
+    border-radius: 2px;
+    padding-top: 0.6em;
+}
+
+
+.btn-latest{
+    margin-left: 1em;
+}
+
+h1{
+    font-size: 2em;
+    font-weight: 300;
+}
+
+
+/* Table */
+
+.table>tbody>tr>td, .table>thead>tr>th{
+    font-size: 16px;
+    line-height: 2.5;
+}
+
+.table>thead>tr>th{
+    font-weight: normal;
+    font-size: 14px;
+    text-transform: uppercase;
+    
+}
+
+
+/* Form */
+
+.form-edit{
+    margin-top: 1em;
+}
+
+.form-horizontal .control-label{
+    text-align:left;
+}
+
+.control-label{
+    font-weight: 400;
+}
+
+.form-control{
+    border-radius: 0;
+}
+
+.img-caption{
+    text-align: center;
+}
+
+
+/* Modal */
+
+.modal-delete .modal-body p{
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.modal-delete .modal-footer{
+    background-color: #F9F9FB;
+    padding: 8px;
+}
+
+.modal-body p {
+    margin-bottom: 0;
+    font-size: 16px;
+}
+
+.modal-succes .modal-content{
 }

@@ -27,7 +27,11 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
     }
 
     function edit(id, restaurant){
-        return $http.put('/restaurants/' + id, restaurant).success(function(data){
+        return $http.put('/restaurants/' + id, restaurant, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).success(function(data){
             o.restaurants.push(data);
         })
     }
@@ -47,8 +51,12 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
     }
 
     function deleteRestaurant(id, restaurant) {
-        return $http.delete('/restaurants/' + id, restaurant).success(function(data){
-            o.restaurants.push(data);
+        return $http.delete('/restaurants/' + id, restaurant, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).success(function(data){
+            o.restaurants.splice(o.restaurants.indexOf(restaurant), 1)
         })
     }
 

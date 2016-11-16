@@ -9,6 +9,7 @@ var RestaurantSchema = new mongoose.Schema({
     },
     openingHours: String,
     menus: [{type: mongoose.Schema.Types.ObjectId, ref: 'Menu'}],
+    urlImage: String,
     feedbacks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feedback'}]
 });
 
