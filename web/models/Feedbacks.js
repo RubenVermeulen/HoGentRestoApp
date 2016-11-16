@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 var FeedbackSchema = new mongoose.Schema({
     comfortScore: Number,
-    eetScore: Number,
-    drukteScore: Number,
+    foodScore: Number,
+    trafficScore: Number,
     description: String
 });
 

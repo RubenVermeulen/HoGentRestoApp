@@ -53,18 +53,6 @@ router.param('feedback', function(req, res, next, id) {
     });
 });
 
-router.get('/', function(req, res, next) {
-
-    Restaurant.find(function(err, restaurants) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(restaurants)
-    });
-
-});
-
 router.get('/:restaurant/feedbacks', function(req, res, next) {
 
     req.restaurant.populate('feedbacks', function(err, post) {
