@@ -1,5 +1,6 @@
 angular.module('hogentResto').controller('RestaurantsController',
     function(restaurants, restaurant, auth) {
+        console.log('test');
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
