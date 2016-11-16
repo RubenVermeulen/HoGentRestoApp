@@ -57,6 +57,10 @@ angular.module('hogentResto').controller('RestaurantsController',
 
         }
 
+        function deleteMenu(){
+            
+        }
+
 
         // function incrementUpvotes(comment) {
         //     posts.upvoteComment(post, comment);

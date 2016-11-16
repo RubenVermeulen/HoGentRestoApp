@@ -7,7 +7,6 @@ angular.module('hogentResto').controller('MainController',
 
         vm.restaurants = restaurants.restaurants;
         vm.addRestaurant = addRestaurant;
-        vm.successresto = false;
         // vm.newRestaurant = newRestaurant;
 
         function addRestaurant() {
@@ -26,11 +25,9 @@ angular.module('hogentResto').controller('MainController',
                 urlImage: vm.restaurant.urlImage
             });
 
-            vm.successresto = true;
+            vm.successresto = "success!";
             
             $state.go('home');
-
-            return;
 
         }
 
