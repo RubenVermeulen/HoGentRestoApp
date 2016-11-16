@@ -6,3 +6,14 @@ var AllergeenSchema = new mongoose.Schema({
 });
 
 mongoose.model('Allergeen', AllergeenSchema);
+
+/*AllergeenSchema.pre('remove', function (next) {
+    var allergeen = this;
+    allergeen.model('Menus').update(
+        { allergenen: {$in: allergeen.menus}},
+        { $pull: { allergeen: allergeen._id } },
+        { multi: true },
+        next
+     );
+});
+*/

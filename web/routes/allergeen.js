@@ -127,13 +127,31 @@ router.get('/:restaurant/menus/:menu/allergenen/:allergeen', function(req, res, 
 
 });
 
+router.put('/:restaurant/menus/:menu/allergenen/:allergeen', function(req, res, next) {
+
+  var allergeen = req.allergeen;
+  var body = req.body;
+
+  allergeen.naam = body.hasOwnProperty('naam') ? body.naam : allergeen.naam;
+
+
+  allergeen.save(function(err, allergeen) {
+    if (err) {
+      return next(err);
+    }
+
+    res.json(allergeen);
+  });
+
+});
+
 router.delete('/:restaurant/menus/:menu/allergenen/:allergeen', function(req, res, next) {
 
-  var i = req.menu.allergenen.indexOf(req.allergeen);
+/*  var i = req.menu.allergenen.indexOf(req.allergeen);
   if(i != -1) {
   	req.menu.allergenen.splice(i, 1);
   }
-
+*/
 
   req.allergeen.remove(function(err, allergeen) {
     if (err) {
