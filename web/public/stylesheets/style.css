@@ -126,3 +126,18 @@ h1{
     text-transform: uppercase;
     
 }
+
+
+/* Form */
+
+.form-horizontal .control-label{
+    text-align:left;
+}
+
+.control-label{
+    font-weight: 400;
+}
+
+.form-control{
+    border-radius: 0;
+}

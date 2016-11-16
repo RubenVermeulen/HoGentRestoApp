@@ -11,7 +11,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../stylesheets/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -89,26 +89,79 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><a href="#/restaurants/{{restaurant._id}}">Schoonmeersen P</td>
-                    <td>Valentin Vaerwyckweg 1 9000 Gent</td>
-                    <td>8u00 tot 15u45</td>
-                    <td><a href="#/menus/{{restaurant._id}}">Menu's</td>
-                </tr>
-                <tr>
-                    <td><a href="#/restaurants/{{restaurant._id}}">Schoonmeersen P</td>
-                    <td>Valentin Vaerwyckweg 1 9000 Gent</td>
-                    <td>8u00 tot 15u45</td>
-                    <td><a href="#/menus/{{restaurant._id}}">Menu's</td>
-                </tr>
-                <tr>
-                    <td><a href="#/restaurants/{{restaurant._id}}">Schoonmeersen P</td>
-                    <td>Valentin Vaerwyckweg 1 9000 Gent</td>
-                    <td>8u00 tot 15u45</td>
-                    <td><a href="#/menus/{{restaurant._id}}">Menu's</td>
-                </tr>
-            </tbody>
-		</table>
-</div>
+                        <td><a href="#">Schoonmeersen P</td>
+                        <td>Valentin Vaerwyckweg 1 9000 Gent</td>
+                        <td>8u00 tot 15u45</td>
+                        <td><a href="#">Menu's</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">Schoonmeersen P</td>
+                        <td>Valentin Vaerwyckweg 1 9000 Gent</td>
+                        <td>8u00 tot 15u45</td>
+                        <td><a href="#">Menu's</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">Schoonmeersen P</td>
+                        <td>Valentin Vaerwyckweg 1 9000 Gent</td>
+                        <td>8u00 tot 15u45</td>
+                        <td><a href="#">Menu's</td>
+                    </tr>
+                </tbody>
+		    </table>
+        </div>
+
+        <h1>Resto D <small class="small">Details</small> </h1>
+        <div class="row">
+            <div class="col-sm-8">
+            <form ng-submit="vm.editRestaurant()"  class="form-horizontal">
+                <div class="form-group">
+                    <label for="naam" class="col-sm-2 control-label">Naam</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="naam" ng-model="vm.restaurant.name" placeholder="Naam">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-sm-2 control-label">Adres</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="address" ng-model="vm.restaurant.address" placeholder="Adres">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="hours" class="col-sm-2 control-label">Openingsuren</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="hours" ng-model="vm.restaurant.openingHours" placeholder="Openingsuren">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lat" class="col-sm-2 control-label">Lat</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="lat" ng-model="vm.restaurant.coordinates.lat" placeholder="Lat">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="long" class="col-sm-2 control-label">Lng</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="long" ng-model="vm.restaurant.coordinates.long" placeholder="Long">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="img" class="col-sm-2 control-label">Afbeelding</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="img" ng-model="vm.restaurant.urlImage" placeholder="Afbeeldingsurl">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Sla op</button>
+                        <button type="submit" ng-click="vm.delete=true" class="btn btn-default">Verwijder restaurant</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div class="col-sm-4">
+            <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/6/000/1d1/10b/0e3c51d.jpg"/>
+            </div>
+            </div>
 
     </div>
 
