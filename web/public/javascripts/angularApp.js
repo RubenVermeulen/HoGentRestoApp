@@ -10,6 +10,11 @@ angular.module('hogentResto').config(
                     return restaurants.getAll();
                 }]
             }
+        }).state('restaurantsNew', {
+            url: '/restaurants/create',
+            templateUrl: '/createRestaurant.html',
+            controller: 'MainController',
+            controllerAs: 'vm'
         }).state('restaurants', {
             url: '/restaurants/{id}',
             templateUrl: '/restaurants.html',
@@ -20,11 +25,6 @@ angular.module('hogentResto').config(
                     return restaurants.get($stateParams.id);
                 }]
             }
-        }).state('restaurants.new', {
-            url: '/restaurants/new',
-            templateUrl: '/newrestaurant.html',
-            controller: 'MainController',
-            controllerAs: 'vm'
         }).state('menus', {
             url: '/menus/{id}',
             templateUrl: '/menus.html',
