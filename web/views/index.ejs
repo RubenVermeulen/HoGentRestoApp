@@ -24,6 +24,7 @@
 
     <script src="javascripts/angular.module.js"></script>
     <script src="javascripts/angularApp.js"></script>
+    <script src="javascripts/alert.service.js"></script>
     <script src="javascripts/restaurants.factory.js"></script>
     <script src="javascripts/auth.factory.js"></script>
     <script src="javascripts/main.controller.js"></script>
@@ -75,9 +76,9 @@
             <li class="active">Resto's</li>
         </ol>
 
-        <div ng-show="vm.successresto" class="alert alert-success alert-dismissible" role="alert">
+        <div ng-show="vm.successmessage" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            Resto succesvol toegevoegd!
+            {{vm.successmessage}}
         </div>
 
         <div class="titleflex">
@@ -124,6 +125,11 @@
                     <li><a href="/#/home">Resto's</a></li>
                     <li class="active">{{vm.restaurant.name}}</li>
                 </ol>
+
+                <div ng-show="vm.successmessage" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{vm.successmessage}}
+                </div>
 
                 <div class="titleflex">
                     <div class="titleflexattr">

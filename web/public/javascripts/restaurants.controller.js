@@ -1,5 +1,5 @@
 angular.module('hogentResto').controller('RestaurantsController',
-    function($state, restaurants, restaurant, auth) {
+    function($state, restaurants, restaurant, auth, alertService) {
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
@@ -7,6 +7,12 @@ angular.module('hogentResto').controller('RestaurantsController',
         
         vm.editRestaurant = editRestaurant;
         vm.addMenu = addMenu;
+
+        var message = alertService.getMessage();
+        if(message != ''){
+            vm.successmessage = alertService.getMessage();
+            alertService.resetMessage();
+        }
 
         function editRestaurant() {
             if (!vm.restaurant.name || vm.restaurant.name === '') {
@@ -17,6 +23,7 @@ angular.module('hogentResto').controller('RestaurantsController',
                 restaurants.deleteRestaurant(restaurant._id);
                 angular.element("#myModal").modal('hide');
                 angular.element(".modal-backdrop.fade.in").remove();
+                alertService.setMessage('Resto ' + vm.restaurant.name + ' is succesvol verwijderd.');
                 $state.go('home');
                 return;
             }
@@ -31,6 +38,9 @@ angular.module('hogentResto').controller('RestaurantsController',
                 },
                 urlImage: vm.restaurant.urlImage
             });
+
+            alertService.setMessage('Resto ' + vm.restaurant.name + ' is aangepast.');
+            $state.go($state.current, {}, {reload: true});
 
             
         }
@@ -58,7 +68,7 @@ angular.module('hogentResto').controller('RestaurantsController',
         }
 
         function deleteMenu(){
-            
+
         }
 
 
