@@ -82,8 +82,9 @@ router.put('/:restaurant', function(req, res, next) {
 
     restaurant.name = body.hasOwnProperty('name') ? body.name : restaurant.name;
     restaurant.address = body.hasOwnProperty('address') ? body.address : restaurant.address;
-    restaurant.coordinates.lat = body.hasOwnProperty('lat') ? body.lat : restaurant.coordinates.lat;
-    restaurant.coordinates.long = body.hasOwnProperty('long') ? body.long : restaurant.coordinates.long;
+    restaurant.coordinates = body.hasOwnProperty('coordinates') ? body.coordinates : restaurant.coordinates;
+    // restaurant.coordinates.lat = body.hasOwnProperty('lat') ? body.lat : restaurant.coordinates.lat;
+    // restaurant.coordinates.long = body.hasOwnProperty('long') ? body.long : restaurant.coordinates.long;
     restaurant.openingHours = body.hasOwnProperty('openingHours') ? body.openingHours : restaurant.openingHours;
     restaurant.urlImage = body.hasOwnProperty('urlImage') ? body.urlImage : restaurant.urlImage;
 

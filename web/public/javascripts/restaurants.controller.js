@@ -1,6 +1,5 @@
 angular.module('hogentResto').controller('RestaurantsController',
     function($state, restaurants, restaurant, auth) {
-        console.log('test');
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
@@ -26,10 +25,14 @@ angular.module('hogentResto').controller('RestaurantsController',
                 name: vm.restaurant.name,
                 address: vm.restaurant.address,
                 openingHours: vm.restaurant.openingHours,
-                lat: vm.restaurant.coordinates.lat,
-                long: vm.restaurant.coordinates.long,
+                coordinates: {
+                    lat: vm.restaurant.coordinates.lat,
+                    long: vm.restaurant.coordinates.long
+                },
                 urlImage: vm.restaurant.urlImage
             });
+
+            
         }
 
         function addMenu() {
