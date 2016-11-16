@@ -12,6 +12,7 @@ require('./models/Users');
 require('./models/Restaurants');
 require('./models/Menus');
 require('./models/Feedbacks');
+require('./models/Allergenen');
 require('./config/passport');
 
 mongoose.connect('mongodb://localhost/hogent');
@@ -19,6 +20,7 @@ mongoose.connect('mongodb://localhost/hogent');
 var routes = require('./routes/index');
 var restaurant = require('./routes/restaurant');
 var feedback = require('./routes/feedback');
+var allergeen = require('./routes/allergeen');
 var app = express();
 
 // view engine setup
@@ -38,6 +40,7 @@ app.use(passport.initialize());
 app.use('/', routes);
 app.use('/restaurants', restaurant);
 app.use('/restaurants', feedback);
+app.use('/restaurants', allergeen);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
