@@ -87,6 +87,7 @@ router.post('/:restaurant/feedbacks', function(req, res, next) {
 
     req.restaurant.feedbacks.push(feedback);
 
+    req.restaurant.save();
     feedback.save(function(err, feedback) {
         if (err) {
             return next(err);
@@ -97,7 +98,7 @@ router.post('/:restaurant/feedbacks', function(req, res, next) {
 
 });
 
-router.delete('/:feedback', function(req, res, next) {
+router.delete('/:restaurant/feedbacks/:feedback', function(req, res, next) {
 
     req.feedback.remove(function(err, feedback) {
         if (err) {
