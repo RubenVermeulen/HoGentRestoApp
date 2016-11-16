@@ -102,9 +102,29 @@ body{
 .btn-primary{
     text-transform: uppercase;
     background-color: #2196F3;
-    border: none;
-    border-radius: 0;
+    border-color: transparent;
+    border-radius: 2px;
     padding-top: 0.6em;
+}
+
+.btn-default{
+    text-transform: uppercase;
+    background-color: none;
+    border: #E0E0E0 1px solid;
+    border-radius: 2px;
+    padding-top: 0.6em;
+}
+
+.btn-danger{
+    text-transform: uppercase;
+    border-color: transparent;
+    border-radius: 2px;
+    padding-top: 0.6em;
+}
+
+
+.btn-latest{
+    margin-left: 1em;
 }
 
 h1{
@@ -130,6 +150,10 @@ h1{
 
 /* Form */
 
+.form-edit{
+    margin-top: 1em;
+}
+
 .form-horizontal .control-label{
     text-align:left;
 }
@@ -140,4 +164,29 @@ h1{
 
 .form-control{
     border-radius: 0;
+}
+
+.img-caption{
+    text-align: center;
+}
+
+
+/* Modal */
+
+.modal-delete .modal-body p{
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.modal-delete .modal-footer{
+    background-color: #F9F9FB;
+    padding: 8px;
+}
+
+.modal-body p {
+    margin-bottom: 0;
+    font-size: 16px;
+}
+
+.modal-succes .modal-content{
 }

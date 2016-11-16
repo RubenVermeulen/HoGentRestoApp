@@ -2,38 +2,41 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>HoGent Resto</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-		crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HoGent Resto</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500" rel="stylesheet">
     <link rel="stylesheet" href="stylesheets/style.css">
-    
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 
-	<script src="javascripts/angular.module.js"></script>
-	<script src="javascripts/angularApp.js"></script>
-	<script src="javascripts/restaurants.factory.js"></script>
-	<script src="javascripts/auth.factory.js"></script>
-	<script src="javascripts/main.controller.js"></script>
-	<script src="javascripts/restaurants.controller.js"></script>
-	<script src="javascripts/auth.controller.js"></script>
-	<script src="javascripts/nav.controller.js"></script>
 
-	<style>
-		.glyphicon-thumbs-up {
-			cursor: pointer;
-		}
-	</style>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+
+    <script src="javascripts/angular.module.js"></script>
+    <script src="javascripts/angularApp.js"></script>
+    <script src="javascripts/restaurants.factory.js"></script>
+    <script src="javascripts/auth.factory.js"></script>
+    <script src="javascripts/main.controller.js"></script>
+    <script src="javascripts/restaurants.controller.js"></script>
+    <script src="javascripts/auth.controller.js"></script>
+    <script src="javascripts/nav.controller.js"></script>
+    <script src="javascripts/bootstraphelper.js"></script>
+
+    <style>
+        .glyphicon-thumbs-up {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body ng-app="hogentResto">
@@ -47,7 +50,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">HoGent Resto <small>Administratiepaneel</small></a>
+                <a class="navbar-brand" href="#/home">HoGent Resto <small>Administratiepaneel</small></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -61,18 +64,22 @@
         </div>
     </nav>
 
-	<div class="container main">
-			<!-- Inline templates will be injected here  -->
-			<ui-view></ui-view>
-	</div>
+    <div class="container main">
+        <!-- Inline templates will be injected here  -->
+        <ui-view></ui-view>
+    </div>
 
-	<!-- Inline templates  -->
-	<script type="text/ng-template" id="/home.html">
+    <!-- Inline templates  -->
+    <script type="text/ng-template" id="/home.html">
 <div ng-show="vm.isLoggedIn()">
         <ol class="breadcrumb">
-            <li><a href="#">HoGent Resto</a></li>
             <li class="active">Resto's</li>
         </ol>
+
+        <div ng-show="vm.successresto" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Resto succesvol toegevoegd!
+        </div>
 
         <div class="titleflex">
             <div class="titleflexattr">
@@ -80,7 +87,7 @@
             </div>
             <div class="titleflexattr">
                 <!--<p class="titleadd"><a href="{{vm.newRestaurant()}}" class="btn btn-primary" ng-click="vm.add=true">Voeg resto toe xd</a></p>-->
-                <p class="titleadd"><a href="/#/restaurants/create" class="btn btn-primary">Voeg resto toe xd</a></p>
+                <p class="titleadd"><a href="/#/restaurants/create" class="btn btn-primary">Voeg resto toe</a></p>
             </div>
         </div>
 
@@ -141,7 +148,7 @@
                 <div class="form-group">
                     <label for="img" class="col-sm-2 control-label">Afbeelding</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="img" ng-model="vm.restaurant.urlImage" placeholder="Afbeeldingsurl">
+                        <input type="text" class="form-control" id="img" ng-model="vm.urlImage" placeholder="Afbeeldingsurl">
                     </div>
                 </div>
                 <div class="form-group">
@@ -154,64 +161,106 @@
             </div>
     </script>
 
-	<script type="text/ng-template" id="/restaurants.html">
-        <div class="page-header">
-            <ol class="breadcrumb">
-            <li><a href="/#/home">Resto's</a></li>
-            <li class="active">{{vm.restaurant.name}}</li>
-        </ol>
-            <h3>
-                {{vm.restaurant.name}} <small class="">Details</small>
-            </h3>
-            <form ng-submit="vm.editRestaurant()"  class="form-horizontal">
-                <div class="form-group">
-                    <label for="naam" class="col-sm-2 control-label">Naam</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="naam" ng-model="vm.restaurant.name" placeholder="Naam">
+    <script type="text/ng-template" id="/restaurants.html">
+
+        <form ng-submit="vm.editRestaurant()">
+            
+            <div ng-show="vm.isLoggedIn()">
+                
+                <ol class="breadcrumb">
+                    <li><a href="/#/home">Resto's</a></li>
+                    <li class="active">{{vm.restaurant.name}}</li>
+                </ol>
+
+                <div class="titleflex">
+                    <div class="titleflexattr">
+                        <h1>{{vm.restaurant.name}} <small class="">Details</small> </h1>
+                    </div>
+                    <div class="titleflexattr">
+                        <p class="titleadd"><a href="/#/Home" class="btn btn-default">Terug</a><button type="submit" class="btn btn-primary btn-latest">Sla wijzigingen op</butto></p>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="address" class="col-sm-2 control-label">Adres</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="address" ng-model="vm.restaurant.address" placeholder="Adres">
+
+                <div class="row form-edit">
+                    <div class="col-sm-8">
+                    <div class="form-horizontal">  
+                        <div class="form-group">
+                            <label for="naam" class="col-sm-2 control-label">Naam</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="naam" ng-model="vm.restaurant.name" placeholder="Naam">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="col-sm-2 control-label">Adres</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="address" ng-model="vm.restaurant.address" placeholder="Adres">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="hours" class="col-sm-2 control-label">Openingsuren</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="hours" ng-model="vm.restaurant.openingHours" placeholder="Openingsuren">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lat" class="col-sm-2 control-label">Lat</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="lat" ng-model="vm.restaurant.coordinates.lat" placeholder="Lat">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="long" class="col-sm-2 control-label">Lng</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="long" ng-model="vm.restaurant.coordinates.long" placeholder="Long">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="img" class="col-sm-2 control-label">Afbeelding</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="img" ng-model="vm.restaurant.urlImage" placeholder="Afbeeldingsurl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger">Verwijder restaurant</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <img class="center-block img-responsive" src="{{vm.restaurant.urlImage}}"/>
+                        <p class="img-caption">
+
+                        <%# if(!vm.restaurant.urlImage || vm.restaurant.urlImage === ''){ %>
+                            <!--Ongeldig afbeeldings url opgegeven!-->
+                        <%# } else{ %>  
+                            {{vm.restaurant.urlImage}}
+                        <%# } %>
+                        </p>
+                    
+                </div>
+                </div>
+            
+            </div>
+            <!-- Modal -->
+            <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>Bent u zeker dat u het restaurant {{vm.restaurant.name}} wil verwijderen?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
+                        <button type="submit" ng-click="vm.delete=true" class="btn btn-danger">Verwijder restaurant</button>
+                    </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="hours" class="col-sm-2 control-label">Openingsuren</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="hours" ng-model="vm.restaurant.openingHours" placeholder="Openingsuren">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="lat" class="col-sm-2 control-label">Lat</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="lat" ng-model="vm.restaurant.coordinates.lat" placeholder="Lat">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="long" class="col-sm-2 control-label">Lng</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="long" ng-model="vm.restaurant.coordinates.long" placeholder="Long">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="img" class="col-sm-2 control-label">Afbeelding</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="img" ng-model="vm.restaurant.urlImage" placeholder="Afbeeldingsurl">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Sla op</button>
-                        <button type="submit" ng-click="vm.delete=true" class="btn btn-default">Verwijder restaurant</button>
-                    </div>
-                </div>
-                 <img src="{{vm.restaurant.urlImage}}"/>
-            </form>
-        </div>
+            </div>
+        </form>
     </script>
 
-	<script type="text/ng-template" id="/menus.html">
+    <script type="text/ng-template" id="/menus.html">
         <div class="page-header">
             <h3>
                 {{vm.restaurant.name}} <small class="">Menu's</small>
@@ -278,11 +327,82 @@
     </script>
 
     <script type="text/ng-template" id="/createRestaurant.html">
-        <br><br><br><br><br><br><br><br><br>
-        <p> just 1 big meme </p>
+        <form ng-submit="vm.addRestaurant()">
+            
+            <div ng-show="vm.isLoggedIn()">
+                
+                <ol class="breadcrumb">
+                    <li><a href="/#/home">Resto's</a></li>
+                    <li class="active">Nieuwe Resto</li>
+                </ol>
+
+                <div class="titleflex">
+                    <div class="titleflexattr">
+                        <h1>{{vm.restaurant.name}} <small class="">Details</small> </h1>
+                    </div>
+                    <div class="titleflexattr">
+                        <p class="titleadd"><a href="/#/Home" class="btn btn-default">Terug</a><button type="submit" class="btn btn-primary btn-latest">Voeg resto toe</button></p>
+                    </div>
+                </div>
+
+                <div class="row form-edit">
+                    <div class="col-sm-8">
+                    <div class="form-horizontal">  
+                        <div class="form-group">
+                            <label for="naam" class="col-sm-2 control-label">Naam</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="naam" ng-model="vm.name" placeholder="Naam">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="col-sm-2 control-label">Adres</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="address" ng-model="vm.address" placeholder="Adres">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="hours" class="col-sm-2 control-label">Openingsuren</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="hours" ng-model="vm.openingHours" placeholder="Openingsuren">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lat" class="col-sm-2 control-label">Lat</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="lat" ng-model="vm.coordinates.lat" placeholder="Lat">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="long" class="col-sm-2 control-label">Lng</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="long" ng-model="vm.coordinates.long" placeholder="Long">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="img" class="col-sm-2 control-label">Afbeelding</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="img" ng-model="vm.restaurant.urlImage" placeholder="Afbeeldingsurl">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <img class="center-block img-responsive" src="{{vm.restaurant.urlImage}}"/>
+                        <p class="img-caption">
+
+                        <%# if(!vm.restaurant.urlImage || vm.restaurant.urlImage === ''){ %>
+                            <!--Ongeldig afbeeldings url opgegeven!-->
+                        <%# } else{ %>  
+                            {{vm.restaurant.urlImage}}
+                        <%# } %>
+                        </p>
+                    
+                    </div>
+                </div>
+            </form>
     </script>
 
-	<script type="text/ng-template" id="/register.html">
+    <script type="text/ng-template" id="/register.html">
         <div class="page-header">
             <h1>Hogent Resto</h1>
         </div>
@@ -311,7 +431,7 @@
         </form>
     </script>
 
-	<script type="text/ng-template" id="/login.html">
+    <script type="text/ng-template" id="/login.html">
         <div class="page-header">
             <h1>HoGent Resto</h1>
         </div>

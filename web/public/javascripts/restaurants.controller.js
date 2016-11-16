@@ -1,5 +1,5 @@
 angular.module('hogentResto').controller('RestaurantsController',
-    function(restaurants, restaurant, auth) {
+    function($state, restaurants, restaurant, auth) {
         console.log('test');
         var vm = this;
 
@@ -16,6 +16,9 @@ angular.module('hogentResto').controller('RestaurantsController',
 
             if(vm.delete){
                 restaurants.deleteRestaurant(restaurant._id);
+                angular.element("#myModal").modal('hide');
+                angular.element(".modal-backdrop.fade.in").remove();
+                $state.go('home');
                 return;
             }
             

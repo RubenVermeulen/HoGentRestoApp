@@ -109,11 +109,20 @@
                 </tbody>
 		    </table>
         </div>
+    <form ng-submit="vm.editRestaurant()">
 
-        <h1>Resto D <small class="small">Details</small> </h1>
-        <div class="row">
+        <div class="titleflex">
+            <div class="titleflexattr">
+                <h1>Resto D <small class="small">Details</small> </h1>
+            </div>
+            <div class="titleflexattr">
+                <p class="titleadd"><a class="btn btn-default">Annuleer</a><a class="btn btn-primary btn-latest">Sla wijzigingen op</a></p>
+            </div>
+        </div>
+
+        <div class="row form-edit">
             <div class="col-sm-8">
-            <form ng-submit="vm.editRestaurant()"  class="form-horizontal">
+            <div class="form-horizontal">
                 <div class="form-group">
                     <label for="naam" class="col-sm-2 control-label">Naam</label>
                     <div class="col-sm-10">
@@ -156,13 +165,14 @@
                         <button type="submit" ng-click="vm.delete=true" class="btn btn-default">Verwijder restaurant</button>
                     </div>
                 </div>
-            </form>
+            </div>
             </div>
             <div class="col-sm-4">
-            <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/6/000/1d1/10b/0e3c51d.jpg"/>
+                    <img class="center-block" src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/6/000/1d1/10b/0e3c51d.jpg"/>
+                    <p class="img-caption">{{vm.restaurant.urlImage}}</p>
             </div>
             </div>
-
+    </form>
     </div>
 
 
