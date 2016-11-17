@@ -136,7 +136,11 @@
                         <h1>{{vm.restaurant.name}} <small class="">Details</small> </h1>
                     </div>
                     <div class="titleflexattr">
-                        <p class="titleadd"><a href="/#/Home" class="btn btn-default">Terug</a><button type="submit" class="btn btn-primary btn-latest">Sla wijzigingen op</button></p>
+                        <p class="titleadd">
+                            <a href="/#/Home" class="btn btn-default">Terug</a>
+                            <a href="/#/menus/{{vm.restaurant._id}}" class="btn btn-default">Menu's</a>
+                            <button type="submit" class="btn btn-primary btn-latest">Sla wijzigingen op</button>
+                        </p>
                     </div>
                 </div>
 
@@ -189,11 +193,10 @@
                     <div class="col-sm-4">
                         <img class="center-block img-responsive" src="{{vm.restaurant.urlImage}}"/>
                         <p class="img-caption">
-
                         <%# if(!vm.restaurant.urlImage || vm.restaurant.urlImage === ''){ %>
                             <!--Ongeldig afbeeldings url opgegeven!-->
                         <%# } else{ %>  
-                            {{vm.restaurant.urlImage}}
+                            <!--{{vm.restaurant.urlImage}}-->
                         <%# } %>
                         </p>
                     
@@ -207,11 +210,11 @@
                     <div class="modal-content">
                     <div class="modal-body">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <p>Bent u zeker dat u het restaurant {{vm.restaurant.name}} wil verwijderen?</p>
+                        <p>Bent u zeker dat u de resto {{vm.restaurant.name}} wil verwijderen?</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
-                        <button type="submit" ng-click="vm.delete=true" class="btn btn-danger">Verwijder restaurant</button>
+                        <button type="submit" ng-click="vm.delete=true" class="btn btn-danger">Verwijder resto</button>
                     </div>
                     </div>
                 </div>
@@ -220,10 +223,20 @@
     </script>
 
     <script type="text/ng-template" id="/menus.html">
-        <div class="page-header">
-            <h3>
-                {{vm.restaurant.name}} <small class="">Menu's</small>
-            </h3>
+        <ol class="breadcrumb">
+            <li><a href="/#/home">Resto's</a></li>
+            <li><a href="#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
+            <li class="active">Menu's</li>
+        </ol>
+        
+        <div class="titleflex">
+            <div class="titleflexattr">
+                <h1>{{vm.restaurant.menus.length}} Menu's</h1>
+            </div>
+            <div class="titleflexattr">
+                <p class="titleadd"><a href="/#/restaurants/{{vm.restaurant._id}}/menus/create" class="btn btn-primary">Voeg menu toe</a></p>
+            </div>
+        </div>
 
             <table class="table">
                 <thead>
@@ -240,51 +253,32 @@
                     <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-title'">
                         <td>{{menu.title}}</td>
                         <td>{{menu.description}}</td>
-                        <td>{{menu.price}}</td>
+                        <td>{{menu.price | currency: '€'}}</td>
                         <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
                         <td><a href="#/menus/{{restaurant._id}}">Bewerk</td>
-                        <td><a href="#/menus/{{restaurant._id}}">Verwijder</td>
+                        <td><a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}">Verwijder</a></td>
                     </tr>
                 </tbody>
             </table>
 
-            <div style="margin-top: 4em;">
-                <h3>Voeg nieuw menu toe</h3>
-
-                <form ng-submit="vm.addMenu()"  class="form-horizontal">
-                    <div class="form-group">
-                        <label for="naam" class="col-sm-2 control-label">Naam</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="naam" ng-model="vm.title" placeholder="Naam">
-                        </div>
+            <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>Bent u zeker dat u het menu {{vm.menuobj.title}} wil verwijderen?</p>
                     </div>
-                    <div class="form-group">
-                        <label for="description" class="col-sm-2 control-label">Beschrijving</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="description" ng-model="vm.description" placeholder="Beschrijving">
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
+                        <button type="submit" ng-click="vm.deleteMenu()" class="btn btn-danger">Verwijder menu</button>
                     </div>
-                    <div class="form-group">
-                        <label for="price" class="col-sm-2 control-label">Prijs</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="price" ng-model="vm.price" placeholder="Prijs">
-                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="date" class="col-sm-2 control-label">Datum</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control" id="date" ng-model="vm.availableAt" placeholder="Datum">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Voeg toe</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
+            
     </script>
 
+    
     <script type="text/ng-template" id="/createRestaurant.html">
         <form ng-submit="vm.addRestaurant()">
             
@@ -297,10 +291,13 @@
 
                 <div class="titleflex">
                     <div class="titleflexattr">
-                        <h1>{{vm.restaurant.name}} <small class="">Details</small> </h1>
+                        <h1>{{vm.name}} <small class="">Details</small> </h1>
                     </div>
                     <div class="titleflexattr">
-                        <p class="titleadd"><a href="/#/Home" class="btn btn-default">Terug</a><button type="submit" class="btn btn-primary btn-latest">Voeg resto toe</button></p>
+                        <p class="titleadd">
+                            <a href="/#/Home" class="btn btn-default">Terug</a>
+                            <button type="submit" class="btn btn-primary btn-latest">Voeg resto toe</button>
+                        </p>
                     </div>
                 </div>
 
@@ -360,6 +357,64 @@
                 </div>
             </form>
     </script>
+
+
+    <script type="text/ng-template" id="/createMenu.html">
+
+        <form ng-submit="vm.addMenu()">
+            
+            <div ng-show="vm.isLoggedIn()">
+                
+                <ol class="breadcrumb">
+                    <li><a href="/#/home">Resto's</a></li>
+                    <li><a href="/#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
+                    <li><a href="/#/menus/{{vm.restaurant._id}}">Menu's</a></li>
+                    <li class="active">Nieuwe menu</li>
+                </ol>
+
+                <div class="titleflex">
+                    <div class="titleflexattr">
+                        <h1>{{vm.title}} <small class="">Menu</small> </h1>
+                    </div>
+                    <div class="titleflexattr">
+                        <p class="titleadd"><a href="/#/menus/{{vm.restaurant._id}}" class="btn btn-default">Terug</a><button type="submit" class="btn btn-primary btn-latest">Voeg resto toe</button></p>
+                    </div>
+                </div>
+
+                <div class="row form-edit">
+                    <div class="col-sm-8">
+                    <div class="form-horizontal">  
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">Gerecht</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="title" ng-model="vm.title" placeholder="Gerecht">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">Beschrijving</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="description" ng-model="vm.description" placeholder="Beschrijving">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="col-sm-2 control-label">Prijs</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="price" ng-model="vm.price" placeholder="Prijs">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="col-sm-2 control-label">Datum</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="date" ng-model="vm.availableAt">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+            </form>
+    </script>
+
 
     <script type="text/ng-template" id="/register.html">
 

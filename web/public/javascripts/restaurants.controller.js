@@ -7,6 +7,7 @@ angular.module('hogentResto').controller('RestaurantsController',
         
         vm.editRestaurant = editRestaurant;
         vm.addMenu = addMenu;
+        vm.deleteMenu = deleteMenu;
 
         var message = alertService.getMessage();
         if(message != ''){
@@ -51,24 +52,26 @@ angular.module('hogentResto').controller('RestaurantsController',
                 return;
             }
 
-            restaurants.addMenu(restaurant._id, {
+            restaurants.createMenu(restaurant._id, {
                 title: vm.title,
                 description: vm.description,
                 price: vm.price,
                 availableAt: vm.availableAt
-            }).success(function(menu) {
+            }).then(function(menu) {
                 vm.restaurant.menus.push(menu);
+                alertService.setMessage('Resto ' + vm.name + ' is toegevoegd.');
+                $state.go('menus', {id: restaurant._id});
             });
 
-            vm.title = '';
-            vm.description = '';
-            vm.price = '';
-            vm.availableAt = '';
 
         }
 
         function deleteMenu(){
-
+            restaurants.deleteMenu(vm.restaurant._id, vm.menuobj.id);
+            angular.element("#myModal").modal('hide');
+            angular.element(".modal-backdrop.fade.in").remove();
+            $state.go($state.current, {}, {reload: true});
+            console.log(value);
         }
 
 
