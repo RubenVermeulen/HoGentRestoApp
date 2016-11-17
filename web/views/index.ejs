@@ -102,7 +102,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="restaurant in vm.restaurants | orderBy: '-name'">
+                    <tr ng-repeat="restaurant in vm.restaurants | orderBy: 'name'">
                         <td><a href="#/restaurants/{{restaurant._id}}">{{restaurant.name}}</td>
                         <td>{{restaurant.address}}</td>
                         <td>{{restaurant.openingHours}}</td>
@@ -250,7 +250,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-title'">
+                    <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-date'">
                         <td>{{menu.title}}</td>
                         <td>{{menu.description}}</td>
                         <td>{{menu.price | currency: '€'}}</td>
@@ -349,7 +349,7 @@
                         <%# if(!vm.restaurant.urlImage || vm.restaurant.urlImage === ''){ %>
                             <!--Ongeldig afbeeldings url opgegeven!-->
                         <%# } else{ %>  
-                            {{vm.restaurant.urlImage}}
+                            <!--{{vm.restaurant.urlImage}}-->
                         <%# } %>
                         </p>
                     
@@ -377,7 +377,7 @@
                         <h1>{{vm.title}} <small class="">Menu</small> </h1>
                     </div>
                     <div class="titleflexattr">
-                        <p class="titleadd"><a href="/#/menus/{{vm.restaurant._id}}" class="btn btn-default">Terug</a><button type="submit" class="btn btn-primary btn-latest">Voeg resto toe</button></p>
+                        <p class="titleadd"><a href="/#/menus/{{vm.restaurant._id}}" class="btn btn-default">Terug</a><button type="submit" class="btn btn-primary btn-latest">Voeg menu toe</button></p>
                     </div>
                 </div>
 
