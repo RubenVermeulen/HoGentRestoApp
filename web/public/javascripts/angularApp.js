@@ -35,6 +35,16 @@ angular.module('hogentResto').config(
                     return restaurants.get($stateParams.id);
                 }]
             }
+        }).state('menusNew', {
+            url: '/restaurants/{id}/menus/create',
+            templateUrl: '/createMenu.html',
+            controller: 'RestaurantsController',
+            controllerAs: 'vm',
+            resolve: {
+                restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
+                    return restaurants.get($stateParams.id);
+                }]
+            }
         }).state('login', {
             url: '/login',
             templateUrl: '/login.html',

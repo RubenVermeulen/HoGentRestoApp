@@ -2,12 +2,14 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
 
     var o = {
         restaurants: [],
+        menus: [],
         getAll: getAll,
         create: create,
         edit: edit,
         get: get,
-        addMenu: addMenu,
-        deleteRestaurant: deleteRestaurant
+        createMenu: createMenu,
+        deleteRestaurant: deleteRestaurant,
+        deleteMenu: deleteMenu
     };
 
     function getAll() {
@@ -42,11 +44,13 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         });
     }
 
-    function addMenu(id, menu) {
+    function createMenu(id, menu) {
         return $http.post('/restaurants/' + id + '/menus', menu, {
             headers: {
                 Authorization: 'Bearer ' + auth.getToken()
             }
+        }).success(function(data){
+            o.restaurants.push(data);
         });
     }
 
@@ -60,15 +64,16 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         })
     }
 
-    // o.upvoteComment = function(restaurant, comment) {
-    //     return $http.put('/restaurants/' + restaurant._id + '/comments/' + comment._id + '/upvote', null, {
-    //         headers: {
-    //             Authorization: 'Bearer ' + auth.getToken()
-    //         }
-    //     }).success(function(data) {
-    //         comment.upvotes += 1;
-    //     });
-    // };
+    function deleteMenu(id, menuid, menu){
+        return $http.delete('/restaurants/' + id + '/menus/' + menuid, menu, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).success(function(data){
+            // o.menus.splice(o.menus.indexOf(menu), 1)
+        })
+    }
+
     return o;
 
 });

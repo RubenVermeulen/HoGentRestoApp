@@ -1,5 +1,5 @@
 angular.module('hogentResto').controller('MainController',
-    function($state, restaurants, auth) {
+    function($state, restaurants, auth, alertService) {
         
         var vm = this;
 
@@ -7,7 +7,12 @@ angular.module('hogentResto').controller('MainController',
 
         vm.restaurants = restaurants.restaurants;
         vm.addRestaurant = addRestaurant;
-        // vm.newRestaurant = newRestaurant;
+        
+        var message = alertService.getMessage();
+        if(message != ''){
+            vm.successmessage = alertService.getMessage();
+            alertService.resetMessage();
+        }
 
         function addRestaurant() {
             if (!vm.name || vm.name === '') {
@@ -23,31 +28,12 @@ angular.module('hogentResto').controller('MainController',
                     long: vm.coordinates.long
                 },
                 urlImage: vm.restaurant.urlImage
+            }).then(function(){
+                alertService.setMessage('Resto ' + vm.name + ' is toegevoegd.');
+                $state.go('home');
             });
-
-            vm.successresto = "success!";
-            
-            $state.go('home');
 
         }
 
-        // function newRestaurant() {
-
-        //     if (!vm.add || vm.add === '') {
-        //         return;
-        //     }
-
-        //     restaurants.create({
-        //         name: "test xd",
-        //         address: " ",
-        //         openingHours: " ",
-        //         coordinates: {
-        //             lat: 2.5,
-        //             long: 3.4
-        //         },
-        //         urlImage: "vm.restaurant.urlImage"
-        //     });
-        //     vm.add=false;
-        // }
     }
 );
