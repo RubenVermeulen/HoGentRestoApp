@@ -1,70 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    card_view:cardUseCompatPadding="true"
+    >
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:text="Default resto"
-        android:textSize="18sp"
-        android:gravity="center_vertical"
-        />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TableLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2.5"
-        android:layout_gravity="center_vertical">
-
-        <TableRow android:paddingBottom="2dp">
-
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/kitchen"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/trafficKitchen"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:src="@drawable/circle"
-                android:layout_gravity="center_vertical"
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/resto_d"
                 />
-
-        </TableRow>
-
-        <TableRow>
-
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/eating_area"/>
 
             <ImageView
-                android:id="@+id/trafficEatingArea"
-                android:layout_width="0dp"
+                android:id="@+id/trafficIndicator"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:src="@drawable/circle"
-                android:layout_gravity="center_vertical"
+                android:src="@drawable/circle_doable"
+                android:layout_gravity="center"
                 />
 
-        </TableRow>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                >
+                <TableRow>
 
-    </TableLayout>
+                    <TextView
+                        android:id="@+id/trafficGrade"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center_horizontal"
+                        />
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.5"
-        android:src="@drawable/ic_info"
-        android:layout_gravity="center_vertical"
-        />
+                </TableRow>
+                <TableRow>
 
-</LinearLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/traffic"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center_horizontal"
+                        android:textSize="12sp"
+                        />
+
+                </TableRow>
+            </TableLayout>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/openingHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp"
+            />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

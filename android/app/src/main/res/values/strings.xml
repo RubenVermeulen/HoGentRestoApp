@@ -3,4 +3,13 @@
     <string name="title_homescreen">Restaurants</string>
     <string name="kitchen">Keuken</string>
     <string name="eating_area">Zaal</string>
+    <string name="traffic">Drukte</string>
+    <string name="default_resto">Default resto</string>
+    <string name="calm">Rustig</string>
+    <string name="doable">Doenbaar</string>
+    <string name="full">Vol</string>
+    <string name="menus">Menu\'s</string>
+    <string name="lipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc porttitor placerat ipsum eget lobortis. Maecenas dolor leo, posuere sed tortor quis, lobortis bibendum turpis. Fusce vestibulum nisl sem, ut molestie magna tincidunt non.</string>
+    <string name="not_connected">Je bent niet verbonden met het internet.</string>
+    <string name="refresh">Refresh</string>
 </resources>
