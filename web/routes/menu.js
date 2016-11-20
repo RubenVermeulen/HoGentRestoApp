@@ -7,6 +7,12 @@ var jwt = require('express-jwt');
 var Restaurant = mongoose.model('Restaurant');
 var Menu = mongoose.model('Menu');
 
+// middlewares
+var auth = jwt({
+    secret: 'SECRET',
+    userProperty: 'payload'
+});
+
 // params
 router.param('restaurant', function(req, res, next, id) {
     var query = Restaurant.findById(id);
@@ -26,7 +32,6 @@ router.param('restaurant', function(req, res, next, id) {
     });
 });
 
-// routes
 router.param('menu', function(req, res, next, id) {
     var query = Menu.findById(id);
 
@@ -45,6 +50,7 @@ router.param('menu', function(req, res, next, id) {
     });
 });
 
+// routes
 router.get('/:restaurant/menus', function(req, res, next) {
 
     req.restaurant.populate('menus', function(err, post) {
@@ -63,7 +69,7 @@ router.get('/:restaurant/menus/:menu', function(req, res, next) {
 
 });
 
-router.post('/:restaurant/menus', function(req, res, next) {
+router.post('/:restaurant/menus', auth, function(req, res, next) {
 
     var body = req.body;
 
@@ -90,7 +96,7 @@ router.post('/:restaurant/menus', function(req, res, next) {
 
 });
 
-router.put('/:restaurant/menus/:menu', function(req, res, next) {
+router.put('/:restaurant/menus/:menu', auth, function(req, res, next) {
 
     var menu = req.menu;
     var body = req.body;
@@ -114,7 +120,7 @@ router.put('/:restaurant/menus/:menu', function(req, res, next) {
 
 });
 
-router.delete('/:restaurant/menus/:menu', function(req, res, next) {
+router.delete('/:restaurant/menus/:menu', auth, function(req, res, next) {
 
     req.menu.remove(function(err, menu) {
         if (err) {
