@@ -50,7 +50,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/home">HoGent Resto <small>Administratiepaneel</small></a>
+                <a class="navbar-brand" href="#/home">HoGent Resto <small>Administratie</small></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -111,16 +111,16 @@
                 </tbody>
             </table>
             </div>
-        
+
         </div>
     </script>
 
     <script type="text/ng-template" id="/restaurants.html">
 
         <form ng-submit="vm.editRestaurant()">
-            
+
             <div ng-show="vm.isLoggedIn()">
-                
+
                 <ol class="breadcrumb">
                     <li><a href="/#/home">Resto's</a></li>
                     <li class="active">{{vm.restaurant.name}}</li>
@@ -139,14 +139,20 @@
                         <p class="titleadd">
                             <a href="/#/Home" class="btn btn-default">Terug</a>
                             <a href="/#/menus/{{vm.restaurant._id}}" class="btn btn-default">Menu's</a>
-                            <button type="submit" class="btn btn-primary btn-latest">Sla wijzigingen op</button>
+                            <button type="submit" class="btn btn-primary btn-latest">
+                              <!-- <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Opslaan -->
+                              Sla wijzigingen op
+                            </button>
+                            <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
                         </p>
                     </div>
                 </div>
 
                 <div class="row form-edit">
                     <div class="col-sm-8">
-                    <div class="form-horizontal">  
+                    <div class="form-horizontal">
                         <div class="form-group">
                             <label for="naam" class="col-sm-2 control-label">Naam</label>
                             <div class="col-sm-10">
@@ -183,11 +189,6 @@
                                 <input type="text" class="form-control" id="img" ng-model="vm.restaurant.urlImage" placeholder="Afbeeldingsurl">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger">Verwijder restaurant</button>
-                            </div>
-                        </div>
                     </div>
                     </div>
                     <div class="col-sm-4">
@@ -195,14 +196,14 @@
                         <p class="img-caption">
                         <%# if(!vm.restaurant.urlImage || vm.restaurant.urlImage === ''){ %>
                             <!--Ongeldig afbeeldings url opgegeven!-->
-                        <%# } else{ %>  
+                        <%# } else{ %>
                             <!--{{vm.restaurant.urlImage}}-->
                         <%# } %>
                         </p>
-                    
+
                 </div>
                 </div>
-            
+
             </div>
             <!-- Modal -->
             <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -228,7 +229,7 @@
             <li><a href="#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
             <li class="active">Menu's</li>
         </ol>
-        
+
         <div class="titleflex">
             <div class="titleflexattr">
                 <h1>{{vm.restaurant.menus.length}} Menu's</h1>
@@ -275,15 +276,15 @@
                     </div>
                 </div>
             </div>
-            
+
     </script>
 
-    
+
     <script type="text/ng-template" id="/createRestaurant.html">
         <form ng-submit="vm.addRestaurant()">
-            
+
             <div ng-show="vm.isLoggedIn()">
-                
+
                 <ol class="breadcrumb">
                     <li><a href="/#/home">Resto's</a></li>
                     <li class="active">Nieuwe Resto</li>
@@ -303,7 +304,7 @@
 
                 <div class="row form-edit">
                     <div class="col-sm-8">
-                    <div class="form-horizontal">  
+                    <div class="form-horizontal">
                         <div class="form-group">
                             <label for="naam" class="col-sm-2 control-label">Naam</label>
                             <div class="col-sm-10">
@@ -348,11 +349,11 @@
 
                         <%# if(!vm.restaurant.urlImage || vm.restaurant.urlImage === ''){ %>
                             <!--Ongeldig afbeeldings url opgegeven!-->
-                        <%# } else{ %>  
+                        <%# } else{ %>
                             {{vm.restaurant.urlImage}}
                         <%# } %>
                         </p>
-                    
+
                     </div>
                 </div>
             </form>
@@ -362,9 +363,9 @@
     <script type="text/ng-template" id="/createMenu.html">
 
         <form ng-submit="vm.addMenu()">
-            
+
             <div ng-show="vm.isLoggedIn()">
-                
+
                 <ol class="breadcrumb">
                     <li><a href="/#/home">Resto's</a></li>
                     <li><a href="/#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
@@ -383,7 +384,7 @@
 
                 <div class="row form-edit">
                     <div class="col-sm-8">
-                    <div class="form-horizontal">  
+                    <div class="form-horizontal">
                         <div class="form-group">
                             <label for="title" class="col-sm-2 control-label">Gerecht</label>
                             <div class="col-sm-10">
@@ -410,7 +411,7 @@
                         </div>
                     </div>
                     </div>
-                    
+
                 </div>
             </form>
     </script>
