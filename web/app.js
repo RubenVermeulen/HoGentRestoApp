@@ -16,6 +16,7 @@ require('./config/passport');
 
 mongoose.connect('mongodb://localhost/hogent');
 
+// routes
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var restaurant = require('./routes/restaurant');

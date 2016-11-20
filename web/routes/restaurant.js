@@ -5,7 +5,6 @@ var jwt = require('express-jwt');
 
 // models
 var Restaurant = mongoose.model('Restaurant');
-var Menu = mongoose.model('Menu');
 
 // middlewares
 var auth = jwt({
