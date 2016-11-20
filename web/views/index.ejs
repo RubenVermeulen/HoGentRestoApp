@@ -26,9 +26,11 @@
     <script src="javascripts/angularApp.js"></script>
     <script src="javascripts/alert.service.js"></script>
     <script src="javascripts/restaurants.factory.js"></script>
+    <script src="javascripts/menus.factory.js"></script>
     <script src="javascripts/auth.factory.js"></script>
     <script src="javascripts/main.controller.js"></script>
     <script src="javascripts/restaurants.controller.js"></script>
+    <script src="javascripts/menus.controller.js"></script>
     <script src="javascripts/auth.controller.js"></script>
     <script src="javascripts/nav.controller.js"></script>
 
@@ -106,7 +108,7 @@
                         <td><a href="#/restaurants/{{restaurant._id}}">{{restaurant.name}}</td>
                         <td>{{restaurant.address}}</td>
                         <td>{{restaurant.openingHours}}</td>
-                        <td><a href="#/menus/{{restaurant._id}}">Menu's</td>
+                        <td><a href="#/restaurants/{{restaurant._id}}/menus">Menu's</td>
                     </tr>
                 </tbody>
             </table>
@@ -138,7 +140,7 @@
                     <div class="titleflexattr titleflexright">
                         <p class="titleadd">
                             <a href="/#/Home" class="btn btn-default">Terug</a>
-                            <a href="/#/menus/{{vm.restaurant._id}}" class="btn btn-default">Menu's</a>
+                            <a href="/#/restaurants/{{vm.restaurant._id}}/menus" class="btn btn-default">Menu's</a>
                             <button type="submit" class="btn btn-primary btn-latest">
                               <!-- <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Opslaan -->
                               Sla wijzigingen op
@@ -239,43 +241,43 @@
             </div>
         </div>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Gerecht</th>
-                        <th>Beschrijving</th>
-                        <th>Prijs</th>
-                        <th>Datum</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-title'">
-                        <td>{{menu.title}}</td>
-                        <td>{{menu.description}}</td>
-                        <td>{{menu.price | currency: '€'}}</td>
-                        <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
-                        <td><a href="#/menus/{{restaurant._id}}">Bewerk</td>
-                        <td><a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}">Verwijder</a></td>
-                    </tr>
-                </tbody>
-            </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Gerecht</th>
+                    <th>Beschrijving</th>
+                    <th>Prijs</th>
+                    <th>Datum</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-title'">
+                    <td>{{menu.title}}</td>
+                    <td>{{menu.description}}</td>
+                    <td>{{menu.price | currency: '€'}}</td>
+                    <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
+                    <td><a href="#/restaurants/{{restaurant._id}}/menus">Bewerk</td>
+                    <td><a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}">Verwijder</a></td>
+                </tr>
+            </tbody>
+        </table>
 
-            <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <p>Bent u zeker dat u het menu {{vm.menuobj.title}} wil verwijderen?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
-                        <button type="submit" ng-click="vm.deleteMenu()" class="btn btn-danger">Verwijder menu</button>
-                    </div>
-                    </div>
+        <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p>Bent u zeker dat u het menu {{vm.menuobj.title}} wil verwijderen?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
+                    <button type="submit" ng-click="vm.deleteMenu()" class="btn btn-danger">Verwijder menu</button>
+                </div>
                 </div>
             </div>
+        </div>
 
     </script>
 

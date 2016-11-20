@@ -4,7 +4,7 @@ angular.module('hogentResto').controller('RestaurantsController',
 
         vm.isLoggedIn = auth.isLoggedIn;
         vm.restaurant = restaurant;
-        
+
         vm.editRestaurant = editRestaurant;
         vm.addMenu = addMenu;
         vm.deleteMenu = deleteMenu;
@@ -28,7 +28,7 @@ angular.module('hogentResto').controller('RestaurantsController',
                 $state.go('home');
                 return;
             }
-            
+
             restaurants.edit(restaurant._id, {
                 name: vm.restaurant.name,
                 address: vm.restaurant.address,
@@ -43,7 +43,7 @@ angular.module('hogentResto').controller('RestaurantsController',
             alertService.setMessage('Resto ' + vm.restaurant.name + ' is aangepast.');
             $state.go($state.current, {}, {reload: true});
 
-            
+
         }
 
         function addMenu() {

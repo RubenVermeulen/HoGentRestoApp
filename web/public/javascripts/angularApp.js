@@ -26,7 +26,7 @@ angular.module('hogentResto').config(
                 }]
             }
         }).state('menus', {
-            url: '/menus/{id}',
+            url: '/restaurants/{id}/menus',
             templateUrl: '/menus.html',
             controller: 'RestaurantsController',
             controllerAs: 'vm',
@@ -34,6 +34,19 @@ angular.module('hogentResto').config(
                 restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
                     return restaurants.get($stateParams.id);
                 }]
+            }
+        }).state('menuEdit', {
+            url: '/restaurants/{id}/menus/{id2}',
+            templateUrl: '/editMenu.html',
+            controller: 'MenusController',
+            controllerAs: 'vm',
+            resolve: {
+                restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
+                    return restaurants.getMenu($stateParams.id2);
+                }],
+                menu: ['$stateParams', 'menus', function($stateParams, menus) {
+                    return menus.get($stateParams.id2);
+                }],
             }
         }).state('menusNew', {
             url: '/restaurants/{id}/menus/create',
@@ -70,9 +83,3 @@ angular.module('hogentResto').config(
         $urlRouterProvider.otherwise('home');
     }
 );
-
-
-
-
-
-
