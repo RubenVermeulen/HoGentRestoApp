@@ -5,7 +5,6 @@ var jwt = require('express-jwt');
 
 // models
 var Restaurant = mongoose.model('Restaurant');
-var Menu = mongoose.model('Menu');
 var Feedback = mongoose.model('Feedback');
 
 // middlewares
@@ -14,8 +13,7 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
-// Restaurants
-
+// params
 router.param('restaurant', function(req, res, next, id) {
     var query = Restaurant.findById(id);
 
@@ -33,7 +31,6 @@ router.param('restaurant', function(req, res, next, id) {
         return next();
     });
 });
-
 
 router.param('feedback', function(req, res, next, id) {
     var query = Feedback.findById(id);
@@ -53,7 +50,8 @@ router.param('feedback', function(req, res, next, id) {
     });
 });
 
-router.get('/:restaurant/feedbacks', function(req, res, next) {
+// routes
+router.get('/:restaurant/feedback', function(req, res, next) {
 
     req.restaurant.populate('feedbacks', function(err, post) {
         if (err) {
@@ -65,7 +63,7 @@ router.get('/:restaurant/feedbacks', function(req, res, next) {
 
 });
 
-router.get('/:restaurant/feedbacks/:feedback', function(req, res, next) {
+router.get('/:restaurant/feedback/:feedback', function(req, res, next) {
 
     req.restaurant.populate('feedbacks', function(err, post) {
         if (err) {
@@ -78,16 +76,23 @@ router.get('/:restaurant/feedbacks/:feedback', function(req, res, next) {
 });
 
 
-router.post('/:restaurant/feedbacks', function(req, res, next) {
+router.post('/:restaurant/feedback', auth, function(req, res, next) {
 
-    if (!req.body.comfortScore || !req.body.foodScore || !req.body.trafficScore || !req.body.description) {
+    var body = req.body;
+
+    if (!body.comfortScore || !body.foodScore || !body.trafficScore || !body.description) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
 
     var feedback = new Feedback(req.body);
+
     req.restaurant.feedbacks.push(feedback);
 
-    req.restaurant.save();
+    req.restaurant.save(function(err) {
+        if (err) {
+            return next(err);
+        }
+    });
 
     feedback.save(function(err, feedback) {
         if (err) {
@@ -99,7 +104,7 @@ router.post('/:restaurant/feedbacks', function(req, res, next) {
 
 });
 
-router.delete('/:restaurant/feedbacks/:feedback', function(req, res, next) {
+router.delete('/:restaurant/feedback/:feedback', auth, function(req, res, next) {
 
     req.feedback.remove(function(err, feedback) {
         if (err) {
