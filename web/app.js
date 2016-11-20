@@ -19,6 +19,7 @@ mongoose.connect('mongodb://localhost/hogent');
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var restaurant = require('./routes/restaurant');
+var menu = require('./routes/menu');
 var feedback = require('./routes/feedback');
 var app = express();
 
@@ -39,6 +40,7 @@ app.use(passport.initialize());
 app.use('/', routes);
 app.use('/', auth);
 app.use('/restaurants', restaurant);
+app.use('/restaurants', menu);
 app.use('/restaurants', feedback);
 
 // catch 404 and forward to error handler
