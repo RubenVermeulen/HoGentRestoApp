@@ -13,8 +13,7 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
-// Restaurants
-
+// routes
 router.param('restaurant', function(req, res, next, id) {
     var query = Restaurant.findById(id);
 
@@ -57,9 +56,13 @@ router.get('/:restaurant', function(req, res, next) {
 
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', auth, function(req, res, next) {
 
-    if (!req.body.name || !req.body.address || !req.body.coordinates || !req.body.openingHours || !req.body.urlImage) {
+    var body = req.body;
+
+    if (!body.name || !body.address ||
+        !body.coordinates.lat || !body.coordinates.long ||
+        !body.openingHours || !body.urlImage) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
 
@@ -75,18 +78,23 @@ router.post('/', function(req, res, next) {
 
 });
 
-router.put('/:restaurant', function(req, res, next) {
+router.put('/:restaurant', auth, function(req, res, next) {
 
     var restaurant = req.restaurant;
     var body = req.body;
 
-    restaurant.name = body.hasOwnProperty('name') ? body.name : restaurant.name;
-    restaurant.address = body.hasOwnProperty('address') ? body.address : restaurant.address;
-    restaurant.coordinates = body.hasOwnProperty('coordinates') ? body.coordinates : restaurant.coordinates;
-    // restaurant.coordinates.lat = body.hasOwnProperty('lat') ? body.lat : restaurant.coordinates.lat;
-    // restaurant.coordinates.long = body.hasOwnProperty('long') ? body.long : restaurant.coordinates.long;
-    restaurant.openingHours = body.hasOwnProperty('openingHours') ? body.openingHours : restaurant.openingHours;
-    restaurant.urlImage = body.hasOwnProperty('urlImage') ? body.urlImage : restaurant.urlImage;
+    if (!body.name || !body.address ||
+        !body.coordinates.lat || !body.coordinates.long ||
+        !body.openingHours || !body.urlImage) {
+        return res.status(400).json({message: 'Please fill out all fields'});
+    }
+
+    restaurant.name = body.name;
+    restaurant.address = body.address;
+    restaurant.coordinates.lat = body.coordinates.lat;
+    restaurant.coordinates.long = body.coordinates.long;
+    restaurant.openingHours = body.openingHours;
+    restaurant.urlImage = body.urlImage;
 
     restaurant.save(function(err, restaurant) {
         if (err) {

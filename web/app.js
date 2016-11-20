@@ -17,6 +17,7 @@ require('./config/passport');
 mongoose.connect('mongodb://localhost/hogent');
 
 var routes = require('./routes/index');
+var auth = require('./routes/auth');
 var restaurant = require('./routes/restaurant');
 var feedback = require('./routes/feedback');
 var app = express();
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/', routes);
+app.use('/', auth);
 app.use('/restaurants', restaurant);
 app.use('/restaurants', feedback);
 
