@@ -20,6 +20,9 @@ angular.module('hogentResto').controller('MenusController',
                 return;
             }
 
+            /*  Omdat we met een soort 'hack' werken om input:date onze waarde te kunnen laten meegeven, zal de input:date null worden als we de datum niet aanpassen tijdens het bewerken
+                Deze if/else voorkomt dat we die lege datum pushen naar de database */
+
             if (vm.menu.availableAt != null) {
                 menus.edit(vm.restaurant._id, vm.menu._id, {
                     title: vm.menu.title,
