@@ -35,19 +35,6 @@ angular.module('hogentResto').config(
                     return restaurants.get($stateParams.id);
                 }]
             }
-        }).state('menuEdit', {
-            url: '/restaurants/{id}/menus/{id2}',
-            templateUrl: '/editMenu.html',
-            controller: 'MenusController',
-            controllerAs: 'vm',
-            resolve: {
-                restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
-                    return restaurants.getMenu($stateParams.id2);
-                }],
-                menu: ['$stateParams', 'menus', function($stateParams, menus) {
-                    return menus.get($stateParams.id2);
-                }],
-            }
         }).state('menusNew', {
             url: '/restaurants/{id}/menus/create',
             templateUrl: '/createMenu.html',
@@ -56,6 +43,19 @@ angular.module('hogentResto').config(
             resolve: {
                 restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
                     return restaurants.get($stateParams.id);
+                }]
+            }
+        }).state('menuEdit', {
+            url: '/restaurants/{id}/menus/{id2}',
+            templateUrl: '/editMenu.html',
+            controller: 'MenusController',
+            controllerAs: 'vm',
+            resolve: {
+                restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
+                    return restaurants.get($stateParams.id);
+                }],
+                menu: ['$stateParams', 'menus', function($stateParams, menus) {
+                    return menus.get($stateParams.id, $stateParams.id2);
                 }]
             }
         }).state('login', {

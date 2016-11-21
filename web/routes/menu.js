@@ -120,7 +120,8 @@ router.put('/:restaurant/menus/:menu', auth, function(req, res, next) {
 
 });
 
-router.delete('/:restaurant/menus/:menu', auth, function(req, res, next) {
+//router.delete('/:restaurant/menus/:menu', auth, function(req, res, next) {
+router.delete('/:restaurant/menus/:menu', function(req, res, next) {
 
     req.menu.remove(function(err, menu) {
         if (err) {

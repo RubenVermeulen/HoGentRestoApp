@@ -258,7 +258,7 @@
                     <td>{{menu.description}}</td>
                     <td>{{menu.price | currency: '€'}}</td>
                     <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
-                    <td><a href="#/restaurants/{{restaurant._id}}/menus">Bewerk</td>
+                    <td><a href="/#/restaurants/{{vm.restaurant._id}}/menus/{{menu._id}}">Bewerk</td>
                     <td><a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}">Verwijder</a></td>
                 </tr>
             </tbody>
@@ -371,7 +371,7 @@
                 <ol class="breadcrumb">
                     <li><a href="/#/home">Resto's</a></li>
                     <li><a href="/#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
-                    <li><a href="/#/menus/{{vm.restaurant._id}}">Menu's</a></li>
+                    <li><a href="/#/restaurants/{{vm.restaurant._id}}/menus">Menu's</a></li>
                     <li class="active">Nieuwe menu</li>
                 </ol>
 
@@ -380,7 +380,10 @@
                         <h1>{{vm.title}} <small class="">Menu</small> </h1>
                     </div>
                     <div class="titleflexattr">
-                        <p class="titleadd"><a href="/#/menus/{{vm.restaurant._id}}" class="btn btn-default">Terug</a><button type="submit" class="btn btn-primary btn-latest">Voeg resto toe</button></p>
+                        <p class="titleadd">
+                            <a href="/#/restaurants/{{vm.restaurant._id}}/menus" class="btn btn-default">Terug</a>
+                            <button type="submit" class="btn btn-primary btn-latest">Voeg menu toe</button>
+                        </p>
                     </div>
                 </div>
 
@@ -416,6 +419,86 @@
 
                 </div>
             </form>
+
+
+    </script>
+
+
+    <script type="text/ng-template" id="/editMenu.html">
+
+        <form ng-submit="vm.editMenu()">
+
+            <div ng-show="vm.isLoggedIn()">
+
+                <ol class="breadcrumb">
+                    <li><a href="/#/home">Resto's</a></li>
+                    <li><a href="/#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
+                    <li><a href="/#/restaurants/{{vm.restaurant._id}}/menus">Menu's</a></li>
+                    <li class="active">Nieuwe menu</li>
+                </ol>
+
+                <div class="titleflex">
+                    <div class="titleflexattr">
+                        <h1>{{vm.menu.title}} <small class="">Menu</small> </h1>
+                    </div>
+                    <div class="titleflexattr">
+                        <p class="titleadd">
+                            <a href="/#/restaurants/{{vm.restaurant._id}}/menus" class="btn btn-default">Terug</a>
+                            <button type="submit" class="btn btn-primary btn-latest">Sla menu op</button>
+                            <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row form-edit">
+                    <div class="col-sm-8">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">Gerecht</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="title" ng-model="vm.menu.title" placeholder="Gerecht">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">Beschrijving</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="description" ng-model="vm.menu.description" placeholder="Beschrijving">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="col-sm-2 control-label">Prijs</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="price" ng-model="vm.menu.price" placeholder="Prijs">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="col-sm-2 control-label">Datum</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="date" ng-model="vm.menu.availableAt" value="{{vm.menu.availableAt | date:'yyyy-MM-dd'}}">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+            </form>
+
+            <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>Bent u zeker dat u het menu {{vm.menu.title}} wil verwijderen?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
+                        <button type="submit" ng-click="vm.deleteMenu()" class="btn btn-danger">Verwijder menu</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
     </script>
 
 
