@@ -5,6 +5,7 @@ angular.module('hogentResto').controller('MenusController',
         vm.isLoggedIn = auth.isLoggedIn;
         vm.restaurant = restaurant;
         vm.menu = menu;
+        vm.menu.availableAt = new Date(vm.menu.availableAt);
 
         vm.editMenu = editMenu;
         vm.deleteMenu = deleteMenu;
@@ -20,31 +21,17 @@ angular.module('hogentResto').controller('MenusController',
                 return;
             }
 
-            /*  Omdat we met een soort 'hack' werken om input:date onze waarde te kunnen laten meegeven, zal de input:date null worden als we de datum niet aanpassen tijdens het bewerken
-                Deze if/else voorkomt dat we die lege datum pushen naar de database */
-
-            if (vm.menu.availableAt != null) {
-                menus.edit(vm.restaurant._id, vm.menu._id, {
-                    title: vm.menu.title,
-                    description: vm.menu.description,
-                    price: vm.menu.price,
-                    availableAt: new Date(vm.menu.availableAt)
-                });
-            }
-            else {
-                menus.edit(vm.restaurant._id, vm.menu._id, {
-                    title: vm.menu.title,
-                    description: vm.menu.description,
-                    price: vm.menu.price
-                });
-            }
+            menus.edit(vm.restaurant._id, vm.menu._id, {
+                title: vm.menu.title,
+                description: vm.menu.description,
+                price: vm.menu.price,
+                availableAt: vm.menu.availableAt
+            });
 
             alertService.setMessage('Resto ' + vm.restaurant.name + ' is aangepast.');
             $state.go($state.current, {}, {
                 reload: true
             });
-
-
 
         }
 
