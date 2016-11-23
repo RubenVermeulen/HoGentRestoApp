@@ -63,6 +63,42 @@ router.get('/:restaurant/menus', function(req, res, next) {
 
 });
 
+router.get('/:restaurant/menus/week', function(req, res, next) {
+
+    var today = new Date(),
+        start = new Date(),
+        end = new Date(),
+        offsetStart,
+        offsetEnd;
+
+    if (today.getDay() > 0 && today.getDay() < 6) {
+        start = new Date(today);
+        end.setDate(today.getDate() + 6 - today.getDay())
+    }
+    else {
+        if (today.getDay() === 0) {
+            offsetStart = 1;
+            offsetEnd = 6;
+        }
+        else {
+            offsetStart = 1;
+            offsetEnd = 7;
+        }
+
+        start.setDate(today.getDate() + offsetStart);
+        end.setDate(today.getDate() + offsetEnd);
+    }
+
+    Menu.find({availableAt: {$gte: start, $lt: end}}, function(err, menus) {
+        if (err) {
+            return next(err);
+        }
+
+        return res.json(menus);
+    });
+
+});
+
 router.get('/:restaurant/menus/:menu', function(req, res, next) {
 
     res.json(req.menu);
