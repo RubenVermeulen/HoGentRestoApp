@@ -12,6 +12,8 @@ require('./models/Users');
 require('./models/Restaurants');
 require('./models/Menus');
 require('./models/Feedbacks');
+require('./models/Occupancies');
+
 require('./config/passport');
 
 mongoose.connect('mongodb://localhost/hogent');
@@ -22,6 +24,7 @@ var auth = require('./routes/auth');
 var restaurant = require('./routes/restaurant');
 var menu = require('./routes/menu');
 var feedback = require('./routes/feedback');
+var occupancy = require('./routes/occupancy');
 var app = express();
 
 // view engine setup
@@ -43,6 +46,7 @@ app.use('/', auth);
 app.use('/restaurants', restaurant);
 app.use('/restaurants', menu);
 app.use('/restaurants', feedback);
+app.use('/restaurants', occupancy);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
