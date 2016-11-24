@@ -8,51 +8,51 @@ var Restaurant = mongoose.model('Restaurant');
 
 // middlewares
 var auth = jwt({
-    secret: 'SECRET',
-    userProperty: 'payload'
+  secret: 'SECRET',
+  userProperty: 'payload'
 });
 
 // params
 router.param('restaurant', function(req, res, next, id) {
-    var query = Restaurant.findById(id);
+  var query = Restaurant.findById(id);
 
-    query.exec(function(err, restaurant) {
-        if (err) {
-            return next(err);
-        }
+  query.exec(function(err, restaurant) {
+    if (err) {
+      return next(err);
+    }
 
-        if ( ! restaurant) {
-            return next(new Error('can\'t find restaurant'));
-        }
+    if ( ! restaurant) {
+      return next(new Error('can\'t find restaurant'));
+    }
 
-        req.restaurant = restaurant;
+    req.restaurant = restaurant;
 
-        return next();
-    });
+    return next();
+  });
 });
 
 // routes
 router.get('/', function(req, res, next) {
 
-    Restaurant.find(function(err, restaurants) {
-        if (err) {
-            return next(err);
-        }
+  Restaurant.find(function(err, restaurants) {
+    if (err) {
+      return next(err);
+    }
 
-        res.json(restaurants)
-    });
+    res.json(restaurants)
+  });
 
 });
 
 router.get('/:restaurant', function(req, res, next) {
 
-    req.restaurant.populate('menus', function(err, post) {
-        if (err) {
-            return next(err);
-        }
+  req.restaurant.populate('menus', function(err, post) {
+    if (err) {
+      return next(err);
+    }
 
-        res.json(req.restaurant);
-    });
+    res.json(req.restaurant);
+  });
 
 });
 
@@ -66,22 +66,22 @@ router.post('/', auth, function(req, res, next) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
 
-    var restaurant = new Restaurant(req.body);
+  var restaurant = new Restaurant(req.body);
 
-    restaurant.save(function(err, restaurant) {
-        if (err) {
-            return next(err);
-        }
+  restaurant.save(function(err, restaurant) {
+    if (err) {
+      return next(err);
+    }
 
-        res.json(restaurant);
-    });
+    res.json(restaurant);
+  });
 
 });
 
 router.put('/:restaurant', auth, function(req, res, next) {
 
-    var restaurant = req.restaurant;
-    var body = req.body;
+  var restaurant = req.restaurant;
+  var body = req.body;
 
     if (!body.name || !body.address ||
         !body.coordinates.lat || !body.coordinates.long ||
@@ -101,20 +101,20 @@ router.put('/:restaurant', auth, function(req, res, next) {
             return next(err);
         }
 
-        res.json(restaurant);
-    });
+    res.json(restaurant);
+  });
 
 });
 
 router.delete('/:restaurant', function(req, res, next) {
 
-    req.restaurant.remove(function(err, restaurant) {
-        if (err) {
-            return next(err);
-        }
+  req.restaurant.remove(function(err, restaurant) {
+    if (err) {
+      return next(err);
+    }
 
-        res.json(restaurant);
-    });
+    res.json(restaurant);
+  });
 
 });
 
