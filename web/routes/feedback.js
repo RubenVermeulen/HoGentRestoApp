@@ -106,6 +106,13 @@ router.post('/:restaurant/feedback', auth, function(req, res, next) {
 
 router.delete('/:restaurant/feedback/:feedback', auth, function(req, res, next) {
 
+    req.restaurant.feedbacks.pull(req.feedback._id);
+    req.restaurant.save(function(err) {
+        if (err) {
+            return next(err);
+        }
+    });
+
     req.feedback.remove(function(err, feedback) {
         if (err) {
             return next(err);

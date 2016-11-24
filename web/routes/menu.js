@@ -156,8 +156,14 @@ router.put('/:restaurant/menus/:menu', auth, function(req, res, next) {
 
 });
 
-//router.delete('/:restaurant/menus/:menu', auth, function(req, res, next) {
-router.delete('/:restaurant/menus/:menu', function(req, res, next) {
+router.delete('/:restaurant/menus/:menu', auth, function(req, res, next) {
+
+    req.restaurant.menus.pull(req.menu._id);
+    req.restaurant.save(function(err) {
+        if (err) {
+            return next(err);
+        }
+    });
 
     req.menu.remove(function(err, menu) {
         if (err) {
