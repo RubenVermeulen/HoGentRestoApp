@@ -101,7 +101,13 @@ router.get('/:restaurant/menus/week', function(req, res, next) {
 
 router.get('/:restaurant/menus/:menu', function(req, res, next) {
 
-    res.json(req.menu);
+    req.menu.populate('product', function(err, menu) {
+        if (err) {
+            return next(err);
+        }
+
+        return res.json(menu);
+    });
 
 });
 
@@ -109,7 +115,7 @@ router.post('/:restaurant/menus', auth, function(req, res, next) {
 
     var body = req.body;
 
-    if (!body.title || !body.description || !body.price || !body.availableAt) {
+    if (!body.title || !body.price || !body.availableAt || !body.product) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
 
@@ -137,7 +143,7 @@ router.put('/:restaurant/menus/:menu', auth, function(req, res, next) {
     var menu = req.menu;
     var body = req.body;
 
-    if (!body.title || !body.description || !body.price || !body.availableAt) {
+    if (!body.title || !body.price || !body.availableAt || !body.product) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
 
@@ -145,6 +151,7 @@ router.put('/:restaurant/menus/:menu', auth, function(req, res, next) {
     menu.description = body.description;
     menu.price = body.price;
     menu.availableAt = body.availableAt;
+    menu.product = body.product;
 
     menu.save(function(err, menu) {
         if (err) {

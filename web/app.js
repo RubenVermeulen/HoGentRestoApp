@@ -12,8 +12,8 @@ require('./models/Users');
 require('./models/Restaurants');
 require('./models/Menus');
 require('./models/Feedbacks');
-require('./models/Allergenen');
 require('./models/Occupancies');
+require('./models/Products');
 
 require('./config/passport');
 
@@ -26,7 +26,8 @@ var restaurant = require('./routes/restaurant');
 var menu = require('./routes/menu');
 var feedback = require('./routes/feedback');
 var occupancy = require('./routes/occupancy');
-var allergeen = require('./routes/allergeen');
+var product = require('./routes/product');
+
 var app = express();
 
 // view engine setup
@@ -49,7 +50,7 @@ app.use('/restaurants', restaurant);
 app.use('/restaurants', menu);
 app.use('/restaurants', feedback);
 app.use('/restaurants', occupancy);
-app.use('/restaurants', allergeen);
+app.use('/products', product);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
