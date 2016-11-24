@@ -1,22 +1,38 @@
 angular.module('hogentResto').service('alertService', function(){
     var message = '';
+    var type = '';
 
-    var setMessage = function(newObj){
+    var setAlert = function(newObj, specie){
         message = newObj;
+        type = specie;
     }
 
-    var resetMessage = function(){
+    var resetAlert = function(){
         message = '';
+        type = '';
+    }
+
+    var getAlert = function(){
+        return {
+            message: message,
+            type: type
+        }
     }
 
     var getMessage = function(){
         return message;
     }
 
+    var getType = function(){
+        return type;
+    }
+
     return {
-        setMessage: setMessage,
-        resetMessage: resetMessage,
-        getMessage: getMessage
+        setAlert: setAlert,
+        resetAlert: resetAlert,
+        getAlert: getAlert,
+        getMessage: getMessage,
+        getType: getType
     };
 
 });

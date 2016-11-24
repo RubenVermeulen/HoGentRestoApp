@@ -9,10 +9,10 @@ angular.module('hogentResto').controller('RestaurantsController',
         vm.addMenu = addMenu;
         vm.deleteMenu = deleteMenu;
 
-        var message = alertService.getMessage();
-        if(message != ''){
-            vm.successmessage = alertService.getMessage();
-            alertService.resetMessage();
+        var alert = alertService.getAlert();
+        if(alert.message != ''){
+            vm.alertmessage = alert.message;
+            alertService.resetAlert();
         }
 
         function editRestaurant() {
@@ -24,7 +24,7 @@ angular.module('hogentResto').controller('RestaurantsController',
                 restaurants.deleteRestaurant(restaurant._id);
                 angular.element("#myModal").modal('hide');
                 angular.element(".modal-backdrop.fade.in").remove();
-                alertService.setMessage('Resto ' + vm.restaurant.name + ' is succesvol verwijderd.');
+                alertService.setAlert('Resto ' + vm.restaurant.name + ' is succesvol verwijderd.', 'success');
                 $state.go('home');
                 return;
             }
@@ -40,7 +40,7 @@ angular.module('hogentResto').controller('RestaurantsController',
                 urlImage: vm.restaurant.urlImage
             });
 
-            alertService.setMessage('Resto ' + vm.restaurant.name + ' is aangepast.');
+            alertService.setAlert('Resto ' + vm.restaurant.name + ' is aangepast.', 'success');
             $state.go($state.current, {}, {reload: true});
 
 
@@ -59,7 +59,7 @@ angular.module('hogentResto').controller('RestaurantsController',
                 availableAt: vm.availableAt
             }).then(function(menu) {
                 vm.restaurant.menus.push(menu);
-                alertService.setMessage('Resto ' + vm.name + ' is toegevoegd.');
+                alertService.setAlert('Resto ' + vm.name + ' is toegevoegd.', 'success');
                 $state.go('menus', {id: restaurant._id});
             });
 

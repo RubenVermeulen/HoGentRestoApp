@@ -10,10 +10,10 @@ angular.module('hogentResto').controller('MenusController',
         vm.editMenu = editMenu;
         vm.deleteMenu = deleteMenu;
 
-        var message = alertService.getMessage();
-        if (message != '') {
-            vm.successmessage = alertService.getMessage();
-            alertService.resetMessage();
+        var alert = alertService.getAlert();
+        if(alert.message != ''){
+            vm.alertmessage = alert.message;
+            alertService.resetAlert();
         }
 
         function editMenu() {
