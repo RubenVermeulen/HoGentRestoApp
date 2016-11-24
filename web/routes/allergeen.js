@@ -147,11 +147,6 @@ router.put('/:restaurant/menus/:menu/allergenen/:allergeen', function(req, res, 
 
 router.delete('/:restaurant/menus/:menu/allergenen/:allergeen', function(req, res, next) {
 
-/*  var i = req.menu.allergenen.indexOf(req.allergeen);
-  if(i != -1) {
-  	req.menu.allergenen.splice(i, 1);
-  }
-*/
 
   req.allergeen.remove(function(err, allergeen) {
     if (err) {
