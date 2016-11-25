@@ -78,6 +78,31 @@ angular.module('hogentResto').config(
                     $state.go('home');
                 }
             }]
+        }).state('products', {
+            url: '/products',
+            templateUrl: '/products.html',
+            controller: 'ProductsController',
+            controllerAs: 'vm',
+            resolve: {
+                postPromise: ['products', function(products) {
+                    return products.getAll();
+                }]
+            },
+            onEnter: ['$state', 'auth', function ($state, auth) {
+                if (!auth.isLoggedIn()) {
+                    $state.go('home');
+                }
+            }]
+        }).state('productsNew', {
+            url: '/products/create',
+            templateUrl: '/createProduct.html',
+            controller: 'ProductsController',
+            controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function ($state, auth) {
+                if (!auth.isLoggedIn()) {
+                    $state.go('home');
+                }
+            }]
         });
 
         $urlRouterProvider.otherwise('home');
