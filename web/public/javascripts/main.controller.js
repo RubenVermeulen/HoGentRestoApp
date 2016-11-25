@@ -23,7 +23,7 @@ angular.module('hogentResto').controller('MainController',
                  return;
             }
 
-            if (!angular.isNumber(vm.lat)){
+            if (false){
                 vm.alertmessage = 'Coördinaten moeten een nummer zijn.';
                 return;
             }
