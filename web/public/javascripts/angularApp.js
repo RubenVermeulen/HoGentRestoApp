@@ -86,7 +86,10 @@ angular.module('hogentResto').config(
             resolve: {
                 postPromise: ['products', function(products) {
                     return products.getAll();
-                }]
+                }],
+                product: function() {
+                    return {};
+                }
             },
             onEnter: ['$state', 'auth', function ($state, auth) {
                 if (!auth.isLoggedIn()) {
@@ -98,11 +101,26 @@ angular.module('hogentResto').config(
             templateUrl: '/createProduct.html',
             controller: 'ProductsController',
             controllerAs: 'vm',
+            resolve: {
+                product: function() {
+                    return {};
+                }
+            },
             onEnter: ['$state', 'auth', function ($state, auth) {
                 if (!auth.isLoggedIn()) {
                     $state.go('home');
                 }
             }]
+        }).state('productEdit', {
+            url: '/products/{id}',
+            templateUrl: '/editProduct.html',
+            controller: 'ProductsController',
+            controllerAs: 'vm',
+            resolve: {
+                product: ['$stateParams', 'products', function($stateParams, products) {
+                    return products.get($stateParams.id);
+                }]
+            }
         });
 
         $urlRouterProvider.otherwise('home');

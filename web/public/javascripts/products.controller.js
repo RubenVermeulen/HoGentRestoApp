@@ -1,12 +1,13 @@
 angular.module('hogentResto').controller('ProductsController',
-    function($state, products, auth, alertService) {
+    function($state, products, product, auth, alertService) {
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
         vm.products = products.products;
-        vm.product = {};
+        vm.product = product;
 
         vm.createProduct = createProduct;
+        vm.editProduct = editProduct;
 
         var alert = alertService.getAlert();
         if(alert.message != ''){
@@ -18,8 +19,8 @@ angular.module('hogentResto').controller('ProductsController',
         function createProduct() {
             if (!vm.product.description || vm.product.description === ''
                 || !vm.product.allergens || vm.product.allergens === '') {
-                vm.alertmessage = "Gelieve alle velden in te vullen.";
-                vm.alerttype = "danger";
+                vm.alertMessage = "Gelieve alle velden in te vullen.";
+                vm.alertType = "danger";
                 return;
             }
 
@@ -35,24 +36,41 @@ angular.module('hogentResto').controller('ProductsController',
             });
         }
 
-        // function editMenu() {
-        //     if (!vm.menu.title || vm.menu.title === '') {
-        //         return;
-        //     }
-        //
-        //     menus.edit(vm.restaurant._id, vm.menu._id, {
-        //         title: vm.menu.title,
-        //         description: vm.menu.description,
-        //         price: vm.menu.price,
-        //         availableAt: vm.menu.availableAt
-        //     });
-        //
-        //     alertService.setMessage('Resto ' + vm.restaurant.name + ' is aangepast.');
-        //     $state.go($state.current, {}, {
-        //         reload: true
-        //     });
-        //
-        // }
+        function editProduct() {
+            if (!vm.product.description || vm.product.description === ''
+                || !vm.product.allergens || vm.product.allergens === '') {
+                vm.alertMessage = "Gelieve alle velden in te vullen.";
+                vm.alertType = "danger";
+                return;
+            }
+
+
+            // Convert if allergens is string
+            var allergens;
+
+            if (vm.product.allergens instanceof Array) {
+                allergens = vm.product.allergens;
+            }
+            else {
+                allergens = vm.product.allergens.trim().split(',');
+            }
+
+            products.edit(vm.product._id, {
+                description: vm.product.description,
+                allergens: allergens
+            }).error(function(error) {
+                vm.alertMessage = error.message;
+                vm.alertType = "danger";
+            }).then(function() {
+                alertService.setAlert('Product ' + vm.product.description + ' is aangepast.', 'success');
+                $state.go($state.current, {}, {
+                    reload: true
+                });
+            });
+
+
+
+        }
         //
         // function deleteMenu() {
         //     restaurants.deleteMenu(vm.restaurant._id, vm.menu._id);
