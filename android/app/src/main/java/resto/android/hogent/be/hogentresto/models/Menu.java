@@ -13,6 +13,13 @@ public class Menu implements Serializable {
     double price;
     Date availableAt;
 
+    public Menu(Date availableAt, double price, String description, String title) {
+        this.availableAt = availableAt;
+        this.price = price;
+        this.description = description;
+        this.title = title;
+    }
+
     public String getId() {
         return id;
     }
