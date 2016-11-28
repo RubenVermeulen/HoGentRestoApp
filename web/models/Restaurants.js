@@ -12,7 +12,7 @@ var RestaurantSchema = new mongoose.Schema({
     urlImage: String,
     feedbacks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feedback'}],
     sensors: [{type: mongoose.Schema.Types.ObjectId,ref: 'Sensor'}],
-    prediction: [{type: mongoose.Schema.Types.ObjectId, ref: 'Prediction'}]
+    forecast: [{type: mongoose.Schema.Types.ObjectId, ref: 'Forecast'}]
 });
 
 mongoose.model('Restaurant', RestaurantSchema);

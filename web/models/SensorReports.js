@@ -8,6 +8,5 @@ var SensorReportSchema = new mongoose.Schema({
 
 mongoose.model('SensorReport', SensorReportSchema);
 
-SensorReportSchema.methods.findOnDate = function(cb){
-  return this.model('SensorReport').find({ type: this.time }, cb);
+  return this.model('SensorReport').find( this.time.getDay() , cb);
 };
