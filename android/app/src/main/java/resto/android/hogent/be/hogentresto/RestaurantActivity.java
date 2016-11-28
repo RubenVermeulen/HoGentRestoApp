@@ -3,37 +3,53 @@ package resto.android.hogent.be.hogentresto;
 
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import resto.android.hogent.be.hogentresto.MenuTabs.Dinsdag;
-import resto.android.hogent.be.hogentresto.MenuTabs.Maandag;
+import resto.android.hogent.be.hogentresto.MenuTabs.MenuFragment;
+import resto.android.hogent.be.hogentresto.adapters.MenuAdapter;
+import resto.android.hogent.be.hogentresto.config.Config;
 import resto.android.hogent.be.hogentresto.helpers.Traffic;
 import resto.android.hogent.be.hogentresto.models.Menu;
 import resto.android.hogent.be.hogentresto.models.Restaurant;
+import resto.android.hogent.be.hogentresto.services.HoGentRestoService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static resto.android.hogent.be.hogentresto.R.id.progressBar;
 
 public class RestaurantActivity extends AppCompatActivity {
 
-
+    private MenuFragment fragment;
+    private MenuAdapter adapter;
     private List<Menu> dataset;
     private Restaurant r;
-
+    Map<String, List<Menu>> menus = new HashMap<>();
+    DateFormat df = new SimpleDateFormat("EEEE");
     @BindView(R.id.cardView)
     CardView cardView;
     @BindView(R.id.thumbnail)
@@ -52,14 +68,12 @@ public class RestaurantActivity extends AppCompatActivity {
     ImageView expand;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    //@BindView(R.id.progressBar)
-    //ProgressBar progressBar;
-    //@BindView(R.id.refresh)
-    //TextView refresh;
-    //@BindView(R.id.toolbar)
-    //Toolbar toolbar;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.refresh)
+    TextView refresh;
     @BindView(R.id.tabs)
-    TabLayout tabLayout;
+    PagerSlidingTabStrip tabsStrip;
 
     TextView title;
     TextView description;
@@ -80,14 +94,15 @@ public class RestaurantActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         setRestaurant(r);
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+        adapter = new MenuAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabsStrip.setViewPager(viewPager);
 
+        getMenus();
 
-        //getMenus();
     }
 
-    /*private void getMenus() {
+    public void getMenus() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -107,24 +122,15 @@ public class RestaurantActivity extends AppCompatActivity {
 
                 if (dataset.isEmpty()) {
                     View child = getLayoutInflater().inflate(R.layout.menus_no_results, null);
-                    menus.addView(child);
+                    viewPager.addView(child);
                 }
                 else {
-                    View child;
 
                     for (Menu m : dataset) {
-                        child = getLayoutInflater().inflate(R.layout.menus_list_item, null);
-
-                        title = (TextView) child.findViewById(R.id.title);
-                        description = (TextView) child.findViewById(R.id.description);
-                        price = (TextView) child.findViewById(R.id.price);
-
-                        title.setText(m.getTitle());
-                        description.setText(m.getDescription());
-                        price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
-
-                        menus.addView(child);
+                        menus.put(df.format(m.getAvailableAt()).toLowerCase(), Arrays.asList(m));
                     }
+                    fragment = adapter.getFragment();
+                    fragment.setMenus(menus);
                 }
             }
 
@@ -137,7 +143,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 toast.show();
             }
         });
-    }*/
+    }
 
     private void setRestaurant(Restaurant r) {
         Picasso.with(this).load(r.getUrlImage()).into(thumbnail);
@@ -159,52 +165,15 @@ public class RestaurantActivity extends AppCompatActivity {
         }
     }
 
-    /*public void refresh(View view) {
+    public void refresh(View view) {
         progressBar.setVisibility(View.VISIBLE);
-        //getMenus();
-    }*/
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new Maandag(), "Ma");
-        adapter.addFrag(new Dinsdag(), "Di");
-        adapter.addFrag(new Dinsdag(), "Woe");
-        adapter.addFrag(new Dinsdag(), "Do");
-        adapter.addFrag(new Dinsdag(), "Vr");
-        viewPager.setAdapter(adapter);
-
+        getMenus();
     }
 
 
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
 
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
 
 }
 

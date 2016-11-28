@@ -169,7 +169,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="8dp"
                 >
 
@@ -181,29 +181,26 @@
                     android:textSize="24sp"
                     android:paddingTop="8dp"/>
 
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tabs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:tabMode="scrollable"/>
 
+                <com.astuetz.PagerSlidingTabStrip
+                    android:id="@+id/tabs"
+                    android:textSize="14sp"
+                    app:pstsShouldExpand="true"
+                    app:pstsTextAllCaps="true"
+                    android:layout_width="match_parent"
+                    app:pstsDividerColor="@color/colorTrafficCalm"
+                    app:pstsIndicatorColor="@color/colorTrafficFull"
+                    app:pstsUnderlineColor="@color/colorPrimary"
+                    android:layout_height="48dp" />
 
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/viewpager"
-                        android:layout_below="@android:id/tabs"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                        />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@android:color/white" />
 
-
-
-
-
-
-            <!--<include layout="@layout/progress_bar" />
-            <include layout="@layout/refresh" />-->
+            <include layout="@layout/progress_bar" />
+            <include layout="@layout/refresh" />
 
         </LinearLayout>
 
