@@ -14,12 +14,22 @@ angular.module('hogentResto').config(
             url: '/restaurants/create',
             templateUrl: '/createRestaurant.html',
             controller: 'MainController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function ($state, auth) {
+                if (!auth.isLoggedIn()) {
+                    $state.go('home');
+                }
+            }]
         }).state('restaurants', {
             url: '/restaurants/{id}',
             templateUrl: '/restaurants.html',
             controller: 'RestaurantsController',
             controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function ($state, auth) {
+                if (!auth.isLoggedIn()) {
+                    $state.go('home');
+                }
+            }],
             resolve: {
                 restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
                     return restaurants.get($stateParams.id);
@@ -40,6 +50,11 @@ angular.module('hogentResto').config(
             templateUrl: '/createMenu.html',
             controller: 'RestaurantsController',
             controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function ($state, auth) {
+                if (!auth.isLoggedIn()) {
+                    $state.go('home');
+                }
+            }],
             resolve: {
                 restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
                     return restaurants.get($stateParams.id);
@@ -53,6 +68,11 @@ angular.module('hogentResto').config(
             templateUrl: '/editMenu.html',
             controller: 'MenusController',
             controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function ($state, auth) {
+                if (!auth.isLoggedIn()) {
+                    $state.go('home');
+                }
+            }],
             resolve: {
                 restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
                     return restaurants.get($stateParams.id);

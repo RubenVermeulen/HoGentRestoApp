@@ -1,66 +1,61 @@
 <script type="text/ng-template" id="/editMenu.html">
 
     <form ng-submit="vm.editMenu()">
+        <ol class="breadcrumb">
+            <li><a href="/#/home">Resto's</a></li>
+            <li><a href="/#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
+            <li><a href="/#/restaurants/{{vm.restaurant._id}}/menus">Menu's</a></li>
+            <li class="active">Nieuwe menu</li>
+        </ol>
 
-        <div ng-show="vm.isLoggedIn()">
-
-            <ol class="breadcrumb">
-                <li><a href="/#/home">Resto's</a></li>
-                <li><a href="/#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
-                <li><a href="/#/restaurants/{{vm.restaurant._id}}/menus">Menu's</a></li>
-                <li class="active">Nieuwe menu</li>
-            </ol>
-
-            <div class="titleflex">
-                <div class="titleflexattr">
-                    <h1>{{vm.menu.title}} <small class="">Menu</small> </h1>
-                </div>
-                <div class="titleflexattr">
-                    <p class="titleadd">
-                        <a href="/#/restaurants/{{vm.restaurant._id}}/menus" class="btn btn-default">Terug</a>
-                        <button type="submit" class="btn btn-primary btn-latest">Sla menu op</button>
-                        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </button>
-                    </p>
-                </div>
+        <div class="titleflex">
+            <div class="titleflexattr">
+                <h1>{{vm.menu.title}} <small class="">Menu</small> </h1>
             </div>
+            <div class="titleflexattr">
+                <p class="titleadd">
+                    <a href="/#/restaurants/{{vm.restaurant._id}}/menus" class="btn btn-default">Terug</a>
+                    <button type="submit" class="btn btn-primary btn-latest">Sla menu op</button>
+                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </p>
+            </div>
+        </div>
 
-            <% include ../../partials/alert.ejs %>
+        <% include ../../partials/alert.ejs %>
 
-            <div class="row form-edit">
-                <div class="col-sm-8">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">Gerecht</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" ng-model="vm.menu.title" placeholder="Gerecht">
-                            </div>
+        <div class="row form-edit">
+            <div class="col-sm-8">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">Gerecht</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="title" ng-model="vm.menu.title" placeholder="Gerecht">
                         </div>
-                        <div class="form-group">
-                            <label for="product" class="col-sm-2 control-label">Beschrijving</label>
-                            <div class="col-sm-10">
-                                <select ng-options="product.description for product in vm.products track by product._id"
-                                        ng-model="vm.menu.product" id="product" class="form-control"></select>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="product" class="col-sm-2 control-label">Beschrijving</label>
+                        <div class="col-sm-10">
+                            <select ng-options="product.description for product in vm.products track by product._id"
+                                    ng-model="vm.menu.product" id="product" class="form-control"></select>
                         </div>
-                        <div class="form-group">
-                            <label for="price" class="col-sm-2 control-label">Prijs</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="price" ng-model="vm.menu.price" placeholder="Prijs">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="col-sm-2 control-label">Prijs</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="price" ng-model="vm.menu.price" placeholder="Prijs">
                         </div>
-                        <div class="form-group">
-                            <label for="date" class="col-sm-2 control-label">Datum</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" id="date" ng-model="vm.menu.availableAt" value="{{vm.menu.availableAt | date:'yyyy-MM-dd'}}">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="col-sm-2 control-label">Datum</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="date" ng-model="vm.menu.availableAt" value="{{vm.menu.availableAt | date:'yyyy-MM-dd'}}">
                         </div>
                     </div>
                 </div>
-
             </div>
-
+        </div>
 
         <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -77,4 +72,5 @@
             </div>
         </div>
     </form>
+
 </script>
