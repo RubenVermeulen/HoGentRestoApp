@@ -4,6 +4,11 @@ angular.module('hogentResto').controller('NavController',
 
         vm.isLoggedIn = auth.isLoggedIn;
         vm.currentUser = auth.currentUser;
-        vm.logOut = auth.logOut;
+        vm.logOut = logOut;
+
+        function logOut() {
+            auth.logOut();
+            $state.go('home');
+        }
     }
 );
