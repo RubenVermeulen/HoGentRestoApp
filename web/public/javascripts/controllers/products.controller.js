@@ -19,8 +19,7 @@ angular.module('hogentResto').controller('ProductsController',
         }
 
         function createProduct() {
-            if (!vm.product.description || vm.product.description === ''
-                || !vm.product.allergens || vm.product.allergens === '') {
+            if (!vm.product.description || vm.product.description === '') {
                 vm.alertMessage = "Gelieve alle velden in te vullen.";
                 vm.alertType = "danger";
                 return;
@@ -28,7 +27,7 @@ angular.module('hogentResto').controller('ProductsController',
 
             products.create({
                 description: vm.product.description,
-                allergens: vm.product.allergens.split(',')
+                allergens: vm.product.allergens ? vm.product.allergens.split(',') : []
             }).error(function(error) {
                 vm.alertMessage = error.message;
                 vm.alertType = "danger";
@@ -39,8 +38,7 @@ angular.module('hogentResto').controller('ProductsController',
         }
 
         function editProduct() {
-            if (!vm.product.description || vm.product.description === ''
-                || !vm.product.allergens || vm.product.allergens === '') {
+            if (!vm.product.description || vm.product.description === '') {
                 vm.alertMessage = "Gelieve alle velden in te vullen.";
                 vm.alertType = "danger";
                 return;
