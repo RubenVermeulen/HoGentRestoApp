@@ -27,8 +27,10 @@ angular.module('hogentResto').controller('MenusController',
                     return;
                 });
 
+                /* Delete Bootstrap modal */
                 angular.element("#myModal").modal('hide');
                 angular.element(".modal-backdrop.fade.in").remove();
+                angular.element(".modal-open").removeClass("modal-open");
 
                 alertService.setAlert('Menu ' + vm.menu.title  + ' is verwijderd.', 'success');
 

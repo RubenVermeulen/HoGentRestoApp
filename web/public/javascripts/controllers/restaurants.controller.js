@@ -38,9 +38,13 @@ angular.module('hogentResto').controller('RestaurantsController',
                     vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
                     vm.alertType = 'danger';
                     return;
-                });;
+                });
+
+                /* Delete Bootstrap modal */
                 angular.element("#myModal").modal('hide');
                 angular.element(".modal-backdrop.fade.in").remove();
+                angular.element(".modal-open").removeClass("modal-open");
+
                 alertService.setAlert('Resto ' + vm.restaurant.name + ' is succesvol verwijderd.', 'success');
                 $state.go('home');
                 return;
@@ -118,8 +122,10 @@ angular.module('hogentResto').controller('RestaurantsController',
                 return;
             });
 
+            /* Delete Bootstrap modal */
             angular.element("#myModal").modal('hide');
             angular.element(".modal-backdrop.fade.in").remove();
+            angular.element(".modal-open").removeClass("modal-open");
 
             vm.alertMessage = 'Menu ' + vm.menuobj.title + ' is succesvol verwijderd.';
             vm.alertType = 'success';
