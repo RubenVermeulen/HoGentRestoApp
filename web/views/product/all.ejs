@@ -14,10 +14,14 @@
 
     <div ng-show="vm.alertMessage" class="alert alert-{{vm.alertType}} alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        {{vm.alertmessage}}
+        {{vm.alertMessage}}
     </div>
 
-    <table class="table">
+    <div ng-hide="vm.hasProducts()">
+        <p>Er zijn nog geen producten.</p>
+    </div>
+
+    <table ng-show="vm.hasProducts()" class="table">
         <thead>
         <tr>
             <th>Beschrijving</th>
@@ -49,7 +53,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
-                    <button type="submit" ng-click="vm.deleteMenu()" class="btn btn-danger">Verwijder product</button>
+                    <button type="submit" ng-click="vm.deleteProduct()" class="btn btn-danger">Verwijder product</button>
                 </div>
             </div>
         </div>

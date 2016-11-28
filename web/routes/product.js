@@ -5,6 +5,7 @@ var jwt = require('express-jwt');
 
 // models
 var Product = mongoose.model('Product');
+var Menu = mongoose.model('Menu');
 
 // middlewares
 var auth = jwt({
@@ -98,8 +99,8 @@ router.delete('/:product', auth, function(req, res, next) {
             return next(err);
         }
 
-        if (menus.count() === 0) {
-            return res.status(418).json({message: 'Product is used in other menu\'s'});
+        if (menus.length !== 0) {
+            return res.status(400).json({message: 'Product is used in other menu\'s'});
         }
     });
 

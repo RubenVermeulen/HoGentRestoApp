@@ -42,12 +42,12 @@ angular.module('hogentResto').factory('products', function ($http, auth) {
     }
 
     function deleteProduct(id, product) {
-        return $http.delete('/products/' + id, product, {
+        return $http.delete('/products/' + id, {
             headers: {
                 Authorization: 'Bearer ' + auth.getToken()
             }
-        }).success(function(data){
-            o.restaurants.splice(o.restaurants.indexOf(product), 1)
+        }).success(function(){
+            o.products.splice(o.products.indexOf(product), 1)
         })
     }
 

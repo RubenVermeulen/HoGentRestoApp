@@ -8,6 +8,8 @@ angular.module('hogentResto').controller('ProductsController',
 
         vm.createProduct = createProduct;
         vm.editProduct = editProduct;
+        vm.deleteProduct = deleteProduct;
+        vm.hasProducts = hasProducts;
 
         var alert = alertService.getAlert();
         if(alert.message != ''){
@@ -71,15 +73,24 @@ angular.module('hogentResto').controller('ProductsController',
 
 
         }
-        //
-        // function deleteMenu() {
-        //     restaurants.deleteMenu(vm.restaurant._id, vm.menu._id);
-        //     angular.element("#myModal").modal('hide');
-        //     angular.element(".modal-backdrop.fade.in").remove();
-        //     $state.go('menus', {
-        //         id: restaurant._id
-        //     });
-        //     console.log(value);
-        // }
+
+        function deleteProduct() {
+            products.deleteProduct(vm.productPendingDelete.id).error(function(error) {
+                vm.alertMessage = error.message;
+                vm.alertType = "danger";
+            }).then(function() {
+                vm.alertMessage = "Het product is succesvol verwijderd.";
+                vm.alertType = "success";
+            });
+
+            angular.element("#myModal").modal('hide');
+            angular.element(".modal-backdrop.fade.in").remove();
+
+            $state.go('products');
+        }
+
+        function hasProducts() {
+            return vm.products.length !== 0;
+        }
     }
 );
