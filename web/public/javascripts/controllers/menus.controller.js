@@ -9,7 +9,6 @@ angular.module('hogentResto').controller('MenusController',
         vm.products = products.products;
 
         vm.editMenu = editMenu;
-        vm.deleteMenu = deleteMenu;
         vm.selectedProduct = selectedProduct;
 
         var alert = alertService.getAlert();
@@ -20,6 +19,21 @@ angular.module('hogentResto').controller('MenusController',
         }
 
         function editMenu() {
+
+            if (vm.delete) {
+                restaurants.deleteMenu(vm.restaurant._id, vm.menu._id, vm.menu);
+
+                angular.element("#myModal").modal('hide');
+                angular.element(".modal-backdrop.fade.in").remove();
+
+                alertService.setAlert('Menu ' + vm.menu.title  + ' is verwijderd.', 'success');
+
+                $state.go('menus', {id: restaurant._id});
+
+                return;
+
+            }
+
             if (!vm.menu.title || vm.menu.title === '' || !vm.menu.price || vm.menu.price === '') {
                 return;
             }

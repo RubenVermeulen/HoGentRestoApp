@@ -61,20 +61,21 @@
                 </div>
 
             </div>
-    </form>
 
-    <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <p>Bent u zeker dat u het menu {{vm.menu.title}} wil verwijderen?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
-                    <button type="submit" ng-click="vm.deleteMenu()" class="btn btn-danger">Verwijder menu</button>
+
+        <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>Bent u zeker dat u het menu {{vm.menu.title}} wil verwijderen?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
+                        <button type="submit" ng-click="vm.delete=true" class="btn btn-danger">Verwijder menu</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </script>
