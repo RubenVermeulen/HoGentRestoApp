@@ -46,13 +46,20 @@ router.get('/', function(req, res, next) {
 
 router.get('/:restaurant', function(req, res, next) {
 
-  req.restaurant.populate('menus', function(err, post) {
-    if (err) {
-      return next(err);
-    }
+    req.restaurant.populate({
+        path: 'menus',
+        model: 'Menu',
+        populate: {
+            path: 'product',
+            model: 'Product'
+        }
+    }, function(err, restaurant) {
+        if (err) {
+            return next(err);
+        }
 
-    res.json(req.restaurant);
-  });
+        return res.json(restaurant);
+    })
 
 });
 

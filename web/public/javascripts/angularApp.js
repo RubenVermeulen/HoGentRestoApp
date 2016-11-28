@@ -43,6 +43,9 @@ angular.module('hogentResto').config(
             resolve: {
                 restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
                     return restaurants.get($stateParams.id);
+                }],
+                getProducts: ['products', function(products) {
+                    return products.getAll();
                 }]
             }
         }).state('menuEdit', {
@@ -56,6 +59,9 @@ angular.module('hogentResto').config(
                 }],
                 menu: ['$stateParams', 'menus', function($stateParams, menus) {
                     return menus.get($stateParams.id, $stateParams.id2);
+                }],
+                getProducts: ['products', function(products) {
+                    return products.getAll();
                 }]
             }
         }).state('login', {

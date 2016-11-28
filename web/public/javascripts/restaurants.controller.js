@@ -1,17 +1,20 @@
 angular.module('hogentResto').controller('RestaurantsController',
-    function($state, restaurants, restaurant, auth, alertService) {
+    function($state, restaurants, restaurant, products, auth, alertService) {
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
         vm.restaurant = restaurant;
+        vm.products = products.products;
 
         vm.editRestaurant = editRestaurant;
         vm.addMenu = addMenu;
         vm.deleteMenu = deleteMenu;
+        vm.hasMenus = hasMenus;
 
         var alert = alertService.getAlert();
         if(alert.message != ''){
-            vm.alertmessage = alert.message;
+            vm.alertMessage = alert.message;
+            vm.alertType = alert.type;
             alertService.resetAlert();
         }
 
@@ -48,35 +51,42 @@ angular.module('hogentResto').controller('RestaurantsController',
 
         function addMenu() {
 
-            if (!vm.title || vm.title === '') {
+            if (!vm.title || vm.title === '' || !vm.price || vm.price === '') {
                 return;
             }
 
             restaurants.createMenu(restaurant._id, {
                 title: vm.title,
-                description: vm.description,
+                product: vm.product,
                 price: vm.price,
                 availableAt: vm.availableAt
             }).then(function(menu) {
                 vm.restaurant.menus.push(menu);
-                alertService.setAlert('Resto ' + vm.name + ' is toegevoegd.', 'success');
+                alertService.setAlert('Menu ' + vm.title + ' is toegevoegd.', 'success');
                 $state.go('menus', {id: restaurant._id});
             });
-
-
         }
 
         function deleteMenu(){
-            restaurants.deleteMenu(vm.restaurant._id, vm.menuobj.id);
+            restaurants.deleteMenu(vm.restaurant._id, vm.menuobj.id, vm.menuobj).success(function() {
+                for (var key in vm.restaurant.menus) {
+                    if (vm.restaurant.menus[key]._id === vm.menuobj.id) {
+                        vm.restaurant.menus.splice(key, 1);
+                        break;
+                    }
+                }
+
+            });
+
             angular.element("#myModal").modal('hide');
             angular.element(".modal-backdrop.fade.in").remove();
-            $state.go($state.current, {}, {reload: true});
-            console.log(value);
+
+            vm.alertMessage = 'Menu ' + vm.menuobj.title + ' is succesvol verwijderd.';
+            vm.alertType = 'success';
         }
 
-
-        // function incrementUpvotes(comment) {
-        //     posts.upvoteComment(post, comment);
-        // };
+        function hasMenus() {
+            return vm.restaurant.menus.length !== 0;
+        }
     }
 );

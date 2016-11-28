@@ -7,12 +7,12 @@ angular.module('hogentResto').controller('MainController',
 
         vm.restaurants = restaurants.restaurants;
         vm.addRestaurant = addRestaurant;
+        vm.hasRestaurants = hasRestaurants;
 
         var alert = alertService.getAlert();
         if(alert.message != ''){
-            console.log(alert.type);
-            vm.alertmessage = alert.message;
-            vm.alerttype = alert.type;
+            vm.alertMessage = alert.message;
+            vm.alertType = alert.type;
             alertService.resetAlert();
         }
 
@@ -45,6 +45,10 @@ angular.module('hogentResto').controller('MainController',
                 $state.go('home');
             });
 
+        }
+
+        function hasRestaurants() {
+            return vm.restaurants.length !== 0;
         }
 
     }

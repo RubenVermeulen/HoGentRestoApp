@@ -53,13 +53,20 @@ router.param('menu', function(req, res, next, id) {
 // routes
 router.get('/:restaurant/menus', function(req, res, next) {
 
-    req.restaurant.populate('menus', function(err, post) {
+    req.restaurant.populate({
+        path: 'menus',
+        model: 'Menu',
+        populate: {
+            path: 'product',
+            model: 'Product'
+        }
+    }, function(err, restaurant) {
         if (err) {
             return next(err);
         }
 
-        res.json(req.restaurant.menus);
-    });
+        return res.json(restaurant.menus);
+    })
 
 });
 

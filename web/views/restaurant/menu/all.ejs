@@ -14,11 +14,17 @@
         </div>
     </div>
 
-    <table class="table">
+    <% include ../../partials/alert.ejs %>
+
+    <div ng-hide="vm.hasMenus()">
+        <p>Er zijn nog geen menu's.</p>
+    </div>
+
+    <table ng-show="vm.hasMenus()" class="table">
         <thead>
         <tr>
-            <th>Gerecht</th>
-            <th>Beschrijving</th>
+            <th>Soort gerecht</th>
+            <th>Product</th>
             <th>Prijs</th>
             <th>Datum</th>
             <th></th>
@@ -28,7 +34,7 @@
         <tbody>
         <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-title'">
             <td>{{menu.title}}</td>
-            <td>{{menu.description}}</td>
+            <td>{{menu.product.description}}</td>
             <td>{{menu.price | currency: '€'}}</td>
             <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
             <td><a href="/#/restaurants/{{vm.restaurant._id}}/menus/{{menu._id}}">Bewerk</td>

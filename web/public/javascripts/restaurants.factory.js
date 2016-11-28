@@ -2,7 +2,7 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
 
     var o = {
         restaurants: [],
-        menus: [],
+
         getAll: getAll,
         create: create,
         edit: edit,
@@ -68,10 +68,8 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         return $http.delete('/restaurants/' + id + '/menus/' + menuid, {
             headers: {
                 Authorization: 'Bearer ' + auth.getToken()
-            },
-        }).success(function(data){
-             o.menus.splice(o.menus.indexOf(menu), 1)
-        })
+            }
+        });
     }
 
     return o;

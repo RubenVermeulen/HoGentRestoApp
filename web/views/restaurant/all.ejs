@@ -4,10 +4,6 @@
             <li class="active">Resto's</li>
         </ol>
 
-        <div ng-show="vm.alertmessage" class="alert alert-{{vm.alerttype}}" role="alert">
-            {{vm.alertmessage}}
-        </div>
-
         <div class="titleflex">
             <div class="titleflexattr">
                 <h1>{{vm.restaurants.length}} Resto's</h1>
@@ -17,8 +13,13 @@
             </div>
         </div>
 
+        <% include ../partials/alert.ejs %>
 
-        <div class="table-responsive">
+        <div ng-hide="vm.hasRestaurants()">
+            <p>Er zijn nog geen restaurants.</p>
+        </div>
+
+        <div ng-show="vm.hasRestaurants()" class="table-responsive">
             <table class="table">
                 <thead>
                 <tr>
