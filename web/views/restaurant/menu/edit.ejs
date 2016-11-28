@@ -40,8 +40,7 @@
                         <div class="form-group">
                             <label for="product" class="col-sm-2 control-label">Beschrijving</label>
                             <div class="col-sm-10">
-                                <select ng-init="vm.menu.product = vm.menu.product"
-                                        ng-options="product as product.description for product in vm.products"
+                                <select ng-options="product.description for product in vm.products track by product._id"
                                         ng-model="vm.menu.product" id="product" class="form-control"></select>
                             </div>
                         </div>

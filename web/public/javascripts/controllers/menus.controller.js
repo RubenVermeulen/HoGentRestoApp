@@ -9,7 +9,6 @@ angular.module('hogentResto').controller('MenusController',
         vm.products = products.products;
 
         vm.editMenu = editMenu;
-        vm.selectedProduct = selectedProduct;
 
         var alert = alertService.getAlert();
         if(alert.message != ''){
@@ -45,24 +44,8 @@ angular.module('hogentResto').controller('MenusController',
                 availableAt: vm.menu.availableAt
             });
 
-            alertService.setAlert('Menu is aangepast.', 'success');
-            $state.go($state.current, {}, {
-                reload: true
-            });
-
-        }
-
-        function selectedProduct() {
-            for (var key in vm.products) {
-                if (vm.products.hasOwnProperty(key)) {
-                    if (vm.products[key] === vm.menu.product._id) {
-                        console.log(key);
-                        return key;
-                    }
-                }
-            }
-            console.log(0);
-            return 0;
+            vm.alertMessage = 'Menu is aangepast.';
+            vm.alertType = 'success';
         }
     }
 );
