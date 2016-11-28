@@ -20,7 +20,12 @@ angular.module('hogentResto').controller('MenusController',
         function editMenu() {
 
             if (vm.delete) {
-                restaurants.deleteMenu(vm.restaurant._id, vm.menu._id, vm.menu);
+                restaurants.deleteMenu(vm.restaurant._id, vm.menu._id, vm.menu)
+                .error(function(error){
+                    vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                    vm.alertType = 'danger';
+                    return;
+                });
 
                 angular.element("#myModal").modal('hide');
                 angular.element(".modal-backdrop.fade.in").remove();
@@ -56,6 +61,10 @@ angular.module('hogentResto').controller('MenusController',
                 product: vm.menu.product,
                 price: vm.menu.price,
                 availableAt: vm.menu.availableAt
+            }).error(function(error){
+                vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                vm.alertType = 'danger';
+                return;
             });
 
             vm.alertMessage = 'Menu is aangepast.';

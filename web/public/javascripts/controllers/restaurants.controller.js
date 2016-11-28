@@ -34,7 +34,11 @@ angular.module('hogentResto').controller('RestaurantsController',
             }
 
             if(vm.delete){
-                restaurants.deleteRestaurant(restaurant._id);
+                restaurants.deleteRestaurant(restaurant._id).error(function(error){
+                    vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                    vm.alertType = 'danger';
+                    return;
+                });;
                 angular.element("#myModal").modal('hide');
                 angular.element(".modal-backdrop.fade.in").remove();
                 alertService.setAlert('Resto ' + vm.restaurant.name + ' is succesvol verwijderd.', 'success');
@@ -51,6 +55,10 @@ angular.module('hogentResto').controller('RestaurantsController',
                     long: vm.restaurant.coordinates.long
                 },
                 urlImage: vm.restaurant.urlImage
+            }).error(function(error){
+                vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                vm.alertType = 'danger';
+                return;
             });
 
             alertService.setAlert('Resto ' + vm.restaurant.name + ' is aangepast.', 'success');
@@ -88,6 +96,10 @@ angular.module('hogentResto').controller('RestaurantsController',
                 vm.restaurant.menus.push(menu);
                 alertService.setAlert('Menu ' + vm.title + ' is toegevoegd.', 'success');
                 $state.go('menus', {id: restaurant._id});
+            }).error(function(error){
+                vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                vm.alertType = 'danger';
+                return;
             });
         }
 
@@ -100,6 +112,10 @@ angular.module('hogentResto').controller('RestaurantsController',
                     }
                 }
 
+            }).error(function(error){
+                vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                vm.alertType = 'danger';
+                return;
             });
 
             angular.element("#myModal").modal('hide');

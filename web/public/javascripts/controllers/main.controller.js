@@ -40,8 +40,9 @@ angular.module('hogentResto').controller('MainController',
                 },
                 urlImage: vm.urlImage
             }).error(function(error){
-                alertService.setAlert(error.message, 'danger');
-                $state.go($state.current, {}, {reload: true});
+                vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                vm.alertType = 'danger';
+                return;
             }).then(function(){
                 alertService.setAlert('Resto ' + vm.name + ' is toegevoegd.', 'success');
                 $state.go('home');
