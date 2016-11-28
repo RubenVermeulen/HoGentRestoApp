@@ -19,7 +19,17 @@ angular.module('hogentResto').controller('RestaurantsController',
         }
 
         function editRestaurant() {
-            if (!vm.restaurant.name || vm.restaurant.name === '') {
+            if (!vm.restaurant.name || vm.restaurant.name === '' || !vm.restaurant.address || vm.restaurant.address === '' || !vm.restaurant.openingHours || vm.restaurant.openingHours === '' ||
+            !vm.restaurant.coordinates.lat || vm.restaurant.coordinates.lat === '' || !vm.restaurant.coordinates.long || vm.restaurant.coordinates.long === '' ||
+            !vm.restaurant.urlImage || vm.restaurant.urlImage === '') {
+                 vm.alertMessage = 'Gelieve alle velden in te vullen.';
+                 vm.alertType = 'danger';
+                 return;
+            }
+
+            if (!$.isNumeric(vm.restaurant.coordinates.lat) || !$.isNumeric(vm.restaurant.coordinates.long)){
+                vm.alertMessage = 'Coördinaten moeten een getal zijn.';
+                vm.alertType = 'danger';
                 return;
             }
 
@@ -51,7 +61,21 @@ angular.module('hogentResto').controller('RestaurantsController',
 
         function addMenu() {
 
-            if (!vm.title || vm.title === '' || !vm.price || vm.price === '') {
+            if (!vm.title || vm.title === '' || !vm.price || vm.price === '' || !vm.product || vm.product === '' || !vm.availableAt || vm.availableAt ==='') {
+                vm.alertMessage = 'Gelieve alle velden in te vullen.';
+                vm.alertType = 'danger';
+                return;
+            }
+
+            if (!$.isNumeric(vm.price)){
+                vm.alertMessage = 'Prijs moeten een getal zijn.';
+                vm.alertType = 'danger';
+                return;
+            }
+
+            if (!angular.isDate(vm.availableAt)){
+                vm.alertMessage = 'Gelieve een geldige datum in te geven, volgens het formaat dd/mm/jjjj';
+                vm.alertType = 'danger';
                 return;
             }
 

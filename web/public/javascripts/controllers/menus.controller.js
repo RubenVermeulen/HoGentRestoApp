@@ -33,7 +33,21 @@ angular.module('hogentResto').controller('MenusController',
 
             }
 
-            if (!vm.menu.title || vm.menu.title === '' || !vm.menu.price || vm.menu.price === '') {
+            if (!vm.menu.title || vm.menu.title === '' || !vm.menu.price || vm.menu.price === '' || !vm.menu.product || vm.menu.product === '' || !vm.menu.availableAt || vm.menu.availableAt ==='') {
+                vm.alertMessage = 'Gelieve alle velden in te vullen.';
+                vm.alertType = 'danger';
+                return;
+            }
+
+            if (!$.isNumeric(vm.menu.price)){
+                vm.alertMessage = 'Prijs moeten een getal zijn.';
+                vm.alertType = 'danger';
+                return;
+            }
+
+            if (!angular.isDate(vm.menu.availableAt)){
+                vm.alertMessage = 'Gelieve een geldige datum in te geven, volgens het formaat dd/mm/jjjj';
+                vm.alertType = 'danger';
                 return;
             }
 
