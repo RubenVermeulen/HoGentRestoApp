@@ -81,7 +81,7 @@ angular.module('hogentResto').controller('ProductsController',
                 vm.alertType = "success";
             });
 
-/* Delete Bootstrap modal */
+            /* Delete Bootstrap modal */
             angular.element("#myModal").modal('hide');
             angular.element(".modal-backdrop.fade.in").remove();
             angular.element(".modal-open").removeClass("modal-open");

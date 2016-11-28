@@ -10,5 +10,14 @@ angular.module('hogentResto').controller('NavController',
             auth.logOut();
             $state.go('home');
         }
+
+        angular.element(function(){
+            angular.element('.nav a').on('click', function(){
+                if(angular.element('.navbar-toggle').css('display') !='none'){
+                    angular.element(".navbar-toggle").trigger( "click" );
+                }
+            });
+        });
+
     }
 );

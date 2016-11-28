@@ -215,4 +215,9 @@ h1{
     .titleflex p button, .titleflex p a{
         margin-bottom: 0.5em;
     }
+
+    .navbar-nav li a{
+        line-height: 50px;
+        height: 50px;
+    }
 }
