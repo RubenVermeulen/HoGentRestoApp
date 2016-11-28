@@ -1,5 +1,5 @@
 angular.module('hogentResto').controller('NavController',
-    function(auth) {
+    function($state, auth) {
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
