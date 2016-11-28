@@ -8,30 +8,12 @@
             <li class="active">Nieuwe menu</li>
         </ol>
 
-        <div ng-show="vm.isLoggedIn()">
 
-            <ol class="breadcrumb">
-                <li><a href="/#/home">Resto's</a></li>
-                <li><a href="/#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
-                <li><a href="/#/restaurants/{{vm.restaurant._id}}/menus">Menu's</a></li>
-                <li class="active">Nieuwe menu</li>
-            </ol>
+        <% include ../../partials/alert.ejs %>
 
-            <% include ../../partials/alert.ejs %>
-
-            <div class="titleflex">
-                <div class="titleflexattr">
-                    <h1>{{vm.menu.title}} <small class="">Menu</small> </h1>
-                </div>
-                <div class="titleflexattr">
-                    <p class="titleadd">
-                        <a href="/#/restaurants/{{vm.restaurant._id}}/menus" class="btn btn-default">Terug</a>
-                        <button type="submit" class="btn btn-primary btn-latest">Sla menu op</button>
-                        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </button>
-                    </p>
-                </div>
+        <div class="titleflex">
+            <div class="titleflexattr">
+                <h1>{{vm.menu.title}} <small class="">Menu</small> </h1>
             </div>
             <div class="titleflexattr">
                 <p class="titleadd">
@@ -44,34 +26,33 @@
             </div>
         </div>
 
-            <div class="row form-edit">
-                <div class="col-sm-8">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">Gerecht</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" ng-model="vm.menu.title" placeholder="Gerecht" required>
-                            </div>
+        <div class="row form-edit">
+            <div class="col-sm-8">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">Gerecht</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="title" ng-model="vm.menu.title" placeholder="Gerecht" required>
                         </div>
-                        <div class="form-group">
-                            <label for="product" class="col-sm-2 control-label">Beschrijving</label>
-                            <div class="col-sm-10">
-                                <select ng-init="vm.menu.product = vm.menu.product"
-                                        ng-options="product as product.description for product in vm.products"
-                                        ng-model="vm.menu.product" id="product" class="form-control" required></select>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="product" class="col-sm-2 control-label">Beschrijving</label>
+                        <div class="col-sm-10">
+                            <select ng-init="vm.menu.product = vm.menu.product"
+                                    ng-options="product as product.description for product in vm.products"
+                                    ng-model="vm.menu.product" id="product" class="form-control" required></select>
                         </div>
-                        <div class="form-group">
-                            <label for="price" class="col-sm-2 control-label">Prijs</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="price" ng-model="vm.menu.price" placeholder="Prijs" required>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="col-sm-2 control-label">Prijs</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="price" ng-model="vm.menu.price" placeholder="Prijs" required>
                         </div>
-                        <div class="form-group">
-                            <label for="date" class="col-sm-2 control-label">Datum</label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" id="date" ng-model="vm.menu.availableAt" value="{{vm.menu.availableAt | date:'yyyy-MM-dd'}}" required>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="col-sm-2 control-label">Datum</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" id="date" ng-model="vm.menu.availableAt" value="{{vm.menu.availableAt | date:'yyyy-MM-dd'}}" required>
                         </div>
                     </div>
                 </div>

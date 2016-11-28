@@ -6,16 +6,8 @@
             <li class="active">Nieuwe Resto</li>
         </ol>
 
+            <% include ../partials/alert.ejs %>
 
-            <ol class="breadcrumb">
-                <li><a href="/#/home">Resto's</a></li>
-                <li class="active">Nieuwe Resto</li>
-            </ol>
-
-            <div ng-show="vm.alertmessage" class="alert alert-danger alert-dismissible" role="alert">
-                {{vm.alertmessage}}
-            </div>
-            
         <div class="titleflex">
             <div class="titleflexattr">
                 <h1>{{vm.name}} <small class="">Details</small> </h1>
@@ -70,7 +62,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <img class="center-block img-responsive" src="{{vm.restaurant.urlImage}}"/>
+                <img class="center-block img-responsive" src="{{vm.urlImage}}"/>
             </div>
         </div>
     </form>
