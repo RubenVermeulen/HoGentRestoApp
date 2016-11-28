@@ -9,7 +9,9 @@ var RestaurantSchema = new mongoose.Schema({
     },
     openingHours: String,
     menus: [{type: mongoose.Schema.Types.ObjectId, ref: 'Menu'}],
-    sensors: [{type: mongoose.Schema.Types.ObjectId,ref: 'Sensor'}]
+    sensors: [{type: mongoose.Schema.Types.ObjectId,ref: 'Sensor'}],
+    prediction: [{type: mongoose.Schema.Types.ObjectId, ref: 'Prediction'}]
+
 });
 
 mongoose.model('Restaurant', RestaurantSchema);
