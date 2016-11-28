@@ -54,7 +54,7 @@ router.post('/', auth, function(req, res, next) {
 
     var body = req.body;
 
-    if (!body.description && !body.allergens) {
+    if (!body.description && body.description === '') {
         return res.status(400).json({message: "Please fill in all fields"});
     }
 
