@@ -103,6 +103,7 @@ router.get('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
 });
 
+
 router.post('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
     if (!req.body.time || !req.body.occupancy) {
@@ -111,7 +112,7 @@ router.post('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
     var report = new SensorReport();
 
-    report.time = new Date(parseInt(req.body.time)); //convert unix timestamp to Date
+    report.time = new Date(parseInt(req.body.time)*1000); //convert unix timestamp to Date
     report.occupancy = parseFloat(req.body.occupancy);
 
     report.save(function(err, report) {
@@ -144,5 +145,35 @@ router.get('/:restaurant/sensors/:sensor/latest', function(req, res, next){
         res.json(report[0]);
     });
 });
+
+router.post('/:restaurant/sensors/:sensor/reportset', function(req, res, next) {
+
+    var reports = req.body.reportSet;
+
+    for(var i=0;i<reports.length;i++){
+        console.log(i);
+        var report = new SensorReport();
+
+        report.time = new Date(parseInt(reports[i].time)*1000); //convert unix timestamp to Date
+        report.occupancy = parseFloat(reports[i].occupancy);
+
+        report.save(function(err, report) {
+            if (err) {
+                return next(err);
+            }
+
+            req.sensor.reports.push(report);
+            req.sensor.save(function(err, sensor) {
+                if (err) {
+                    return next(err);
+                }
+            });
+        });
+    }
+    console.log("looped");
+    res.json(req.sensor);
+    console.log("responded");
+});
+
 
 module.exports = router;
