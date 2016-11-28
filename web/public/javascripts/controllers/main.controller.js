@@ -1,5 +1,5 @@
 angular.module('hogentResto').controller('MainController',
-    function($state, restaurants, auth, alertService) {
+    function($state, $filter, restaurants, auth, alertService) {
 
         var vm = this;
 
@@ -19,12 +19,14 @@ angular.module('hogentResto').controller('MainController',
         function addRestaurant() {
             if (!vm.name || vm.name === '' || !vm.address || vm.address === '' || !vm.openingHours || vm.openingHours === '' || !vm.lat || vm.lat === '' || !vm.long || vm.long === ''
              || !vm.urlImage || vm.urlImage === '') {
-                 vm.alertmessage = 'Gelieve alle velden in te vullen.';
+                 vm.alertMessage = 'Gelieve alle velden in te vullen.';
+                 vm.alertType = 'danger';
                  return;
             }
 
-            if (false){
-                vm.alertmessage = 'Coördinaten moeten een nummer zijn.';
+            if (!$.isNumeric(vm.lat) || !$.isNumeric(vm.long)){
+                vm.alertMessage = 'Coördinaten moeten een getal zijn.';
+                vm.alertType = 'danger';
                 return;
             }
 
