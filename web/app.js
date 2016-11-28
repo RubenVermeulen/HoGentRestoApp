@@ -29,7 +29,7 @@ var menu = require('./routes/menu');
 var feedback = require('./routes/feedback');
 var occupancy = require('./routes/occupancy');
 var product = require('./routes/product');
-var sensorReport = require('./routes/sensor')
+var sensorReport = require('./routes/sensor');
 
 var app = express();
 

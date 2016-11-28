@@ -131,4 +131,18 @@ router.post('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
 });
 
+router.get('/:restaurant/sensors/:sensor/latest', function(req, res, next){
+
+    req.sensor.populate('reports', function(err, post) {
+       if (err) {
+            return next(err);
+       }
+
+        var report = req.sensor.reports.sort(function(a,b){
+            return Date.parse(a.time) < Date.parse(b.time);
+        });
+        res.json(report[0]);
+    });
+});
+
 module.exports = router;
