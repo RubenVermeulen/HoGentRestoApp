@@ -1,0 +1,61 @@
+<script type="text/ng-template" id="/menus.html">
+    <ol class="breadcrumb">
+        <li><a href="/#/home">Resto's</a></li>
+        <li><a href="#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
+        <li class="active">Menu's</li>
+    </ol>
+
+    <div class="titleflex">
+        <div class="titleflexattr">
+            <h1>{{vm.restaurant.menus.length}} Menu's</h1>
+        </div>
+        <div class="titleflexattr">
+            <p class="titleadd"><a href="/#/restaurants/{{vm.restaurant._id}}/menus/create" class="btn btn-primary">Voeg menu toe</a></p>
+        </div>
+    </div>
+
+    <% include ../../partials/alert.ejs %>
+
+    <div ng-hide="vm.hasMenus()">
+        <p>Er zijn nog geen menu's.</p>
+    </div>
+
+    <table ng-show="vm.hasMenus()" class="table">
+        <thead>
+        <tr>
+            <th>Soort gerecht</th>
+            <th>Product</th>
+            <th>Prijs</th>
+            <th>Datum</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-title'">
+            <td>{{menu.title}}</td>
+            <td>{{menu.product.description}}</td>
+            <td>{{menu.price | currency: '€'}}</td>
+            <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
+            <td><a href="/#/restaurants/{{vm.restaurant._id}}/menus/{{menu._id}}">Bewerk</td>
+            <td><a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}">Verwijder</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p>Bent u zeker dat u het menu {{vm.menuobj.title}} wil verwijderen?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
+                    <button type="submit" ng-click="vm.deleteMenu()" class="btn btn-danger">Verwijder menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>

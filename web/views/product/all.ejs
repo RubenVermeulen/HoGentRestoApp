@@ -1,0 +1,62 @@
+<script type="text/ng-template" id="/products.html">
+    <ol class="breadcrumb">
+        <li class="active">Producten</li>
+    </ol>
+
+    <div class="titleflex">
+        <div class="titleflexattr">
+            <h1>{{vm.products.length}} Producten</h1>
+        </div>
+        <div class="titleflexattr">
+            <p class="titleadd"><a href="/#/products/create" class="btn btn-primary">Voeg product toe</a></p>
+        </div>
+    </div>
+
+    <div ng-show="vm.alertMessage" class="alert alert-{{vm.alertType}} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{vm.alertMessage}}
+    </div>
+
+    <div ng-hide="vm.hasProducts()">
+        <p>Er zijn nog geen producten.</p>
+    </div>
+
+    <table ng-show="vm.hasProducts()" class="table">
+        <thead>
+        <tr>
+            <th>Beschrijving</th>
+            <th>Allergenen</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="product in vm.products | orderBy: '-description'">
+            <td>{{product.description}}</td>
+            <td>
+                <div ng-repeat="allergen in product.allergens">
+                    {{allergen}}
+                </div>
+            </td>
+            <td><a href="/#/products/{{product._id}}">Bewerk</td>
+            <td><a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.productPendingDelete={id: product._id, description: product.description}">Verwijder</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p>Bent u zeker dat u het product {{vm.productPendingDelete.description}} wil verwijderen?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
+                    <button type="submit" ng-click="vm.deleteProduct()" class="btn btn-danger">Verwijder product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>
