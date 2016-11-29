@@ -152,7 +152,7 @@ angular.module('hogentResto').controller('RestaurantsController',
                 }
             });
 
-            var today = new Date("2016-12-10");
+            var today = new Date();
 
             if (today.getDay() === 6){
                 vm.date = today.setDate(today.getDate() + day + 1);
