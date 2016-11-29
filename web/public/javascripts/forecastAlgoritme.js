@@ -12,7 +12,10 @@ var j = schedule.scheduleJob(rule, function(){
   var today = new Date();
   var dayOfWeek = vandaag.getDate();
 
+  //bevat een rij van sensorreports van vandaag (tijdstip,drukte)
   var reportsTodayTillNow = SensorReport.findReportsOfThisDay();
+
+  //alle sensorreports van die bepaalde weekdag (alle reports vd maandagen bv)
   var reportsOfThisWeekDay = SensorReport.findAllReportsWithCurrentDayOfTheWeek();
 
   var reports1weekgeleden = [];
@@ -105,6 +108,8 @@ var j = schedule.scheduleJob(rule, function(){
 
   var vorigData = reportsTodayTillNow[reportsTodayTillNow.length -1].occupancy;
 
+  var forecast = [];
+
     for (i=0; i<aantalNodigeVoorspellingen; i++){
 
       //het gemiddelde van nu in functie van aantal nodigevoorspellingen en i
@@ -112,34 +117,10 @@ var j = schedule.scheduleJob(rule, function(){
 
       var gemiddeldeVorig = gewogengemiddeldePerTijdslot[reportsTodayTillNow[reportsTodayTillNow.length -1 + i].time];
 
-
-
-
       var voorspellingNu = gemiddeldeNu * (vorigData / gemiddeldeVorig);
 
+      forecast[i] = voorspellingNu;
+
       vorigData = voorspellingNu;
-
-      voorspelling[i] = voorspellingNu;
-
-
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
