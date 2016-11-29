@@ -8,5 +8,17 @@ var SensorReportSchema = new mongoose.Schema({
 
 mongoose.model('SensorReport', SensorReportSchema);
 
-  return this.model('SensorReport').find( this.time.getDay() , cb);
+SensorReportSchema.methods.findAllReportsWithCurrentDayOfTheWeek = function(){
+var vandaag = new Date();
+
+
+  return this.model('SensorReport').aggregate("time": {$dayOfWeek: vandaag.getDay()}).sort({time:1});
+};
+
+SensorReportSchema.methods.findReportsOfThisDay = function(){
+  var vandaag = new Date();
+  vandaag.setHours(0);
+  vandaag.setMinutes(0);
+
+  return this.model('SensorReport').find("time":{"$gte":new Date()}).sort({time:1});
 };
