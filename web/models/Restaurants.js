@@ -11,7 +11,8 @@ var RestaurantSchema = new mongoose.Schema({
     menus: [{type: mongoose.Schema.Types.ObjectId, ref: 'Menu'}],
     urlImage: String,
     feedbacks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feedback'}],
-    sensors: [{type: mongoose.Schema.Types.ObjectId,ref: 'Sensor'}],
+    sensorsSelfservice: [{type: mongoose.Schema.Types.ObjectId,ref: 'Sensor'}],
+    sensorsZaal: [{type: mongoose.Schema.Types.ObjectId,ref: 'Sensor'}],
     prediction: [{type: mongoose.Schema.Types.ObjectId, ref: 'Prediction'}]
 });
 

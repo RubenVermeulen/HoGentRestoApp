@@ -28,6 +28,7 @@
                     <th>Openingsuren</th>
                     <th>Maaltijden</th>
                     <th ng-show="vm.isLoggedIn()"></th>
+                    <th ng-hide="vm.isLoggedIn()">Drukte</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,7 @@
                     <td>{{restaurant.openingHours}}</td>
                     <td><a href="#/restaurants/{{restaurant._id}}/menus">Menu's</a></td>
                     <td ng-show="vm.isLoggedIn()"><a href="#/restaurants/{{restaurant._id}}">Bewerk</a></td>
+                    <!--<td ng-hide="vm.isLoggedIn()">{{::vm.getOccupancy(restaurant._id)}}</td>-->
                 </tr>
                 </tbody>
             </table>

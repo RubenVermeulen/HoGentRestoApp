@@ -14,6 +14,24 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
+router.param('restaurant', function(req, res, next, id) {
+  var query = Restaurant.findById(id);
+
+  query.exec(function(err, restaurant) {
+    if (err) {
+      return next(err);
+    }
+
+    if ( ! restaurant) {
+      return next(new Error('can\'t find restaurant'));
+    }
+
+    req.restaurant = restaurant;
+
+    return next();
+  });
+});
+
 router.param('sensor', function(req, res, next, id) {
     var query = Sensor.findById(id);
 
@@ -32,19 +50,27 @@ router.param('sensor', function(req, res, next, id) {
     });
 });
 
+/* get all selfservices from resto */
 
-router.get('/:restaurant/sensors', function(req, res, next) {
+router.get('/:restaurant/sensors/selfservice', function(req, res, next) {
 
-    Sensor.find(function(err, sensors) {
+    req.restaurant.populate({
+        path: 'sensorsSelfservice',
+        model: 'Sensor'
+    }, function(err, restaurant) {
         if (err) {
             return next(err);
         }
-        res.json(sensors)
-    });
+
+        return res.json(restaurant.sensorsSelfservice);
+    })
+
 });
 
 
-router.post('/:restaurant/sensors', function(req, res, next) {
+/* create selfservice sensor - create sensor en wijs toe aan correct resto */
+
+router.post('/:restaurant/sensors/selfservice', function(req, res, next) {
 
     if (!req.body.description) {
         return res.status(400).json({message: 'Please fill out a description'});
@@ -57,11 +83,28 @@ router.post('/:restaurant/sensors', function(req, res, next) {
             return next(err);
         }
 
-        res.json(sensor);
+        req.restaurant.sensorsSelfservice.push(sensor);
+        req.restaurant.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+
+            res.json(sensor);
+        });
+
     });
 });
 
-router.delete('/:restaurant/sensor/:sensor', function(req, res, next) {
+/* delete selfservice sensor */
+
+router.delete('/:restaurant/sensors/selfservice/:sensor', function(req, res, next) {
+
+    req.restaurant.sensorsSelfservice.pull(req.sensor._id);
+    req.restaurant.save(function(err) {
+        if (err) {
+            return next(err);
+        }
+    });
 
     req.sensor.remove(function(err, sensor) {
         if (err) {
@@ -79,6 +122,35 @@ router.delete('/:restaurant/sensor/:sensor', function(req, res, next) {
 //-----------------------------------------
 
 
+
+/* get latest report selfservice v/e resto */
+
+router.get('/:restaurant/sensors/selfservice/latest', function(req, res, next){
+
+    req.restaurant.populate({
+        path: 'sensorsSelfservice',
+        model: 'Sensor'
+    }, function(err, restaurant) {
+        if (err) {
+            return next(err);
+        }
+
+        restaurant.sensorsSelfservice[0].populate('reports', function(err, post) {
+           if (err) {
+                return next(err);
+           }
+
+            var report = req.restaurant.sensorsSelfservice[0].reports.sort(function(a,b){
+                return Date.parse(a.time) < Date.parse(b.time);
+            });
+            res.json(report[0]);
+        });
+    })
+
+});
+
+/* get sensor */
+
 router.get('/:restaurant/sensors/:sensor', function(req, res, next) {
 
     req.sensor.populate('reports', function(err, post) {
@@ -90,6 +162,8 @@ router.get('/:restaurant/sensors/:sensor', function(req, res, next) {
     });
 
 });
+
+/* get all reports from sensor */
 
 router.get('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
@@ -103,6 +177,7 @@ router.get('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
 });
 
+/* create report for sensor - raspPi gebruikt dit */
 
 router.post('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
@@ -130,20 +205,6 @@ router.post('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
         });
     });
 
-});
-
-router.get('/:restaurant/sensors/:sensor/latest', function(req, res, next){
-
-    req.sensor.populate('reports', function(err, post) {
-       if (err) {
-            return next(err);
-       }
-
-        var report = req.sensor.reports.sort(function(a,b){
-            return Date.parse(a.time) < Date.parse(b.time);
-        });
-        res.json(report[0]);
-    });
 });
 
 router.post('/:restaurant/sensors/:sensor/reportset', function(req, res, next) {
