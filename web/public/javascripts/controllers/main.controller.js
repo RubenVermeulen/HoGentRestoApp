@@ -8,7 +8,6 @@ angular.module('hogentResto').controller('MainController',
         vm.restaurants = restaurants.restaurants;
         vm.addRestaurant = addRestaurant;
         vm.hasRestaurants = hasRestaurants;
-        vm.getOccupancy = getOccupancy;
 
         var alert = alertService.getAlert();
         if(alert.message != ''){
@@ -53,11 +52,6 @@ angular.module('hogentResto').controller('MainController',
 
         function hasRestaurants() {
             return vm.restaurants.length !== 0;
-        }
-
-        function getOccupancy(restoid){
-            console.log( restaurants.getOccupancy(restoid).occupancy);
-            return '0';
         }
 
     }

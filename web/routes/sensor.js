@@ -197,6 +197,7 @@ router.post('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
 
         req.sensor.reports.push(report);
         req.restaurant.occupation = report.occupancy;
+        req.restaurant.save();
         req.sensor.save(function(err, sensor) {
             if (err) {
                 return next(err);
