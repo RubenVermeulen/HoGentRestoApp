@@ -11,6 +11,11 @@ angular.module('hogentResto').controller('RestaurantsController',
         vm.deleteMenu = deleteMenu;
         vm.hasMenus = hasMenus;
 
+        vm.menus = toggleMenus(new Date().getDay());
+        vm.date;
+        vm.toggleMenus = toggleMenus;
+        vm.hasMenusThisDay = hasMenusThisDay;
+
         var alert = alertService.getAlert();
         if(alert.message != ''){
             vm.alertMessage = alert.message;
@@ -133,6 +138,31 @@ angular.module('hogentResto').controller('RestaurantsController',
 
         function hasMenus() {
             return vm.restaurant.menus.length !== 0;
+        }
+
+        function hasMenusThisDay() {
+            return vm.menus ? vm.menus.length !== 0 : false;
+        }
+
+        function toggleMenus(day){
+            vm.menus = restaurants.menus.filter(function(menu){
+                if((new Date(menu.availableAt)).getDay() === day){
+                    vm.date = menu.availableAt;
+                    return menu;
+                }
+            });
+
+            var today = new Date("2016-12-10");
+
+            if (today.getDay() === 6){
+                vm.date = today.setDate(today.getDate() + day + 1);
+            }
+            else{
+                vm.date = today.setDate(today.getDate() + day - today.getDay());
+            }
+
+            angular.element("#menu-days a").removeClass('btn-primary');
+            angular.element("#menu-day-" + day).addClass('btn-primary');
         }
     }
 );

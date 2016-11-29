@@ -2,7 +2,7 @@ angular.module('hogentResto').config(
     function ($stateProvider, $urlRouterProvider) {
         $stateProvider.state('home', {
             url: '/home',
-            templateUrl: '/home.html',
+            templateUrl: '/restaurantsStudents.html',
             controller: 'MainController',
             controllerAs: 'vm',
             resolve: {
@@ -38,6 +38,19 @@ angular.module('hogentResto').config(
         }).state('menus', {
             url: '/restaurants/{id}/menus',
             templateUrl: '/restaurantDetailsStudents.html',
+            controller: 'RestaurantsController',
+            controllerAs: 'vm',
+            resolve: {
+                restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
+                    return restaurants.get($stateParams.id);
+                }],
+                getWeekMenus: ['$stateParams', 'restaurants', function($stateParams, restaurants){
+                    return restaurants.getWeekMenus($stateParams.id);
+                }]
+            }
+        }).state('menusAdmin', {
+            url: '/admin/restaurants/{id}/menus',
+            templateUrl: '/menus.html',
             controller: 'RestaurantsController',
             controllerAs: 'vm',
             resolve: {

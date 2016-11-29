@@ -1,4 +1,4 @@
-<script type="text/ng-template" id="/home.html">
+<script type="text/ng-template" id="/restaurantsStudents.html">
 
         <ol class="breadcrumb">
             <li class="active">Resto's</li>
@@ -19,31 +19,6 @@
             <p>Er zijn nog geen restaurants.</p>
         </div>
 
-        <div ng-show="vm.hasRestaurants()" class="table-responsive">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Naam</th>
-                    <th>Adres</th>
-                    <th>Openingsuren</th>
-                    <th>Maaltijden</th>
-                    <th ng-show="vm.isLoggedIn()"></th>
-                    <th ng-hide="vm.isLoggedIn()">Drukte</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="restaurant in vm.restaurants | orderBy: 'name'">
-                    <td><a href="#/restaurants/{{restaurant._id}}/menus">{{restaurant.name}}</a></td>
-                    <td>{{restaurant.address}}</td>
-                    <td>{{restaurant.openingHours}}</td>
-                    <td><a href="#/restaurants/{{restaurant._id}}/menus">Menu's</a></td>
-                    <td ng-show="vm.isLoggedIn()"><a href="#/restaurants/{{restaurant._id}}">Bewerk</a></td>
-                    <td ng-hide="vm.isLoggedIn()">{{restaurant.occupation}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
         <div class="row">
             <div class="col-sm-6" ng-repeat="restaurant in vm.restaurants | orderBy: 'name'">
                 <div class="card">
@@ -53,8 +28,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-sm-8">
                             <h3 class="margin-bottom-0">{{ restaurant.name }}</h3>
+                        </div>
+                        <div class="col-sm-4 text-right">
+                            <a href="/#/restaurants/{{restaurant._id}}/menus" class="btn btn-primary" style="margin-top: 15px;">Menu's</a>
                         </div>
                     </div>
 

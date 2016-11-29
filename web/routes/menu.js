@@ -101,20 +101,27 @@ router.get('/:restaurant/menus/week', function(req, res, next) {
         end.setDate(today.getDate() + offsetEnd);
     }
 
-    req.restaurant.populate('menus', function(err, restaurant) {
-        if (err) {
-            return next(err);
-        }
-
-        var menus = restaurant.menus.filter(function(menu){
-            var availableAt = menu.availableAt;
-            if (new Date(menu.availableAt) >= start && new Date(menu.availableAt) < end){
-                return menu;
+    req.restaurant.populate({
+            path: 'menus',
+            model: 'Menu',
+            populate: {
+                path: 'product',
+                model: 'Product'
             }
-        })
+        }, function(err, restaurant) {
+            if (err) {
+                return next(err);
+            }
 
-        return res.json(menus);
-    });
+            var menus = restaurant.menus.filter(function(menu){
+                var availableAt = menu.availableAt;
+                if (new Date(menu.availableAt) >= start && new Date(menu.availableAt) < end){
+                    return menu;
+                }
+            })
+
+            return res.json(menus);
+        });
 
 });
 

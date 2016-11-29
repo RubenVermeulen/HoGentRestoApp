@@ -2,11 +2,13 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
 
     var o = {
         restaurants: [],
+        menus: [],
 
         getAll: getAll,
         create: create,
         edit: edit,
         get: get,
+        getWeekMenus: getWeekMenus,
         createMenu: createMenu,
         deleteRestaurant: deleteRestaurant,
         deleteMenu: deleteMenu,
@@ -42,6 +44,13 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
     function get(id) {
         return $http.get('/restaurants/' + id).then(function (res) {
             return res.data;
+        });
+    }
+
+    function getWeekMenus(id) {
+        return $http.get('/restaurants/' + id + '/menus/week' ).success(function (data) {
+            o.menus = data;
+            console.log(data);
         });
     }
 
