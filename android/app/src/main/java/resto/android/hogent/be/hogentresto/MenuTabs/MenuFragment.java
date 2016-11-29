@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -22,7 +23,7 @@ import resto.android.hogent.be.hogentresto.MenuContext.MenuContext;
 import resto.android.hogent.be.hogentresto.R;
 import resto.android.hogent.be.hogentresto.RestaurantActivity;
 import resto.android.hogent.be.hogentresto.models.Menu;
-
+import resto.android.hogent.be.hogentresto.models.WrapContentViewPager;
 
 /**
  * Created by jonas on 28/11/2016.
@@ -31,9 +32,15 @@ import resto.android.hogent.be.hogentresto.models.Menu;
 // In this case, the fragment displays simple text based on the page
 public class MenuFragment extends Fragment {
 
+
     View view;
     TextView tvTitle;
     TextView datum;
+    View child;
+
+    TextView title;
+    TextView description;
+    TextView price;
 
     public static final String ARG_PAGE = "ARG_PAGE";
     MenuContext context = new MenuContext();
@@ -54,7 +61,9 @@ public class MenuFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mPage = getArguments().getInt(ARG_PAGE);
+
 
     }
 
@@ -67,7 +76,9 @@ public class MenuFragment extends Fragment {
         view = inflater.inflate(R.layout.menu_fragment, container, false);
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         datum = (TextView) view.findViewById(R.id.menuDate);
+        LinearLayout fragmentlist = (LinearLayout) view.findViewById(R.id.fragment_list_id);
 
+        menus = context.getMenus();
         menuMaandag = menus.get("maandag");
         menuDinsdag = menus.get("dinsdag");
         menuWoensdag = menus.get("woensdag");
@@ -75,20 +86,88 @@ public class MenuFragment extends Fragment {
         menuVrijdag = menus.get("vrijdag");
 
         switch (mPage){
+
             case 1: tvTitle.setText("Maandag");
+
                 datum.setText(df.format(menuMaandag.get(0).getAvailableAt()));
+                for (Menu m : menuMaandag) {
+                    child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
+
+                    title = (TextView) child.findViewById(R.id.title);
+                    description = (TextView) child.findViewById(R.id.description);
+                    price = (TextView) child.findViewById(R.id.price);
+
+                    title.setText(m.getTitle());
+                    description.setText(m.getProduct().getDescription());
+                    price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+
+                    fragmentlist.addView(child);
+                }
+
                 break;
             case 2: tvTitle.setText("Dinsdag");
                 datum.setText(df.format(menuDinsdag.get(0).getAvailableAt()));
+                for (Menu m : menuDinsdag) {
+                    child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
+
+                    title = (TextView) child.findViewById(R.id.title);
+                    description = (TextView) child.findViewById(R.id.description);
+                    price = (TextView) child.findViewById(R.id.price);
+
+                    title.setText(m.getTitle());
+                    description.setText(m.getProduct().getDescription());
+                    price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+
+                    fragmentlist.addView(child);
+                }
                 break;
             case 3: tvTitle.setText("Woensdag");
                 datum.setText(df.format(menuWoensdag.get(0).getAvailableAt()));
+                for (Menu m : menuWoensdag) {
+                    child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
+
+                    title = (TextView) child.findViewById(R.id.title);
+                    description = (TextView) child.findViewById(R.id.description);
+                    price = (TextView) child.findViewById(R.id.price);
+
+                    title.setText(m.getTitle());
+                    description.setText(m.getProduct().getDescription());
+                    price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+
+                    fragmentlist.addView(child);
+                }
                 break;
             case 4: tvTitle.setText("Donderdag");
                 datum.setText(df.format(menuDonderdag.get(0).getAvailableAt()));
+                for (Menu m : menuDonderdag) {
+                    child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
+
+                    title = (TextView) child.findViewById(R.id.title);
+                    description = (TextView) child.findViewById(R.id.description);
+                    price = (TextView) child.findViewById(R.id.price);
+
+                    title.setText(m.getTitle());
+                    description.setText(m.getProduct().getDescription());
+                    price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+
+                    fragmentlist.addView(child);
+                }
                 break;
             case 5: tvTitle.setText("Vrijdag");
                 datum.setText(df.format(menuVrijdag.get(0).getAvailableAt()));
+                for (Menu m : menuVrijdag) {
+                    child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
+
+                    title = (TextView) child.findViewById(R.id.title);
+                    description = (TextView) child.findViewById(R.id.description);
+                    price = (TextView) child.findViewById(R.id.price);
+
+                    title.setText(m.getTitle());
+                    description.setText(m.getProduct().getDescription());
+                    price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+
+                    fragmentlist.addView(child);
+                }
                 break;
 
         }
@@ -100,5 +179,6 @@ public class MenuFragment extends Fragment {
     public void setMenus(Map<String, List<Menu>> menus) {
         this.menus = menus;
     }
+
 
 }

@@ -47,13 +47,13 @@ public class MenuContext {
     Menu menu8 = new Menu( "Soep", p, 0.60, nov30);
     Menu menu9 = new Menu("Dagschotel" , p, 3.80, nov30);
 
-    Menu menu10 = new Menu("Frietjes", p, 0.80, nov29);
-    Menu menu11 = new Menu( "Soep", p, 0.60, nov29);
-    Menu menu12 = new Menu("Dagschotel" , p, 3.80, nov29);
+    Menu menu10 = new Menu("Frietjes", p, 0.80, dec1);
+    Menu menu11 = new Menu( "Soep", p, 0.60, dec1);
+    Menu menu12 = new Menu("Dagschotel" , p, 3.80, dec1);
 
-    Menu menu13 = new Menu("Frietjes", p, 0.80, nov30);
-    Menu menu14 = new Menu( "Soep", p, 0.60, nov30);
-    Menu menu15 = new Menu("Dagschotel" , p, 3.80, nov30);
+    Menu menu13 = new Menu("Frietjes", p, 0.80, dec2);
+    Menu menu14 = new Menu( "Soep", p, 0.60, dec2);
+    Menu menu15 = new Menu("Dagschotel" , p, 3.80, dec2);
 
     public Map<String, List<Menu>> menus = new HashMap<String, List<Menu>>() {
 

@@ -98,7 +98,7 @@ public class RestaurantActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabsStrip.setViewPager(viewPager);
 
-        getMenus();
+        //getMenus();
 
     }
 
