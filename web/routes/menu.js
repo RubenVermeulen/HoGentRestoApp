@@ -78,6 +78,11 @@ router.get('/:restaurant/menus/week', function(req, res, next) {
         offsetStart,
         offsetEnd;
 
+     today.setHours(0);
+     today.setMinutes(0);
+     today.setSeconds(0);
+     today.setMilliseconds(0);
+
     if (today.getDay() > 0 && today.getDay() < 6) {
         start = new Date(today);
         end.setDate(today.getDate() + 6 - today.getDay())
@@ -96,10 +101,17 @@ router.get('/:restaurant/menus/week', function(req, res, next) {
         end.setDate(today.getDate() + offsetEnd);
     }
 
-    Menu.find({availableAt: {$gte: start, $lt: end}}, function(err, menus) {
+    req.restaurant.populate('menus', function(err, restaurant) {
         if (err) {
             return next(err);
         }
+
+        var menus = restaurant.menus.filter(function(menu){
+            var availableAt = menu.availableAt;
+            if (new Date(menu.availableAt) >= start && new Date(menu.availableAt) < end){
+                return menu;
+            }
+        })
 
         return res.json(menus);
     });
