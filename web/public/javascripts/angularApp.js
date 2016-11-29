@@ -37,7 +37,7 @@ angular.module('hogentResto').config(
             }
         }).state('menus', {
             url: '/restaurants/{id}/menus',
-            templateUrl: '/menus.html',
+            templateUrl: '/restaurantDetailsStudents.html',
             controller: 'RestaurantsController',
             controllerAs: 'vm',
             resolve: {

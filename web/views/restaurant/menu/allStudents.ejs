@@ -1,0 +1,132 @@
+<script type="text/ng-template" id="/restaurantDetailsStudents.html">
+
+    <ol class="breadcrumb">
+        <li><a href="/#/home">Resto's</a></li>
+        <li class="active">{{vm.restaurant.name}}</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <!-- Restaurant details -->
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="restaurant-cover" style="background-image: url('{{ vm.restaurant.urlImage }}')"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3 class="margin-bottom-0">{{ vm.restaurant.name }}</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <hr>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4><span class="glyphicon glyphicon-calendar" style="padding-right: 5px; font-size: 0.875em;"></span> Openingsuren</h4>
+                                        <p>{{ vm.restaurant.openingHours }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4><span class="glyphicon glyphicon-map-marker" style="padding-right: 5px; font-size: 0.875em;"></span> Adres</h4>
+                                        <p>{{ vm.restaurant.address }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="circle-traffic">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graph traffic -->
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>Grafiek drukte</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <hr>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week menu-->
+        <div class="col-md-6">
+            <div class="card">
+
+                <div class="row text-center menu-days">
+                    <a href="" class="btn btn-primary">Maandag</a>
+                    <a href="" class="btn btn-default">Dinsdag</a>
+                    <a href="" class="btn btn-default">Woensdag</a>
+                    <a href="" class="btn btn-default">Donderdag</a>
+                    <a href="" class="btn btn-default">Vrijdag</a>
+                </div>
+
+                <div class="row">
+                    <hr>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h3 class="margin-0">Weekmenu</h3>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <h3 class="margin-0">29/11/2016</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr>
+                </div>
+
+                <div class="row" ng-hide="vm.hasMenus()">
+                    <div class="col-xs-12">
+
+                        <p>Er zijn geen menu's beschikbaar voor deze dag.</p>
+                    </div>
+                </div>
+
+                <div class="menu">
+                    <div ng-repeat="menu in vm.restaurant.menus | orderBy : 'title'" class="menu-item">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p><strong>{{ menu.title }}</strong></p>
+                                <div>{{ menu.product.description }}</div>
+
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                {{ menu.price | currency: '€ ' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-hide="vm.hasMenus()">
+        <p>Er zijn nog geen menu's.</p>
+    </div>
+
+
+
+</script>
