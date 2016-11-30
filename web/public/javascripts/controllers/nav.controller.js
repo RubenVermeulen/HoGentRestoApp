@@ -1,5 +1,5 @@
 angular.module('hogentResto').controller('NavController',
-    function(auth) {
+    function($state, auth) {
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
@@ -8,7 +8,16 @@ angular.module('hogentResto').controller('NavController',
 
         function logOut() {
             auth.logOut();
-            $state.go('home');
+            $state.go('student-restaurants');
         }
+
+        angular.element(function(){
+            angular.element('.nav a').on('click', function(){
+                if(angular.element('.navbar-toggle').css('display') !='none'){
+                    angular.element(".navbar-toggle").trigger( "click" );
+                }
+            });
+        });
+
     }
 );

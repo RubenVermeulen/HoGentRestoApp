@@ -14,6 +14,8 @@ require('./models/Menus');
 require('./models/Feedbacks');
 require('./models/Occupancies');
 require('./models/Products');
+require('./models/Sensors');
+require('./models/SensorReports');
 
 require('./config/passport');
 
@@ -27,6 +29,7 @@ var menu = require('./routes/menu');
 var feedback = require('./routes/feedback');
 var occupancy = require('./routes/occupancy');
 var product = require('./routes/product');
+var sensorReport = require('./routes/sensor');
 
 var app = express();
 
@@ -51,6 +54,7 @@ app.use('/restaurants', menu);
 app.use('/restaurants', feedback);
 app.use('/restaurants', occupancy);
 app.use('/products', product);
+app.use('/restaurants', sensorReport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

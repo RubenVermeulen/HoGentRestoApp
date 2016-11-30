@@ -9,8 +9,6 @@ angular.module('hogentResto').controller('MenusController',
         vm.products = products.products;
 
         vm.editMenu = editMenu;
-        vm.deleteMenu = deleteMenu;
-        vm.selectedProduct = selectedProduct;
 
         var alert = alertService.getAlert();
         if(alert.message != ''){
@@ -20,7 +18,43 @@ angular.module('hogentResto').controller('MenusController',
         }
 
         function editMenu() {
-            if (!vm.menu.title || vm.menu.title === '' || !vm.menu.price || vm.menu.price === '') {
+
+            if (vm.delete) {
+                restaurants.deleteMenu(vm.restaurant._id, vm.menu._id, vm.menu)
+                .error(function(error){
+                    vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                    vm.alertType = 'danger';
+                    return;
+                });
+
+                /* Delete Bootstrap modal */
+                angular.element("#myModal").modal('hide');
+                angular.element(".modal-backdrop.fade.in").remove();
+                angular.element(".modal-open").removeClass("modal-open");
+
+                alertService.setAlert('Menu ' + vm.menu.title  + ' is verwijderd.', 'success');
+
+                $state.go('admin-menus', {id: restaurant._id});
+
+                return;
+
+            }
+
+            if (!vm.menu.title || vm.menu.title === '' || !vm.menu.price || vm.menu.price === '' || !vm.menu.product || vm.menu.product === '' || !vm.menu.availableAt || vm.menu.availableAt ==='') {
+                vm.alertMessage = 'Gelieve alle velden in te vullen.';
+                vm.alertType = 'danger';
+                return;
+            }
+
+            if (!$.isNumeric(vm.menu.price)){
+                vm.alertMessage = 'Prijs moeten een getal zijn.';
+                vm.alertType = 'danger';
+                return;
+            }
+
+            if (!angular.isDate(vm.menu.availableAt)){
+                vm.alertMessage = 'Gelieve een geldige datum in te geven, volgens het formaat dd/mm/jjjj';
+                vm.alertType = 'danger';
                 return;
             }
 
@@ -29,26 +63,14 @@ angular.module('hogentResto').controller('MenusController',
                 product: vm.menu.product,
                 price: vm.menu.price,
                 availableAt: vm.menu.availableAt
+            }).error(function(error){
+                vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
+                vm.alertType = 'danger';
+                return;
             });
 
-            alertService.setAlert('Menu is aangepast.', 'success');
-            $state.go($state.current, {}, {
-                reload: true
-            });
-
-        }
-
-        function selectedProduct() {
-            for (var key in vm.products) {
-                if (vm.products.hasOwnProperty(key)) {
-                    if (vm.products[key] === vm.menu.product._id) {
-                        console.log(key);
-                        return key;
-                    }
-                }
-            }
-            console.log(0);
-            return 0;
+            vm.alertMessage = 'Menu is aangepast.';
+            vm.alertType = 'success';
         }
     }
 );

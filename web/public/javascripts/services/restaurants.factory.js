@@ -2,14 +2,17 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
 
     var o = {
         restaurants: [],
+        menus: [],
 
         getAll: getAll,
         create: create,
         edit: edit,
         get: get,
+        getWeekMenus: getWeekMenus,
         createMenu: createMenu,
         deleteRestaurant: deleteRestaurant,
-        deleteMenu: deleteMenu
+        deleteMenu: deleteMenu,
+        getOccupancy: getOccupancy
     };
 
     function getAll() {
@@ -44,6 +47,12 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         });
     }
 
+    function getWeekMenus(id) {
+        return $http.get('/restaurants/' + id + '/menus/week' ).success(function (data) {
+            o.menus = data;
+        });
+    }
+
     function createMenu(id, menu) {
         return $http.post('/restaurants/' + id + '/menus', menu, {
             headers: {
@@ -69,6 +78,12 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
             headers: {
                 Authorization: 'Bearer ' + auth.getToken()
             }
+        });
+    }
+
+    function getOccupancy(id){
+        return $http.get('/restaurants/' + id + '/sensors/selfservice/latest').then(function (res){
+            return res.data;
         });
     }
 

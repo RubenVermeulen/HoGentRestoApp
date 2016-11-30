@@ -1,0 +1,400 @@
+<script type="text/ng-template" id="/student-restaurants-show.html">
+
+    {{ vm.initiateMenuToday() }}
+
+    <ol class="breadcrumb">
+        <li><a href="/#/restaurants">Restaurants</a></li>
+        <li class="active">{{vm.restaurant.name}}</li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <!-- Restaurant details -->
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="restaurant-cover" style="background-image: url('{{ vm.restaurant.urlImage }}')">
+                                    <div class="circle-traffic {{ vm.getTrafficClass(vm.restaurant.occupancy) }}">
+                                        <div class="circle-traffic-text font-weight-normal">{{ vm.getTrafficText(vm.restaurant.occupancy) }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3 class="margin-bottom-0">{{ vm.restaurant.name }}</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <hr>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4><span class="glyphicon glyphicon-calendar restaurant-glyphicon"></span> Openingsuren</h4>
+                                        <p>{{ vm.restaurant.openingHours }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4><span class="glyphicon glyphicon-map-marker restaurant-glyphicon"></span> Adres</h4>
+                                        <p>{{ vm.restaurant.address }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-xs-12">
+
+                                        <p>
+                                            <div class="text-center restaurant-forecast">13:25</div>
+                                        </p>
+                                        <hr class="restaurant-hr">
+                                        <div class="text-center restaurant-forecast-description">Wanneer is het rustiger?</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graph traffic -->
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3 class="margin-bottom-0">Bezettingsgraad keuken</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <hr>
+                        </div>
+
+                        <div class="row">
+                            <div id="graph" style="min-width: 100%; height: 300px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week menu-->
+        <div class="col-md-6">
+            <div class="card">
+
+                <div class="row text-center menu-days" id="menu-days">
+                    <a ng-click="vm.isDayDisabled(1) || vm.toggleMenus(1)" class="btn btn-default" id="menu-day-1">Maandag</a>
+                    <a ng-click="vm.isDayDisabled(2) || vm.toggleMenus(2)" class="btn btn-default" id="menu-day-2">Dinsdag</a>
+                    <a ng-click="vm.isDayDisabled(3) || vm.toggleMenus(3)" class="btn btn-default" id="menu-day-3">Woensdag</a>
+                    <a ng-click="vm.isDayDisabled(4) || vm.toggleMenus(4)" class="btn btn-default" id="menu-day-4">Donderdag</a>
+                    <a ng-click="vm.isDayDisabled(5) || vm.toggleMenus(5)" class="btn btn-default" id="menu-day-5">Vrijdag</a>
+                </div>
+
+                <div class="row">
+                    <hr>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h3 class="margin-0">Weekmenu</h3>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <h3 class="margin-0 font-weight-thin">{{vm.date | date: 'dd/MM/yyyy'}}</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr>
+                </div>
+
+                <div class="row" ng-hide="vm.hasMenusThisDay()">
+                    <div class="col-xs-12">
+                        <p>Er zijn geen menu's beschikbaar voor deze dag.</p>
+                    </div>
+                </div>
+
+                <div class="menu">
+                    <div ng-repeat="menu in vm.menus | orderBy : 'title'" class="menu-item">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p><strong>{{ menu.title }}</strong></p>
+                                <div>{{ menu.product.description }}</div>
+
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                {{ menu.price | currency: '€ ' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+
+            var dataset = [
+                {"time": "1480935750" , "occupancy": "0.07"},
+                {"time": "1480935780" , "occupancy": "0.07"},
+                {"time": "1480935810" , "occupancy": "0.09"},
+                {"time": "1480935840" , "occupancy": "0.09"},
+                {"time": "1480935870" , "occupancy": "0.09"},
+                {"time": "1480935900" , "occupancy": "0.1"},
+                {"time": "1480935930" , "occupancy": "0.09"},
+                {"time": "1480935960" , "occupancy": "0.11"},
+                {"time": "1480935990" , "occupancy": "0.13"},
+                {"time": "1480936020" , "occupancy": "0.13"},
+                {"time": "1480936050" , "occupancy": "0.14"},
+                {"time": "1480936080" , "occupancy": "0.15"},
+                {"time": "1480936110" , "occupancy": "0.15"},
+                {"time": "1480936140" , "occupancy": "0.15"},
+                {"time": "1480936170" , "occupancy": "0.17"},
+                {"time": "1480936200" , "occupancy": "0.17"},
+                {"time": "1480936230" , "occupancy": "0.18"},
+                {"time": "1480936260" , "occupancy": "0.2"},
+                {"time": "1480936290" , "occupancy": "0.23"},
+                {"time": "1480936320" , "occupancy": "0.24"},
+                {"time": "1480936350" , "occupancy": "0.23"},
+                {"time": "1480936380" , "occupancy": "0.24"},
+                {"time": "1480936410" , "occupancy": "0.25"},
+                {"time": "1480936440" , "occupancy": "0.27"},
+                {"time": "1480936470" , "occupancy": "0.29"},
+                {"time": "1480936500" , "occupancy": "0.29"},
+                {"time": "1480936530" , "occupancy": "0.31"},
+                {"time": "1480936560" , "occupancy": "0.32"},
+                {"time": "1480936590" , "occupancy": "0.36"},
+                {"time": "1480936620" , "occupancy": "0.36"},
+                {"time": "1480936650" , "occupancy": "0.37"},
+                {"time": "1480936680" , "occupancy": "0.4"},
+                {"time": "1480936710" , "occupancy": "0.43"},
+                {"time": "1480936740" , "occupancy": "0.41"},
+                {"time": "1480936770" , "occupancy": "0.45"},
+                {"time": "1480936800" , "occupancy": "0.45"},
+                {"time": "1480936830" , "occupancy": "0.47"},
+                {"time": "1480936860" , "occupancy": "0.48"},
+                {"time": "1480936890" , "occupancy": "0.5"},
+                {"time": "1480936920" , "occupancy": "0.54"},
+                {"time": "1480936950" , "occupancy": "0.52"},
+                {"time": "1480936980" , "occupancy": "0.57"},
+                {"time": "1480937010" , "occupancy": "0.59"},
+                {"time": "1480937040" , "occupancy": "0.58"},
+                {"time": "1480937070" , "occupancy": "0.59"},
+                {"time": "1480937100" , "occupancy": "0.63"},
+                {"time": "1480937130" , "occupancy": "0.66"},
+                {"time": "1480937160" , "occupancy": "0.65"},
+                {"time": "1480937190" , "occupancy": "0.68"},
+                {"time": "1480937220" , "occupancy": "0.68"},
+                {"time": "1480937250" , "occupancy": "0.71"},
+                {"time": "1480937280" , "occupancy": "0.72"},
+                {"time": "1480937310" , "occupancy": "0.74"},
+                {"time": "1480937340" , "occupancy": "0.75"},
+                {"time": "1480937370" , "occupancy": "0.76"},
+                {"time": "1480937400" , "occupancy": "0.78"},
+                {"time": "1480937430" , "occupancy": "0.81"},
+                {"time": "1480937460" , "occupancy": "0.78"},
+                {"time": "1480937490" , "occupancy": "0.82"},
+                {"time": "1480937520" , "occupancy": "0.81"},
+                {"time": "1480937550" , "occupancy": "0.84"},
+                {"time": "1480937580" , "occupancy": "0.85"},
+                {"time": "1480937610" , "occupancy": "0.87"},
+                {"time": "1480937640" , "occupancy": "0.83"},
+                {"time": "1480937670" , "occupancy": "0.8"},
+                {"time": "1480937700" , "occupancy": "0.84"},
+                {"time": "1480937730" , "occupancy": "0.86"},
+                {"time": "1480937760" , "occupancy": "0.87"},
+                {"time": "1480937790" , "occupancy": "0.88"},
+                {"time": "1480937820" , "occupancy": "0.84"},
+                {"time": "1480937850" , "occupancy": "0.85"},
+                {"time": "1480937880" , "occupancy": "0.85"},
+                {"time": "1480937910" , "occupancy": "0.87"},
+                {"time": "1480937940" , "occupancy": "0.86"},
+                {"time": "1480937970" , "occupancy": "0.88"},
+                {"time": "1480938000" , "occupancy": "0.78"},
+                {"time": "1480938030" , "occupancy": "0.83"},
+                {"time": "1480938060" , "occupancy": "0.8"},
+                {"time": "1480938090" , "occupancy": "0.81"},
+                {"time": "1480938120" , "occupancy": "0.83"},
+                {"time": "1480938150" , "occupancy": "0.83"},
+                {"time": "1480938180" , "occupancy": "0.85"},
+                {"time": "1480938210" , "occupancy": "0.79"},
+                {"time": "1480938240" , "occupancy": "0.79"},
+                {"time": "1480938270" , "occupancy": "0.8"},
+                {"time": "1480938300" , "occupancy": "0.8"},
+                {"time": "1480938330" , "occupancy": "0.84"},
+                {"time": "1480938360" , "occupancy": "0.73"},
+                {"time": "1480938390" , "occupancy": "0.74"},
+                {"time": "1480938420" , "occupancy": "0.74"},
+                {"time": "1480938450" , "occupancy": "0.71"},
+                {"time": "1480938480" , "occupancy": "0.69"},
+                {"time": "1480938510" , "occupancy": "0.64"},
+                {"time": "1480938540" , "occupancy": "0.67"},
+                {"time": "1480938570" , "occupancy": "0.66"},
+                {"time": "1480938600" , "occupancy": "0.6"},
+                {"time": "1480938630" , "occupancy": "0.61"},
+                {"time": "1480938660" , "occupancy": "0.61"},
+                {"time": "1480938690" , "occupancy": "0.57"},
+                {"time": "1480938720" , "occupancy": "0.54"},
+                {"time": "1480938750" , "occupancy": "0.58"},
+                {"time": "1480938780" , "occupancy": "0.52"},
+                {"time": "1480938810" , "occupancy": "0.52"},
+                {"time": "1480938840" , "occupancy": "0.49"},
+                {"time": "1480938870" , "occupancy": "0.49"},
+                {"time": "1480938900" , "occupancy": "0.45"},
+                {"time": "1480938930" , "occupancy": "0.45"},
+                {"time": "1480938960" , "occupancy": "0.45"},
+                {"time": "1480938990" , "occupancy": "0.44"},
+                {"time": "1480939020" , "occupancy": "0.4"},
+                {"time": "1480939050" , "occupancy": "0.4"},
+                {"time": "1480939080" , "occupancy": "0.33"},
+                {"time": "1480939110" , "occupancy": "0.37"},
+                {"time": "1480939140" , "occupancy": "0.36"},
+                {"time": "1480939170" , "occupancy": "0.32"},
+                {"time": "1480939200" , "occupancy": "0.33"},
+                {"time": "1480939230" , "occupancy": "0.31"},
+                {"time": "1480939260" , "occupancy": "0.28"},
+                {"time": "1480939290" , "occupancy": "0.28"},
+                {"time": "1480939320" , "occupancy": "0.24"},
+                {"time": "1480939350" , "occupancy": "0.24"},
+                {"time": "1480939380" , "occupancy": "0.23"},
+                {"time": "1480939410" , "occupancy": "0.22"},
+                {"time": "1480939440" , "occupancy": "0.21"},
+                {"time": "1480939470" , "occupancy": "0.21"},
+                {"time": "1480939500" , "occupancy": "0.19"},
+                {"time": "1480939530" , "occupancy": "0.18"},
+                {"time": "1480939560" , "occupancy": "0.18"},
+                {"time": "1480939590" , "occupancy": "0.16"},
+                {"time": "1480939620" , "occupancy": "0.15"},
+                {"time": "1480939650" , "occupancy": "0.16"},
+                {"time": "1480939680" , "occupancy": "0.14"},
+                {"time": "1480939710" , "occupancy": "0.13"},
+                {"time": "1480939740" , "occupancy": "0.11"},
+                {"time": "1480939770" , "occupancy": "0.12"},
+                {"time": "1480939800" , "occupancy": "0.11"},
+                {"time": "1480939830" , "occupancy": "0.1"},
+                {"time": "1480939860" , "occupancy": "0.08"},
+                {"time": "1480939890" , "occupancy": "0.1"},
+                {"time": "1480939920" , "occupancy": "0.08"},
+                {"time": "1480939950" , "occupancy": "0.08"},
+                {"time": "1480939980" , "occupancy": "0.07"},
+                {"time": "1480940010" , "occupancy": "0.07"},
+                {"time": "1480940040" , "occupancy": "0.06"},
+                {"time": "1480940070" , "occupancy": "0.06"},
+                {"time": "1480940100" , "occupancy": "0.05"},
+                {"time": "1480940130" , "occupancy": "0.04"},
+                {"time": "1480940160" , "occupancy": "0.05"},
+                {"time": "1480940190" , "occupancy": "0.04"},
+                {"time": "1480940220" , "occupancy": "0.03"},
+                {"time": "1480940250" , "occupancy": "0.03"},
+                {"time": "1480940280" , "occupancy": "0.04"},
+                {"time": "1480940310" , "occupancy": "0.03"},
+                {"time": "1480940340" , "occupancy": "0.03"},
+                {"time": "1480940370" , "occupancy": "0.03"},
+                {"time": "1480940400" , "occupancy": "0.03"},
+                {"time": "1480940430" , "occupancy": "0.02"},
+                {"time": "1480940460" , "occupancy": "0.02"},
+                {"time": "1480940490" , "occupancy": "0.02"},
+                {"time": "1480940520" , "occupancy": "0.02"},
+                {"time": "1480940550" , "occupancy": "0.01"},
+                {"time": "1480940580" , "occupancy": "0.01"},
+                {"time": "1480940610" , "occupancy": "0.01"},
+                {"time": "1480940640" , "occupancy": "0.02"},
+                {"time": "1480940670" , "occupancy": "0.01"},
+                {"time": "1480940700" , "occupancy": "0.01"},
+                {"time": "1480940730" , "occupancy": "0.01"},
+                {"time": "1480940760" , "occupancy": "0.01"},
+                {"time": "1480940790" , "occupancy": "0.01"},
+                {"time": "1480940820" , "occupancy": "0.01"},
+                {"time": "1480940850" , "occupancy": "0.01"},
+                {"time": "1480940880" , "occupancy": "0"},
+                {"time": "1480940910" , "occupancy": "0"},
+                {"time": "1480940940" , "occupancy": "0.01"},
+                {"time": "1480940970" , "occupancy": "0"},
+                {"time": "1480941000" , "occupancy": "0"}
+            ];
+
+            var data = [];
+
+            for (var key in dataset) {
+                var obj = dataset[key];
+                data.push([parseInt(obj.time) * 1000, parseFloat(obj.occupancy)]);
+            }
+
+            console.log($('#graph'));
+
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
+
+            Highcharts.chart('graph', {
+                chart: {
+                    zoomType: 'x'
+                },
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                xAxis: {
+                    title: {
+                        text: 'Tijdstip'
+                    },
+                    type: 'datetime'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Bezettingsgraad'
+                    },
+                    min: 0,
+                    max: 1,
+                    tickInterval: 0.1
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    area: {
+                        fillColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0.4,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, Highcharts.getOptions().colors[3]],
+                                [1, Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(0.8).get('rgba')]
+                            ]
+                        },
+                        marker: {
+                            radius: 2
+                        },
+                        lineWidth: 1,
+                        states: {
+                            hover: {
+                                lineWidth: 1
+                            }
+                        },
+                        threshold: null
+                    }
+                },
+
+                series: [{
+                    type: 'area',
+                    name: 'Bezettingsgraad keuken',
+                    data: data
+                }]
+            });
+        });
+    </script>
+
+</script>

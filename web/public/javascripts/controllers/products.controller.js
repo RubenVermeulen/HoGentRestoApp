@@ -19,8 +19,7 @@ angular.module('hogentResto').controller('ProductsController',
         }
 
         function createProduct() {
-            if (!vm.product.description || vm.product.description === ''
-                || !vm.product.allergens || vm.product.allergens === '') {
+            if (!vm.product.description || vm.product.description === '') {
                 vm.alertMessage = "Gelieve alle velden in te vullen.";
                 vm.alertType = "danger";
                 return;
@@ -28,19 +27,18 @@ angular.module('hogentResto').controller('ProductsController',
 
             products.create({
                 description: vm.product.description,
-                allergens: vm.product.allergens.split(',')
+                allergens: vm.product.allergens ? vm.product.allergens.split(',') : []
             }).error(function(error) {
                 vm.alertMessage = error.message;
                 vm.alertType = "danger";
             }).then(function() {
                 alertService.setAlert('Product ' + vm.product.description + ' is toegevoegd.', 'success');
-                $state.go('products');
+                $state.go('admin-products');
             });
         }
 
         function editProduct() {
-            if (!vm.product.description || vm.product.description === ''
-                || !vm.product.allergens || vm.product.allergens === '') {
+            if (!vm.product.description || vm.product.description === '') {
                 vm.alertMessage = "Gelieve alle velden in te vullen.";
                 vm.alertType = "danger";
                 return;
@@ -83,10 +81,12 @@ angular.module('hogentResto').controller('ProductsController',
                 vm.alertType = "success";
             });
 
+            /* Delete Bootstrap modal */
             angular.element("#myModal").modal('hide');
             angular.element(".modal-backdrop.fade.in").remove();
+            angular.element(".modal-open").removeClass("modal-open");
 
-            $state.go('products');
+            $state.go('admin-products');
         }
 
         function hasProducts() {
