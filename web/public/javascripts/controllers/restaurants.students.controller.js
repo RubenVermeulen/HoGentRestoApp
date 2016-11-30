@@ -4,12 +4,34 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
 
         vm.restaurant = restaurant;
 
+        initialize();
+
         vm.toggleMenus = toggleMenus;
         vm.hasMenusThisDay = hasMenusThisDay;
-        vm.initiateMenuToday = initiateMenuToday;
+        vm.isDayDisabled = isDayDisabled;
 
-        function initiateMenuToday() {
-            toggleMenus(new Date().getDay());
+        function initialize() {
+            var day = new Date().getDay();
+            toggleMenus(day);
+
+            if (day > 1 && day < 6) {
+                for (var i = day - 1; i > 0; i--) {
+                    angular.element("#menu-day-" + i).attr('disabled', 'disabled');
+                }
+            }
+
+        }
+
+        function isDayDisabled(day) {
+            var attr = angular.element("#menu-day-" + day).attr('disabled');
+
+            console.log(attr);
+
+            if (attr !== undefined && attr !== false) {
+                return true;
+            }
+
+            return false;
         }
 
         function hasMenusThisDay() {

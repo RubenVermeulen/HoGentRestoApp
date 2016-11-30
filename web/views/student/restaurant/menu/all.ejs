@@ -85,11 +85,11 @@
             <div class="card">
 
                 <div class="row text-center menu-days" id="menu-days">
-                    <a ng-click="vm.toggleMenus(1)" class="btn btn-default" id="menu-day-1">Maandag</a>
-                    <a ng-click="vm.toggleMenus(2)" class="btn btn-default" id="menu-day-2">Dinsdag</a>
-                    <a ng-click="vm.toggleMenus(3)" class="btn btn-default" id="menu-day-3">Woensdag</a>
-                    <a ng-click="vm.toggleMenus(4)" class="btn btn-default" id="menu-day-4">Donderdag</a>
-                    <a ng-click="vm.toggleMenus(5)" class="btn btn-default" id="menu-day-5">Vrijdag</a>
+                    <a ng-click="vm.isDayDisabled(1) || vm.toggleMenus(1)" class="btn btn-default" id="menu-day-1">Maandag</a>
+                    <a ng-click="vm.isDayDisabled(2) || vm.toggleMenus(2)" class="btn btn-default" id="menu-day-2">Dinsdag</a>
+                    <a ng-click="vm.isDayDisabled(3) || vm.toggleMenus(3)" class="btn btn-default" id="menu-day-3">Woensdag</a>
+                    <a ng-click="vm.isDayDisabled(4) || vm.toggleMenus(4)" class="btn btn-default" id="menu-day-4">Donderdag</a>
+                    <a ng-click="vm.isDayDisabled(5) || vm.toggleMenus(5)" class="btn btn-default" id="menu-day-5">Vrijdag</a>
                 </div>
 
                 <div class="row">
