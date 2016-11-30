@@ -43,7 +43,6 @@ public class MenuFragment extends Fragment {
     TextView price;
 
     public static final String ARG_PAGE = "ARG_PAGE";
-    MenuContext context = new MenuContext();
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     Map<String, List<Menu>> menus;
     List<Menu> menuMaandag, menuDinsdag, menuWoensdag, menuDonderdag, menuVrijdag;
@@ -76,9 +75,10 @@ public class MenuFragment extends Fragment {
         view = inflater.inflate(R.layout.menu_fragment, container, false);
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         datum = (TextView) view.findViewById(R.id.menuDate);
-        LinearLayout fragmentlist = (LinearLayout) view.findViewById(R.id.fragment_list_id);
 
-        menus = context.getMenus();
+        //menus = context.getMenus();
+        menus = RestaurantActivity.getMenusFromApi();
+        LinearLayout fragmentlist = (LinearLayout) view.findViewById(R.id.fragment_list_id);
         menuMaandag = menus.get("maandag");
         menuDinsdag = menus.get("dinsdag");
         menuWoensdag = menus.get("woensdag");
@@ -88,6 +88,7 @@ public class MenuFragment extends Fragment {
         switch (mPage){
 
             case 1: tvTitle.setText("Maandag");
+            try{
 
                 datum.setText(df.format(menuMaandag.get(0).getAvailableAt()));
                 for (Menu m : menuMaandag) {
@@ -104,8 +105,15 @@ public class MenuFragment extends Fragment {
                     fragmentlist.addView(child);
                 }
 
+                }
+                catch(Exception e){
+                    View child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_no_results, null);
+                    fragmentlist.addView(child);
+                }
+
                 break;
             case 2: tvTitle.setText("Dinsdag");
+                try{
                 datum.setText(df.format(menuDinsdag.get(0).getAvailableAt()));
                 for (Menu m : menuDinsdag) {
                     child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
@@ -120,8 +128,14 @@ public class MenuFragment extends Fragment {
 
                     fragmentlist.addView(child);
                 }
+                }
+                catch(Exception e){
+                    View child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_no_results, null);
+                    fragmentlist.addView(child);
+                }
                 break;
             case 3: tvTitle.setText("Woensdag");
+                try{
                 datum.setText(df.format(menuWoensdag.get(0).getAvailableAt()));
                 for (Menu m : menuWoensdag) {
                     child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
@@ -136,8 +150,14 @@ public class MenuFragment extends Fragment {
 
                     fragmentlist.addView(child);
                 }
+                }
+                catch(Exception e){
+                    View child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_no_results, null);
+                    fragmentlist.addView(child);
+                }
                 break;
             case 4: tvTitle.setText("Donderdag");
+                try{
                 datum.setText(df.format(menuDonderdag.get(0).getAvailableAt()));
                 for (Menu m : menuDonderdag) {
                     child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
@@ -152,8 +172,14 @@ public class MenuFragment extends Fragment {
 
                     fragmentlist.addView(child);
                 }
+                }
+                catch(Exception e){
+                    View child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_no_results, null);
+                    fragmentlist.addView(child);
+                }
                 break;
             case 5: tvTitle.setText("Vrijdag");
+                try{
                 datum.setText(df.format(menuVrijdag.get(0).getAvailableAt()));
                 for (Menu m : menuVrijdag) {
                     child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
@@ -168,9 +194,15 @@ public class MenuFragment extends Fragment {
 
                     fragmentlist.addView(child);
                 }
+                }
+                catch(Exception e){
+                    View child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_no_results, null);
+                    fragmentlist.addView(child);
+                }
                 break;
 
         }
+
 
         return view;
     }
@@ -179,6 +211,7 @@ public class MenuFragment extends Fragment {
     public void setMenus(Map<String, List<Menu>> menus) {
         this.menus = menus;
     }
+
 
 
 }

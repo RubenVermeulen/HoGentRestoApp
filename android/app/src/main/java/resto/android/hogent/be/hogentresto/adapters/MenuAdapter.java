@@ -4,7 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.List;
+import java.util.Map;
+
 import resto.android.hogent.be.hogentresto.MenuTabs.MenuFragment;
+import resto.android.hogent.be.hogentresto.models.Menu;
 
 /**
  * Created by jonas on 28/11/2016.
