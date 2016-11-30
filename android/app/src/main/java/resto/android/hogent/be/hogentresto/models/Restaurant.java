@@ -15,6 +15,7 @@ public class Restaurant implements Serializable {
     private transient List<Menu> menus;
     private String urlImage;
     private double occupation;
+    private List<OccupancyUnit> forecast;
 
     public Restaurant() {
 
@@ -82,5 +83,13 @@ public class Restaurant implements Serializable {
 
     public void setOccupation(double occupation) {
         this.occupation = occupation;
+    }
+
+    public List<OccupancyUnit> getForecast() {
+        return forecast;
+    }
+
+    public void setForecast(List<OccupancyUnit> forecast) {
+        this.forecast = forecast;
     }
 }
