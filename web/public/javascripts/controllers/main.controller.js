@@ -45,7 +45,7 @@ angular.module('hogentResto').controller('MainController',
                 return;
             }).then(function(){
                 alertService.setAlert('Resto ' + vm.name + ' is toegevoegd.', 'success');
-                $state.go('home');
+                $state.go('admin-restaurants');
             });
 
         }

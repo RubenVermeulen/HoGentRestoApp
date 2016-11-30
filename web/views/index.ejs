@@ -38,6 +38,7 @@
 
     <script src="javascripts/controllers/main.controller.js"></script>
     <script src="javascripts/controllers/restaurants.controller.js"></script>
+    <script src="javascripts/controllers/restaurants.students.controller.js"></script>
     <script src="javascripts/controllers/menus.controller.js"></script>
     <script src="javascripts/controllers/auth.controller.js"></script>
     <script src="javascripts/controllers/nav.controller.js"></script>
@@ -60,15 +61,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/home">HoGent Resto</a>
+                <a class="navbar-brand" href="#/restaurants">HoGent Resto</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/#/home">Restaurants</a></li>
-                    <li ng-show="vm.isLoggedIn()"><a href="/#/products">Producten</a></li>
+                    <li ng-show="vm.isLoggedIn()"><a href="/#/restaurants">Weergave student</a></li>
+                    <li ng-show="vm.isLoggedIn()"><a href="/#/admin/restaurants">Beheer restaurants</a></li>
+                    <li ng-show="vm.isLoggedIn()"><a href="/#/admin/products">Beheer producten</a></li>
                     <li ng-show="vm.isLoggedIn()"><a href="" ng-click="vm.logOut()">Log Out</a></li>
-                    <li ng-hide="vm.isLoggedIn()"><a href="/#/login">Log In</a></li>
-                    <li ng-hide="vm.isLoggedIn()"><a href="/#/register">Register</a></li>
+                    <li ng-hide="vm.isLoggedIn()"><a href="/#/admin/login">Log In</a></li>
+                    <li ng-hide="vm.isLoggedIn()"><a href="/#/admin/register">Register</a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -82,28 +84,37 @@
 
     <!-- Inline templates  -->
 
+    <!-- ADMIN -->
+
     <!-- Authentication -->
-    <% include auth/login.ejs %>
-    <% include auth/register.ejs %>
+    <% include admin/auth/register.ejs %>
+    <% include admin/auth/login.ejs %>
 
     <!-- Restaurant -->
-    <% include restaurant/all.ejs %>
-    <% include restaurant/create.ejs %>
-    <% include restaurant/edit.ejs %>
+    <% include admin/restaurant/all.ejs %>
+    <% include admin/restaurant/create.ejs %>
+    <% include admin/restaurant/edit.ejs %>
 
-    <% include restaurant/allStudents.ejs %>
+
 
     <!-- Menu -->
-    <% include restaurant/menu/all.ejs %>
-    <% include restaurant/menu/create.ejs %>
-    <% include restaurant/menu/edit.ejs %>
-
-    <% include restaurant/menu/allStudents.ejs %>
+    <% include admin/restaurant/menu/all.ejs %>
+    <% include admin/restaurant/menu/create.ejs %>
+    <% include admin/restaurant/menu/edit.ejs %>
 
     <!-- Product -->
-    <% include product/all.ejs %>
-    <% include product/create.ejs %>
-    <% include product/edit.ejs %>
+    <% include admin/product/all.ejs %>
+    <% include admin/product/create.ejs %>
+    <% include admin/product/edit.ejs %>
+
+    <!-- STUDENT -->
+
+    <!-- Restaurant -->
+    <% include student/restaurant/all.ejs %>
+
+    <!-- Menu -->
+    <% include student/restaurant/menu/all.ejs %>
+
 </body>
 
 </html>

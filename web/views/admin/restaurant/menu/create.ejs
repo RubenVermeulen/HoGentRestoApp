@@ -2,13 +2,13 @@
 
     <form ng-submit="vm.addMenu()">
         <ol class="breadcrumb">
-            <li><a href="/#/home">Resto's</a></li>
-            <li><a href="/#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
-            <li><a href="/#/restaurants/{{vm.restaurant._id}}/menus">Menu's</a></li>
+            <li><a href="/#/admin/restaurants">Resto's</a></li>
+            <li>{{vm.restaurant.name}}</li>
+            <li><a href="/#/admin/restaurants/{{vm.restaurant._id}}/menus">Menu's</a></li>
             <li class="active">Nieuwe menu</li>
         </ol>
 
-        <% include ../../partials/alert.ejs %>
+        <% include ../../../partials/alert.ejs %>
 
         <div class="titleflex">
             <div class="titleflexattr">
@@ -16,7 +16,7 @@
             </div>
             <div class="titleflexattr">
                 <p class="titleadd">
-                    <a href="/#/restaurants/{{vm.restaurant._id}}/menus" class="btn btn-default">Terug</a>
+                    <a href="/#/admin/restaurants/{{vm.restaurant._id}}/menus" class="btn btn-default">Terug</a>
                     <button type="submit" class="btn btn-primary btn-latest">Voeg menu toe</button>
                 </p>
             </div>

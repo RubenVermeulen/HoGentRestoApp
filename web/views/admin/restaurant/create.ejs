@@ -2,11 +2,11 @@
 
     <form ng-submit="vm.addRestaurant()">
         <ol class="breadcrumb">
-            <li><a href="/#/home">Resto's</a></li>
+            <li><a href="/#/admin/restaurants">Resto's</a></li>
             <li class="active">Nieuwe Resto</li>
         </ol>
 
-            <% include ../partials/alert.ejs %>
+            <% include ../../partials/alert.ejs %>
 
         <div class="titleflex">
             <div class="titleflexattr">
@@ -14,7 +14,7 @@
             </div>
             <div class="titleflexattr">
                 <p class="titleadd">
-                    <a href="/#/Home" class="btn btn-default">Terug</a>
+                    <a href="/#/admin/restaurants" class="btn btn-default">Terug</a>
                     <button type="submit" class="btn btn-primary btn-latest">Voeg resto toe</button>
                 </p>
             </div>

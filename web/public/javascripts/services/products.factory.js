@@ -41,13 +41,18 @@ angular.module('hogentResto').factory('products', function ($http, auth) {
         });
     }
 
-    function deleteProduct(id, product) {
+    function deleteProduct(id) {
         return $http.delete('/products/' + id, {
             headers: {
                 Authorization: 'Bearer ' + auth.getToken()
             }
-        }).success(function(){
-            o.products.splice(o.products.indexOf(product), 1)
+        }).success(function(data){
+            for (var key in o.products) {
+                if (data._id === o.products[key]._id) {
+                    o.products.splice(key, 1);
+                    break;
+                }
+            }
         })
     }
 

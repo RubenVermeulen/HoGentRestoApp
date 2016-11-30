@@ -33,7 +33,7 @@ angular.module('hogentResto').controller('ProductsController',
                 vm.alertType = "danger";
             }).then(function() {
                 alertService.setAlert('Product ' + vm.product.description + ' is toegevoegd.', 'success');
-                $state.go('products');
+                $state.go('admin-products');
             });
         }
 
@@ -86,7 +86,7 @@ angular.module('hogentResto').controller('ProductsController',
             angular.element(".modal-backdrop.fade.in").remove();
             angular.element(".modal-open").removeClass("modal-open");
 
-            $state.go('products');
+            $state.go('admin-products');
         }
 
         function hasProducts() {

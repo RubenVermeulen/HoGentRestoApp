@@ -1,8 +1,8 @@
 <script type="text/ng-template" id="/menus.html">
 
     <ol class="breadcrumb">
-        <li><a href="/#/home">Resto's</a></li>
-        <li><a href="#/restaurants/{{vm.restaurant._id}}">{{vm.restaurant.name}}</a></li>
+        <li><a href="/#/admin/restaurants">Resto's</a></li>
+        <li>{{vm.restaurant.name}}</li>
         <li class="active">Menu's</li>
     </ol>
 
@@ -10,12 +10,12 @@
         <div class="titleflexattr">
             <h1>{{vm.restaurant.menus.length}} Menu's</h1>
         </div>
-        <div ng-show="vm.isLoggedIn()" class="titleflexattr">
-            <p class="titleadd"><a href="/#/restaurants/{{vm.restaurant._id}}/menus/create" class="btn btn-primary">Voeg menu toe</a></p>
+        <div class="titleflexattr">
+            <p class="titleadd"><a href="/#/admin/restaurants/{{vm.restaurant._id}}/menus/create" class="btn btn-primary">Voeg menu toe</a></p>
         </div>
     </div>
 
-    <% include ../../partials/alert.ejs %>
+    <% include ../../../partials/alert.ejs %>
 
     <div ng-hide="vm.hasMenus()">
         <p>Er zijn nog geen menu's.</p>
@@ -28,8 +28,7 @@
             <th>Product</th>
             <th>Prijs</th>
             <th>Datum</th>
-            <th ng-show="vm.isLoggedIn()"></th>
-            <th ng-show="vm.isLoggedIn()"></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -38,8 +37,15 @@
             <td>{{menu.product.description}}</td>
             <td>{{menu.price | currency: '€'}}</td>
             <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
-            <td ng-show="vm.isLoggedIn()"><a href="/#/restaurants/{{vm.restaurant._id}}/menus/{{menu._id}}">Bewerk</td>
-            <td ng-show="vm.isLoggedIn()"><a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}">Verwijder</a></td>
+            <td class="text-right">
+            <td class="text-right">
+                <a href="/#/admin/restaurants/{{vm.restaurant._id}}/menus/{{menu._id}}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>

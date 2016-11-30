@@ -11,11 +11,6 @@ angular.module('hogentResto').controller('RestaurantsController',
         vm.deleteMenu = deleteMenu;
         vm.hasMenus = hasMenus;
 
-        vm.menus = toggleMenus(new Date().getDay());
-        vm.date;
-        vm.toggleMenus = toggleMenus;
-        vm.hasMenusThisDay = hasMenusThisDay;
-
         var alert = alertService.getAlert();
         if(alert.message != ''){
             vm.alertMessage = alert.message;
@@ -51,7 +46,7 @@ angular.module('hogentResto').controller('RestaurantsController',
                 angular.element(".modal-open").removeClass("modal-open");
 
                 alertService.setAlert('Resto ' + vm.restaurant.name + ' is succesvol verwijderd.', 'success');
-                $state.go('home');
+                $state.go('admin-restaurants');
                 return;
             }
 
@@ -104,7 +99,7 @@ angular.module('hogentResto').controller('RestaurantsController',
             }).then(function(menu) {
                 vm.restaurant.menus.push(menu);
                 alertService.setAlert('Menu ' + vm.title + ' is toegevoegd.', 'success');
-                $state.go('menus', {id: restaurant._id});
+                $state.go('admin-menus', {id: restaurant._id});
             }).error(function(error){
                 vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
                 vm.alertType = 'danger';
@@ -138,31 +133,6 @@ angular.module('hogentResto').controller('RestaurantsController',
 
         function hasMenus() {
             return vm.restaurant.menus.length !== 0;
-        }
-
-        function hasMenusThisDay() {
-            return vm.menus ? vm.menus.length !== 0 : false;
-        }
-
-        function toggleMenus(day){
-            vm.menus = restaurants.menus.filter(function(menu){
-                if((new Date(menu.availableAt)).getDay() === day){
-                    vm.date = menu.availableAt;
-                    return menu;
-                }
-            });
-
-            var today = new Date();
-
-            if (today.getDay() === 6){
-                vm.date = today.setDate(today.getDate() + day + 1);
-            }
-            else{
-                vm.date = today.setDate(today.getDate() + day - today.getDay());
-            }
-
-            angular.element("#menu-days a").removeClass('btn-primary');
-            angular.element("#menu-day-" + day).addClass('btn-primary');
         }
     }
 );

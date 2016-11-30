@@ -50,7 +50,6 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
     function getWeekMenus(id) {
         return $http.get('/restaurants/' + id + '/menus/week' ).success(function (data) {
             o.menus = data;
-            console.log(data);
         });
     }
 

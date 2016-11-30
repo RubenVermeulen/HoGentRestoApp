@@ -8,7 +8,7 @@ angular.module('hogentResto').controller('NavController',
 
         function logOut() {
             auth.logOut();
-            $state.go('home');
+            $state.go('student-restaurants');
         }
 
         angular.element(function(){

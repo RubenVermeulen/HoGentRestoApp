@@ -34,7 +34,7 @@ angular.module('hogentResto').controller('MenusController',
 
                 alertService.setAlert('Menu ' + vm.menu.title  + ' is verwijderd.', 'success');
 
-                $state.go('menus', {id: restaurant._id});
+                $state.go('admin-menus', {id: restaurant._id});
 
                 return;
 
