@@ -16,8 +16,8 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="restaurant-cover" style="background-image: url('{{ vm.restaurant.urlImage }}')">
-                                    <div class="circle-traffic circle-traffic-green">
-                                        <h3 class="font-weight-normal">Rustig</h3>
+                                    <div class="circle-traffic {{ vm.getTrafficClass(vm.restaurant.occupancy) }}">
+                                        <div class="circle-traffic-text font-weight-normal">{{ vm.getTrafficText(vm.restaurant.occupancy) }}</div>
                                     </div>
                                 </div>
                             </div>

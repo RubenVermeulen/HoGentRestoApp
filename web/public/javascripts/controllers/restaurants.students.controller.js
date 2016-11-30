@@ -9,6 +9,8 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
         vm.toggleMenus = toggleMenus;
         vm.hasMenusThisDay = hasMenusThisDay;
         vm.isDayDisabled = isDayDisabled;
+        vm.getTrafficClass = getTrafficClass;
+        vm.getTrafficText = getTrafficText;
 
         function initialize() {
             var day = new Date().getDay();
@@ -20,6 +22,36 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
                 }
             }
 
+        }
+
+        function getTrafficClass(occupancy) {
+            switch (getTrafficGrade(occupancy)) {
+                case 0: return 'circle-traffic-green';
+                case 1: return 'circle-traffic-orange';
+                case 2: return 'circle-traffic-red';
+            }
+        }
+
+        function getTrafficText(occupancy) {
+            switch (getTrafficGrade(occupancy)) {
+                case 0: return 'Rustig';
+                case 1: return 'Druk';
+                case 2: return 'Heel druk';
+            }
+        }
+
+        function getTrafficGrade(occupancy) {
+            console.log(occupancy);
+
+            if (occupancy < 0.30) {
+                return 0
+            }
+            else if (occupancy < 0.70) {
+                return 1
+            }
+            else {
+                return 2;
+            }
         }
 
         function isDayDisabled(day) {

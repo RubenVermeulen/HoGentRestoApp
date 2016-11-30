@@ -13,7 +13,7 @@ var RestaurantSchema = new mongoose.Schema({
     feedbacks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Feedback'}],
     sensorsSelfservice: [{type: mongoose.Schema.Types.ObjectId,ref: 'Sensor'}],
     sensorsZaal: [{type: mongoose.Schema.Types.ObjectId,ref: 'Sensor'}],
-    occupation: {type: Number, default: 0},
+    occupancy: {type: Number, default: 0},
     prediction: [{type: mongoose.Schema.Types.ObjectId, ref: 'Prediction'}]
 });
 

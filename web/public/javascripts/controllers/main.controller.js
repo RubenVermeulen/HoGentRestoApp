@@ -4,10 +4,12 @@ angular.module('hogentResto').controller('MainController',
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
-
         vm.restaurants = restaurants.restaurants;
+
         vm.addRestaurant = addRestaurant;
         vm.hasRestaurants = hasRestaurants;
+        vm.getTrafficClass = getTrafficClass;
+        vm.getTrafficText = getTrafficText;
 
         var alert = alertService.getAlert();
         if(alert.message != ''){
@@ -54,5 +56,34 @@ angular.module('hogentResto').controller('MainController',
             return vm.restaurants.length !== 0;
         }
 
+        function getTrafficClass(occupancy) {
+            switch (getTrafficGrade(occupancy)) {
+                case 0: return 'circle-traffic-green';
+                case 1: return 'circle-traffic-orange';
+                case 2: return 'circle-traffic-red';
+            }
+        }
+
+        function getTrafficText(occupancy) {
+            switch (getTrafficGrade(occupancy)) {
+                case 0: return 'Rustig';
+                case 1: return 'Druk';
+                case 2: return 'Heel druk';
+            }
+        }
+
+        function getTrafficGrade(occupancy) {
+            console.log(occupancy);
+
+            if (occupancy < 0.30) {
+                return 0
+            }
+            else if (occupancy < 0.70) {
+                return 1
+            }
+            else {
+                return 2;
+            }
+        }
     }
 );
