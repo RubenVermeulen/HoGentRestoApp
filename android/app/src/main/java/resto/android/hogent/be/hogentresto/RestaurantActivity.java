@@ -38,7 +38,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
->>>>>>> uitklappende grafiek(dummy data)
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -63,12 +62,12 @@ import static resto.android.hogent.be.hogentresto.R.id.progressBar;
 
 public class RestaurantActivity extends AppCompatActivity {
 
-    private MenuFragment fragment;
     private MenuAdapter adapter;
     private List<Menu> dataset;
     private Restaurant r;
     public static Map<String, List<Menu>> menusFromApi = new HashMap<>();
     DateFormat df = new SimpleDateFormat("EEEE");
+
     @BindView(R.id.cardView)
     CardView cardView;
     @BindView(R.id.thumbnail)
@@ -117,20 +116,11 @@ public class RestaurantActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setRestaurant(r);
         getMenus();
-
         adapter = new MenuAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabsStrip.setViewPager(viewPager);
 
-<<<<<<< HEAD
-=======
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-
         GraphView graph = (GraphView) findViewById(R.id.graph);
-
-
-
 
         LineGraphSeries<DataPoint> currentSeries = new LineGraphSeries<>(getCurrentData());
         LineGraphSeries<DataPoint> forecastSeries = new LineGraphSeries<>(getForecastData());
@@ -166,9 +156,6 @@ public class RestaurantActivity extends AppCompatActivity {
         graph.refreshDrawableState();
 
 
-        //getMenus();
-
->>>>>>> origin/develop-android
     }
 
     public void getMenus() {
@@ -198,8 +185,6 @@ public class RestaurantActivity extends AppCompatActivity {
                     for (Menu m : dataset) {
                         menusFromApi.put(df.format(m.getAvailableAt()).toLowerCase(), Arrays.asList(m));
                     }
-
-
                 }
             }
 
@@ -213,7 +198,6 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void setRestaurant(Restaurant r) {
         Picasso.with(this).load(r.getUrlImage()).into(thumbnail);
@@ -240,11 +224,6 @@ public class RestaurantActivity extends AppCompatActivity {
         getMenus();
     }
 
-<<<<<<< HEAD
-    public static Map<String, List<Menu>> getMenusFromApi() {
-        return menusFromApi;
-    }
-=======
     private DataPoint[] getCurrentData(){
         occupancyData = new ArrayList<>();
         occupancyData.add(new OccupancyUnit(new Date(1480933800000L), 0));
@@ -648,14 +627,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
-
-
-
->>>>>>> origin/develop-android
-
+    public static Map<String, List<Menu>> getMenusFromApi() {
+        return menusFromApi;
+    }
 }
-

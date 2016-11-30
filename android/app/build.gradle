@@ -40,4 +40,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
 }

@@ -71,7 +71,6 @@ public class MenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         view = inflater.inflate(R.layout.menu_fragment, container, false);
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         datum = (TextView) view.findViewById(R.id.menuDate);
