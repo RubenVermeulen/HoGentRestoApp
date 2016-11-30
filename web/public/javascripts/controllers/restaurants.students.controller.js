@@ -41,8 +41,6 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
         }
 
         function getTrafficGrade(occupancy) {
-            console.log(occupancy);
-
             if (occupancy < 0.30) {
                 return 0
             }
