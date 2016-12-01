@@ -131,6 +131,15 @@
                                 {{ menu.price | currency: '€ ' }}
                             </div>
                         </div>
+                        <div ng-show="menu.product.allergens.length !== 0">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h6>Allergenen: <span ng-repeat="allergen in menu.product.allergens track by $index">
+                                        {{allergen}}<span ng-show="menu.product.allergens.length - 1 !== $index">, </span>
+                                    </span></h6>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
