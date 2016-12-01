@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="product in vm.products track by $index | orderBy: '-description'">
+        <tr ng-repeat="product in vm.products | orderBy: 'description' track by $index">
             <td>{{product.description}}</td>
             <td>
                 <span ng-show="product.allergens.length === 0">Geen allergenen</span>

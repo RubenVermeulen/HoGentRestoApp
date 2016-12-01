@@ -32,7 +32,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="menu in vm.restaurant.menus | orderBy: '-title'">
+        <tr ng-repeat="menu in vm.restaurant.menus | orderBy: ['-availableAt', 'title']">
             <td>{{menu.title}}</td>
             <td>{{menu.product.description}}</td>
             <td>{{menu.price | currency: '€'}}</td>
