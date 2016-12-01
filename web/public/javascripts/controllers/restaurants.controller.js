@@ -19,19 +19,6 @@ angular.module('hogentResto').controller('RestaurantsController',
         }
 
         function editRestaurant() {
-            if (!vm.restaurant.name || vm.restaurant.name === '' || !vm.restaurant.address || vm.restaurant.address === '' || !vm.restaurant.openingHours || vm.restaurant.openingHours === '' ||
-            !vm.restaurant.coordinates.lat || vm.restaurant.coordinates.lat === '' || !vm.restaurant.coordinates.long || vm.restaurant.coordinates.long === '' ||
-            !vm.restaurant.urlImage || vm.restaurant.urlImage === '') {
-                 vm.alertMessage = 'Gelieve alle velden in te vullen.';
-                 vm.alertType = 'danger';
-                 return;
-            }
-
-            if (!$.isNumeric(vm.restaurant.coordinates.lat) || !$.isNumeric(vm.restaurant.coordinates.long)){
-                vm.alertMessage = 'Coördinaten moeten een getal zijn.';
-                vm.alertType = 'danger';
-                return;
-            }
 
             if(vm.delete){
                 restaurants.deleteRestaurant(restaurant._id).error(function(error){
@@ -47,6 +34,20 @@ angular.module('hogentResto').controller('RestaurantsController',
 
                 alertService.setAlert('Resto ' + vm.restaurant.name + ' is succesvol verwijderd.', 'success');
                 $state.go('admin-restaurants');
+                return;
+            }
+
+            if (!vm.restaurant.name || vm.restaurant.name === '' || !vm.restaurant.address || vm.restaurant.address === '' || !vm.restaurant.openingHours || vm.restaurant.openingHours === '' ||
+            !vm.restaurant.coordinates.lat || vm.restaurant.coordinates.lat === '' || !vm.restaurant.coordinates.long || vm.restaurant.coordinates.long === '' ||
+            !vm.restaurant.urlImage || vm.restaurant.urlImage === '') {
+                 vm.alertMessage = 'Gelieve alle velden in te vullen.';
+                 vm.alertType = 'danger';
+                 return;
+            }
+
+            if (!$.isNumeric(vm.restaurant.coordinates.lat) || !$.isNumeric(vm.restaurant.coordinates.long)){
+                vm.alertMessage = 'Coördinaten moeten een getal zijn.';
+                vm.alertType = 'danger';
                 return;
             }
 

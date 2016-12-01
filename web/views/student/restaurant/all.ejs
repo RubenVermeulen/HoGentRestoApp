@@ -21,11 +21,13 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="restaurant-cover" style="background-image: url('{{ restaurant.urlImage }}')">
-                                <div class="circle-traffic {{ vm.getTrafficClass(restaurant.occupancy) }}">
-                                    <div class="circle-traffic-text font-weight-normal">{{ vm.getTrafficText(restaurant.occupancy) }}</div>
+                            <a href="/#/restaurants/{{restaurant._id}}">
+                                <div class="restaurant-cover" style="background-image: url('{{ restaurant.urlImage }}')">
+                                    <div class="circle-traffic {{ vm.getTrafficClass(restaurant.occupancy) }}">
+                                        <div class="circle-traffic-text font-weight-normal">{{ vm.getTrafficText(restaurant.occupancy) }}</div>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                     <div class="row">
