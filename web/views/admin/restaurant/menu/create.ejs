@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label for="product" class="col-sm-2 control-label">Beschrijving</label>
                         <div class="col-sm-10">
-                            <select ng-init="vm.product = vm.product || vm.products[0]" ng-options="product as product.description for product in vm.products" ng-model="vm.product" id="product" class="form-control" required>
+                            <select ng-init="vm.product = vm.product || vm.products[0]" ng-options="product as product.description for product in vm.products | orderBy: 'description'" ng-model="vm.product" id="product" class="form-control" required>
                             </select>
                         </div>
                     </div>

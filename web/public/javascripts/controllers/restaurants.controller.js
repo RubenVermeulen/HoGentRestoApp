@@ -96,14 +96,14 @@ angular.module('hogentResto').controller('RestaurantsController',
                 product: vm.product,
                 price: vm.price,
                 availableAt: vm.availableAt
-            }).then(function(menu) {
-                vm.restaurant.menus.push(menu);
-                alertService.setAlert('Menu ' + vm.title + ' is toegevoegd.', 'success');
-                $state.go('admin-menus', {id: restaurant._id});
-            }).error(function(error){
+            }).error(function(){
                 vm.alertMessage = 'Error. De server kon uw aanvraag niet verwerken.';
                 vm.alertType = 'danger';
                 return;
+            }).success(function(menu) {
+                vm.restaurant.menus.push(menu);
+                alertService.setAlert('Menu ' + vm.title + ' is toegevoegd.', 'success');
+                $state.go('admin-menus', {id: restaurant._id});
             });
         }
 

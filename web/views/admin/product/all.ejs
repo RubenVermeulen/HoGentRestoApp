@@ -21,31 +21,33 @@
         <p>Er zijn nog geen producten.</p>
     </div>
 
-    <table ng-show="vm.hasProducts()" class="table">
-        <thead>
-        <tr>
-            <th>Beschrijving</th>
-            <th>Allergenen</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="product in vm.products track by $index | orderBy: '-description'">
-            <td>{{product.description}}</td>
-            <td>
-                <span ng-show="product.allergens.length === 0">Geen allergenen</span>
+    <div ng-show="vm.hasProducts()" class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Beschrijving</th>
+                <th>Allergenen</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="product in vm.products | orderBy: 'description'">
+                <td>{{product.description}}</td>
+                <td>
+                    <span ng-show="product.allergens.length === 0">Geen allergenen</span>
 
-                <span ng-repeat="allergen in product.allergens">
+                    <span ng-repeat="allergen in product.allergens track by $index">
                     {{allergen}}<span ng-show="product.allergens.length - 1 !== $index">, </span>
                 </span>
-            </td>
-            <td class="text-right">
-                <a href="/#/admin/products/{{product._id}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
-                <a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.productPendingDelete={id: product._id, description: product.description}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                </td>
+                <td class="text-right">
+                    <a href="/#/admin/products/{{product._id}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.productPendingDelete={id: product._id, description: product.description}" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
