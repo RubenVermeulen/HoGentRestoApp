@@ -45,4 +45,6 @@ public class MenuAdapter extends FragmentPagerAdapter {
     public MenuFragment getFragment() {
         return fragment;
     }
+
+
 }

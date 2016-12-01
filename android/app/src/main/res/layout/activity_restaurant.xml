@@ -188,15 +188,14 @@
                     app:pstsShouldExpand="true"
                     app:pstsTextAllCaps="true"
                     android:layout_width="match_parent"
-                    app:pstsDividerColor="@color/colorTrafficCalm"
+                    app:pstsDividerColor="@color/cardview_shadow_start_color"
                     app:pstsIndicatorColor="@color/colorTrafficFull"
-                    app:pstsUnderlineColor="@color/colorPrimary"
                     android:layout_height="48dp" />
 
                 <resto.android.hogent.be.hogentresto.models.WrapContentViewPager
                     android:id="@+id/viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="500dp"
                     android:background="@android:color/white" />
 
             <include layout="@layout/progress_bar" />

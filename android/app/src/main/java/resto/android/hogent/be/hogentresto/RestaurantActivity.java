@@ -62,6 +62,7 @@ import static resto.android.hogent.be.hogentresto.R.id.progressBar;
 
 public class RestaurantActivity extends AppCompatActivity {
 
+    private List<Menu> menus1;
     private MenuAdapter adapter;
     private List<Menu> dataset;
     private Restaurant r;
@@ -116,10 +117,10 @@ public class RestaurantActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setRestaurant(r);
         getMenus();
+
         adapter = new MenuAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabsStrip.setViewPager(viewPager);
-
         GraphView graph = (GraphView) findViewById(R.id.graph);
 
         LineGraphSeries<DataPoint> currentSeries = new LineGraphSeries<>(getCurrentData());
@@ -183,7 +184,18 @@ public class RestaurantActivity extends AppCompatActivity {
                 else {
 
                     for (Menu m : dataset) {
-                        menusFromApi.put(df.format(m.getAvailableAt()).toLowerCase(), Arrays.asList(m));
+                        String key = df.format(m.getAvailableAt()).toLowerCase();
+                        if(menusFromApi.containsKey(key))
+                        {
+                            menus1 = new ArrayList<Menu>();
+                            menus1 = menusFromApi.get(key);
+                            menus1.add(m);
+                            menusFromApi.put(df.format(m.getAvailableAt()).toLowerCase(), menus1);
+                        }else {
+                            menus1 = new ArrayList<Menu>();
+                            menus1.add(m);
+                            menusFromApi.put(df.format(m.getAvailableAt()).toLowerCase(), menus1);
+                        }
                     }
                 }
             }
