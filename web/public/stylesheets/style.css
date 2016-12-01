@@ -326,6 +326,19 @@ h1{
         line-height: 50px;
         height: 50px;
     }
+
+    .navbar-brand{
+        line-height: 65px;
+        height: 65px;
+    }
+
+    .navbar-default .navbar-brand{
+        font-size: 1.5em;
+    }
+
+    .navbar-toggle{
+        margin-top: 18px;
+    }
 }
 
 /* Misc */
