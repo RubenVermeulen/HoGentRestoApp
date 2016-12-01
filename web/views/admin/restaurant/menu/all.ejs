@@ -21,34 +21,36 @@
         <p>Er zijn nog geen menu's.</p>
     </div>
 
-    <table ng-show="vm.hasMenus()" class="table">
-        <thead>
-        <tr>
-            <th>Soort gerecht</th>
-            <th>Product</th>
-            <th>Prijs</th>
-            <th>Datum</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="menu in vm.restaurant.menus | orderBy: ['-availableAt', 'title']">
-            <td>{{menu.title}}</td>
-            <td>{{menu.product.description}}</td>
-            <td>{{menu.price | currency: '€'}}</td>
-            <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
-            <td class="text-right">
-            <td class="text-right">
-                <a href="/#/admin/restaurants/{{vm.restaurant._id}}/menus/{{menu._id}}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-                <a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div ng-show="vm.hasMenus()" class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Soort gerecht</th>
+                <th>Product</th>
+                <th>Prijs</th>
+                <th>Datum</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="menu in vm.restaurant.menus | orderBy: ['-availableAt', 'title']">
+                <td>{{menu.title}}</td>
+                <td>{{menu.product.description}}</td>
+                <td>{{menu.price | currency: '€'}}</td>
+                <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
+                <td class="text-right">
+                <td class="text-right">
+                    <a href="/#/admin/restaurants/{{vm.restaurant._id}}/menus/{{menu._id}}" class="btn btn-default">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
