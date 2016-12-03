@@ -358,7 +358,13 @@
                     title: {
                         text: 'Tijdstip'
                     },
-                    type: 'datetime'
+                    type: 'datetime',
+                    plotLines: [{
+                        color: '#0113ff', // Red
+                        width: 2,
+                        value: 1480937460 * 1000,
+                        zIndex: 10
+                    }]
                 },
                 yAxis: {
                     title: {
