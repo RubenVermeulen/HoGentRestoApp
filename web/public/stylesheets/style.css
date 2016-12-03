@@ -229,7 +229,6 @@ h1{
 }
 
 .restaurant-forecast {
-    margin-top: 12px;
     padding: 0 15px;
     font-size: 30px;
     font-weight: 400;
@@ -237,6 +236,7 @@ h1{
 }
 
 .restaurant-forecast-description {
+    margin-top: 15px;
     font-weight: 300;
     font-size: 21px;
 }

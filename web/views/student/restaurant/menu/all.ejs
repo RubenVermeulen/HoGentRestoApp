@@ -51,11 +51,12 @@
                                 <div class="row">
                                     <div class="col-xs-12">
 
+                                        <div class="text-center restaurant-forecast-description">Wanneer is het rustiger?</div>
+                                        <hr class="restaurant-hr">
                                         <p>
                                             <div class="text-center restaurant-forecast">12:58</div>
                                         </p>
-                                        <hr class="restaurant-hr">
-                                        <div class="text-center restaurant-forecast-description">Wanneer is het rustiger?</div>
+
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +358,13 @@
                     title: {
                         text: 'Tijdstip'
                     },
-                    type: 'datetime'
+                    type: 'datetime',
+                    plotLines: [{
+                        color: '#0113ff', // Red
+                        width: 2,
+                        value: 1480937460 * 1000,
+                        zIndex: 10
+                    }]
                 },
                 yAxis: {
                     title: {
