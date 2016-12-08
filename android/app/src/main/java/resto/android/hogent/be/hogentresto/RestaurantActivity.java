@@ -83,10 +83,6 @@ public class RestaurantActivity extends AppCompatActivity {
     private List<OccupancyUnit> occupancyData;
     private List<OccupancyUnit> forecastData;
 
-    TextView title;
-    TextView description;
-    TextView price;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +158,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 refresh.setVisibility(View.GONE);
 
+                menusFromApi.clear();
                 dataset = response.body();
 
                 if (dataset.isEmpty()) {
