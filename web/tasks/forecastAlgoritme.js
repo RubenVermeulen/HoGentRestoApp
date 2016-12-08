@@ -18,6 +18,8 @@ var j = schedule.scheduleJob(rule, function(){
   //alle sensorreports van die bepaalde weekdag (alle reports vd maandagen bv)
   var reportsOfThisWeekDay = SensorReport.findAllReportsWithCurrentDayOfTheWeek();
 
+
+//variabelen aanmaken om de reports per dag te vinden
   var reports1weekgeleden = [];
   var reports2wekengeleden = [];
   var reports3wekengeleden = [];
@@ -29,27 +31,41 @@ var j = schedule.scheduleJob(rule, function(){
   for (i = 0; i < reportsOfThisWeekDay.length; i++) {
 
     switch (reportsOfThisWeekDay[i].time.getDate()) {
-      case today.getDate-7*1:
+      case today.getDate()-7*1;
       reports1weekgeleden.push(reportsOfThisWeekDay[i]);
       break;
-      case today.getDate-7*2:
+      case today.getDate()-7*2:
       reports2wekengeleden.push(reportsOfThisWeekDay[i]);
       break;
-      case today.getDate-7*3:
+      case today.getDate()-7*3:
       reports3wekengeleden.push(reportsOfThisWeekDay[i]);
       break;
-      case today.getDate-7*4:
+      case today.getDate()-7*4:
       reports4wekengeleden.push(reportsOfThisWeekDay[i]);
       break;
-      case today.getDate-7*5:
+      case today.getDate()-7*5:
       reports5wekengeleden.push(reportsOfThisWeekDay[i]);
       break;
 
     }
   }
 
-  //dictionaries aanmaken met key= tijdstip en de value= drukte
+  function compare(a,b) {
+  if (a.time < b.time)
+    return -1;
+  if (a.time > b.time)
+    return 1;
+  return 0;
+}
 
+reports1weekgeleden.sort(compare);
+reports2wekengeleden.sort(compare);
+reports3wekengeleden.sort(compare);
+reports4wekengeleden.sort(compare);
+reports5wekengeleden.sort(compare);
+
+/*
+  //dictionaries aanmaken met key= tijdstip en de value= drukte
   var reportsTodayTillNowDic = {};
   for(i = 0; i< reportsTodayTillNow.length;i++){
     reportsTodayTillNowDic[reportsTodayTillNow[i].time] = reportsTodayTillNow[i].occupancy;
@@ -82,34 +98,40 @@ var j = schedule.scheduleJob(rule, function(){
 
 
   var aantalReports = Object.keys(reports1weekgeledendic).length
+*/
 
 
-
-  var gewogengemiddeldePerTijdslot = {};
+  var gewogengemiddeldePerTijdslot = [];
 
   //gewogengemiddelde met wegingsfactoren gebaseerd op fibonacci
-  //key= tijdstip en de value= drukte
-  for(var key in reports1weekgeledendic){
-    gewogengemiddeldePerTijdslot[key] = (144*reports1weekgeledendic[key] + 89*reports2wekengeledendic[key] +
-                55*reports3wekengeledendic[key] + 34*reports4wekengeledendic[key] + 21*reports5wekengeledendic[key])/343
-      }
 
-  var voorspelling = {};
+  for(var i= 0; i<reports1weekgeleden.length ; i++){
+    gewogengemiddeldePerTijdslot[i] = (144*reports1weekgeleden[i].occupancy + 89*reports2wekengeleden[i].occupancy +
+                55*reports3wekengeleden[i].occupancy + 34*reports4wekengeleden[i].occupancy + 21*reports5wekengeleden[i].occupancy)/343;
+                }
+
+  var voorspelling = [];
 
 
   //de voorspellingdictionary opvullen met data van vandaag
-  for(var key in reportsTodayTillNowDic){
-    voorspelling[key] = reportsTodayTillNowDic[key];
+  for(var i=0; i< reportsTodayTillNow.length;i++){
+    voorspelling[i] = reportsTodayTillNow[i].occupancy;
   }
 
+  var aantalMetingenVandaag = reportsTodayTillNow.length;
 
+  var schalingsfactor= (reportsTodayTillNow[aantalMetingenVandaag -1 ]/gewogengemiddeldePerTijdslot[aantalMetingenVandaag -1]+reportsTodayTillNow[aantalMetingenVandaag -2 ]/gewogengemiddeldePerTijdslot[aantalMetingenVandaag -2])/2;
 
-    var aantalNodigeVoorspellingen = Object.keys(gewogengemiddeldePerTijdslot).length - Object.keys(reportsTodayTillNowDic).length ;
+/*
+  var aantalNodigeVoorspellingen = gewogengemiddeldePerTijdslot.length - reportsTodayTillNow.length;
 
   var vorigData = reportsTodayTillNow[reportsTodayTillNow.length -1].occupancy;
+*/
 
-  var forecast = [];
-
+  for (var i = 0; i<aantalNodigeVoorspellingen;i++){
+    voorspelling[aantalMetingenVandaag + i]= schalingsfactor * gewogengemiddeldePerTijdslot[aantalMetingenVandaag+i];
+  }
+/*
     for (i=0; i<aantalNodigeVoorspellingen; i++){
 
       //het gemiddelde van nu in functie van aantal nodigevoorspellingen en i
@@ -123,4 +145,5 @@ var j = schedule.scheduleJob(rule, function(){
 
       vorigData = voorspellingNu;
   }
+  */
 });
