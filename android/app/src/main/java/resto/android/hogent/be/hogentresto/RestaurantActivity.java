@@ -169,15 +169,13 @@ public class RestaurantActivity extends AppCompatActivity {
                     viewPager.addView(child);
                 }
                 else {
-
                     for (Menu m : dataset) {
                         Calendar c = Calendar.getInstance();
-                        Date d = m.getAvailableAt();
                         c.setTime(m.getAvailableAt());
+
                         int key = c.get(Calendar.DAY_OF_WEEK);
 
-                        if(menusFromApi.containsKey(key))
-                        {
+                        if (menusFromApi.containsKey(key)) {
                             menus = new ArrayList<>();
                             menus = menusFromApi.get(key);
 
