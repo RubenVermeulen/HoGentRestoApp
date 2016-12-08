@@ -46,7 +46,7 @@ public class MenuFragment extends Fragment {
 
     public static final String ARG_PAGE = "ARG_PAGE";
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    Map<String, List<Menu>> menus= new HashMap<String, List<Menu>>();
+    Map<Integer, List<Menu>> menus= new HashMap<>();
 
     List<Menu> menuMaandag, menuDinsdag, menuWoensdag, menuDonderdag, menuVrijdag;
 
@@ -79,16 +79,18 @@ public class MenuFragment extends Fragment {
 
         menus = RestaurantActivity.getMenusFromApi();
         LinearLayout fragmentlist = (LinearLayout) view.findViewById(R.id.fragment_list_id);
+
         if(!menus.isEmpty()) {
-            menuMaandag = menus.get("maandag");
-            menuDinsdag = menus.get("dinsdag");
-            menuWoensdag = menus.get("woensdag");
-            menuDonderdag = menus.get("donderdag");
-            menuVrijdag = menus.get("vrijdag");
+            // Sunday == 1
+            menuMaandag = menus.get(2); // Monday
+            menuDinsdag = menus.get(3); // Tuesday
+            menuWoensdag = menus.get(4); // Wednesday
+            menuDonderdag = menus.get(5); // Thursday
+            menuVrijdag = menus.get(6); // Friday
         }
         switch (mPage){
 
-            case 1: tvTitle.setText("Maandag");
+            case 1: tvTitle.setText(R.string.monday);
             try{
 
                 datum.setText(df.format(menuMaandag.get(0).getAvailableAt()));
@@ -113,7 +115,7 @@ public class MenuFragment extends Fragment {
                 }
 
                 break;
-            case 2: tvTitle.setText("Dinsdag");
+            case 2: tvTitle.setText(R.string.tuesday);
                 try{
                 datum.setText(df.format(menuDinsdag.get(0).getAvailableAt()));
                 for (Menu m : menuDinsdag) {
@@ -135,7 +137,7 @@ public class MenuFragment extends Fragment {
                     fragmentlist.addView(child);
                 }
                 break;
-            case 3: tvTitle.setText("Woensdag");
+            case 3: tvTitle.setText(R.string.wednesday);
                 try{
                 datum.setText(df.format(menuWoensdag.get(0).getAvailableAt()));
                 for (Menu m : menuWoensdag) {
@@ -157,7 +159,7 @@ public class MenuFragment extends Fragment {
                     fragmentlist.addView(child);
                 }
                 break;
-            case 4: tvTitle.setText("Donderdag");
+            case 4: tvTitle.setText(R.string.thursday);
                 try{
                 datum.setText(df.format(menuDonderdag.get(0).getAvailableAt()));
                 for (Menu m : menuDonderdag) {
@@ -178,22 +180,23 @@ public class MenuFragment extends Fragment {
                     fragmentlist.addView(child);
                 }
                 break;
-            case 5: tvTitle.setText("Vrijdag");
+            case 5: tvTitle.setText(R.string.friday);
                 try{
-                datum.setText(df.format(menuVrijdag.get(0).getAvailableAt()));
-                for (Menu m : menuVrijdag) {
-                    child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
+                    datum.setText(df.format(menuVrijdag.get(0).getAvailableAt()));
 
-                    title = (TextView) child.findViewById(R.id.title);
-                    description = (TextView) child.findViewById(R.id.description);
-                    price = (TextView) child.findViewById(R.id.price);
+                    for (Menu m : menuVrijdag) {
+                        child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_list_item, null);
 
-                    title.setText(m.getTitle());
-                    description.setText(m.getProduct().getDescription());
-                    price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+                        title = (TextView) child.findViewById(R.id.title);
+                        description = (TextView) child.findViewById(R.id.description);
+                        price = (TextView) child.findViewById(R.id.price);
 
-                    fragmentlist.addView(child);
-                }
+                        title.setText(m.getTitle());
+                        description.setText(m.getProduct().getDescription());
+                        price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+
+                        fragmentlist.addView(child);
+                    }
                 }
                 catch(Exception e){
                     View child = getLayoutInflater(savedInstanceState).inflate(R.layout.menus_no_results, null);
@@ -203,15 +206,6 @@ public class MenuFragment extends Fragment {
 
         }
 
-
         return view;
     }
-
-
-    public void setMenus(Map<String, List<Menu>> menus) {
-        this.menus = menus;
-    }
-
-
-
 }

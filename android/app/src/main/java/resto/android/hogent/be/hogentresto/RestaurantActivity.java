@@ -4,16 +4,9 @@ package resto.android.hogent.be.hogentresto;
 
 import android.os.Bundle;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,24 +20,20 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.HashMap;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import resto.android.hogent.be.hogentresto.MenuTabs.MenuFragment;
 import resto.android.hogent.be.hogentresto.adapters.MenuAdapter;
 import resto.android.hogent.be.hogentresto.config.Config;
 import resto.android.hogent.be.hogentresto.helpers.Traffic;
@@ -58,16 +47,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static resto.android.hogent.be.hogentresto.R.id.progressBar;
-
 public class RestaurantActivity extends AppCompatActivity {
 
-    private List<Menu> menus1;
+    private List<Menu> menus;
     private MenuAdapter adapter;
     private List<Menu> dataset;
     private Restaurant r;
-    public static Map<String, List<Menu>> menusFromApi = new HashMap<>();
-    DateFormat df = new SimpleDateFormat("EEEE");
+    public static Map<Integer, List<Menu>> menusFromApi = new HashMap<>();
 
     @BindView(R.id.cardView)
     CardView cardView;
@@ -121,6 +107,7 @@ public class RestaurantActivity extends AppCompatActivity {
         adapter = new MenuAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabsStrip.setViewPager(viewPager);
+
         GraphView graph = (GraphView) findViewById(R.id.graph);
 
         LineGraphSeries<DataPoint> currentSeries = new LineGraphSeries<>(getCurrentData());
@@ -184,17 +171,23 @@ public class RestaurantActivity extends AppCompatActivity {
                 else {
 
                     for (Menu m : dataset) {
-                        String key = df.format(m.getAvailableAt()).toLowerCase();
+                        Calendar c = Calendar.getInstance();
+                        Date d = m.getAvailableAt();
+                        c.setTime(m.getAvailableAt());
+                        int key = c.get(Calendar.DAY_OF_WEEK);
+
                         if(menusFromApi.containsKey(key))
                         {
-                            menus1 = new ArrayList<Menu>();
-                            menus1 = menusFromApi.get(key);
-                            menus1.add(m);
-                            menusFromApi.put(df.format(m.getAvailableAt()).toLowerCase(), menus1);
-                        }else {
-                            menus1 = new ArrayList<Menu>();
-                            menus1.add(m);
-                            menusFromApi.put(df.format(m.getAvailableAt()).toLowerCase(), menus1);
+                            menus = new ArrayList<>();
+                            menus = menusFromApi.get(key);
+
+                            menus.add(m);
+                            menusFromApi.put(key, menus);
+                        }
+                        else {
+                            menus = new ArrayList<>();
+                            menus.add(m);
+                            menusFromApi.put(key, menus);
                         }
                     }
                 }
@@ -639,7 +632,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
     }
 
-    public static Map<String, List<Menu>> getMenusFromApi() {
+    public static Map<Integer, List<Menu>> getMenusFromApi() {
         return menusFromApi;
     }
 }
