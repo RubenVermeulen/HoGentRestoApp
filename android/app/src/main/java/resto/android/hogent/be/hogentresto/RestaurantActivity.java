@@ -173,17 +173,14 @@ public class RestaurantActivity extends AppCompatActivity {
                         int key = c.get(Calendar.DAY_OF_WEEK);
 
                         if (menusFromApi.containsKey(key)) {
-                            menus = new ArrayList<>();
                             menus = menusFromApi.get(key);
-
-                            menus.add(m);
-                            menusFromApi.put(key, menus);
                         }
                         else {
                             menus = new ArrayList<>();
-                            menus.add(m);
-                            menusFromApi.put(key, menus);
                         }
+
+                        menus.add(m);
+                        menusFromApi.put(key, menus);
                     }
                 }
             }
@@ -222,6 +219,10 @@ public class RestaurantActivity extends AppCompatActivity {
     public void refresh(View view) {
         progressBar.setVisibility(View.VISIBLE);
         getMenus();
+    }
+
+    public static Map<Integer, List<Menu>> getMenusFromApi() {
+        return menusFromApi;
     }
 
     private DataPoint[] getCurrentData(){
@@ -625,9 +626,5 @@ public class RestaurantActivity extends AppCompatActivity {
 
         return data;
 
-    }
-
-    public static Map<Integer, List<Menu>> getMenusFromApi() {
-        return menusFromApi;
     }
 }
