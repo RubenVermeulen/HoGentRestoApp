@@ -24,7 +24,7 @@ import resto.android.hogent.be.hogentresto.MenuContext.MenuContext;
 import resto.android.hogent.be.hogentresto.R;
 import resto.android.hogent.be.hogentresto.RestaurantActivity;
 import resto.android.hogent.be.hogentresto.models.Menu;
-import resto.android.hogent.be.hogentresto.models.WrapContentViewPager;
+
 
 /**
  * Created by jonas on 28/11/2016.

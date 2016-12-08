@@ -17,7 +17,11 @@ import resto.android.hogent.be.hogentresto.models.Menu;
 public class MenuAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 5;
     private String tabTitles[] = new String[] { "Ma", "Di", "Wo", "Do", "Vr" };
-    MenuFragment fragment;
+    MenuFragment fragmentMa = MenuFragment.newInstance(1);
+    MenuFragment fragmentDi = MenuFragment.newInstance(2);
+    MenuFragment fragmentWoe = MenuFragment.newInstance(3);
+    MenuFragment fragmentDo = MenuFragment.newInstance(4);
+    MenuFragment fragmentVr = MenuFragment.newInstance(5);
 
 
     public MenuAdapter(FragmentManager fm) {
@@ -32,8 +36,17 @@ public class MenuAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        fragment = MenuFragment.newInstance(position + 1);
-        return fragment;
+        /*fragment = MenuFragment.newInstance(position + 1);
+        return fragment;*/
+        switch (position){
+            case 0: return fragmentMa;
+            case 1: return fragmentDi;
+            case 2: return fragmentWoe;
+            case 3: return fragmentDo;
+            case 4: return fragmentVr;
+            default:return null;
+        }
+
 
     }
 
