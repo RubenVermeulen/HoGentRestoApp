@@ -74,7 +74,6 @@ public class RestoDetailFragment extends Fragment{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		resto = (Restaurant) getArguments().getSerializable("item");
-
 	}
 
 	@Override
@@ -83,14 +82,6 @@ public class RestoDetailFragment extends Fragment{
 		View view = inflater.inflate(R.layout.fragment_restaurant_detail,
 				container, false);
 		ButterKnife.bind(this, view);
-		/*ImageView thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-		ImageView trafficIndicator = (ImageView) view.findViewById(R.id.trafficIndicator);
-		TextView trafficGrade = (TextView) view.findViewById(R.id.trafficGrade);
-		TextView name = (TextView) view.findViewById(R.id.name);
-		TextView openingHours = (TextView) view.findViewById(R.id.openingHours);
-		LinearLayout menus = (LinearLayout) view.findViewById(R.id.menus);
-		tvTitle.setText("test");
-		tvBody.setText("test");*/
 
 		setRestaurant(resto);
 		adapter = new MenuAdapter(getActivity().getSupportFragmentManager());
