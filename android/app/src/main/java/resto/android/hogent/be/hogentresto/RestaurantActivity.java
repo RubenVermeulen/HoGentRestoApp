@@ -4,8 +4,6 @@ package resto.android.hogent.be.hogentresto;
 
 import android.os.Bundle;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -36,12 +34,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import resto.android.hogent.be.hogentresto.MenuContext.MenuContext;
 import resto.android.hogent.be.hogentresto.adapters.MenuAdapter;
 import resto.android.hogent.be.hogentresto.config.Config;
-import resto.android.hogent.be.hogentresto.fragments.RestoDetailFragment;
 import resto.android.hogent.be.hogentresto.helpers.Traffic;
-import resto.android.hogent.be.hogentresto.models.Item;
 import resto.android.hogent.be.hogentresto.models.Menu;
 import resto.android.hogent.be.hogentresto.models.OccupancyUnit;
 import resto.android.hogent.be.hogentresto.models.Restaurant;
@@ -52,14 +47,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RestaurantActivity extends FragmentActivity {
+public class RestaurantActivity extends AppCompatActivity {
 
     private List<Menu> menus;
     private MenuAdapter adapter;
     private List<Menu> dataset;
     private Restaurant r;
     public static Map<Integer, List<Menu>> menusFromApi = new HashMap<>();
-/*
+
     @BindView(R.id.cardView)
     CardView cardView;
     @BindView(R.id.thumbnail)
@@ -83,7 +78,7 @@ public class RestaurantActivity extends FragmentActivity {
     @BindView(R.id.refresh)
     TextView refresh;
     @BindView(R.id.tabs)
-    PagerSlidingTabStrip tabsStrip;*/
+    PagerSlidingTabStrip tabsStrip;
 
     private List<OccupancyUnit> occupancyData;
     private List<OccupancyUnit> forecastData;
@@ -91,32 +86,25 @@ public class RestaurantActivity extends FragmentActivity {
     TextView title;
     TextView description;
     TextView price;
-    RestoDetailFragment fragmentItemDetail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_detail);
-        r = (Restaurant) getIntent().getSerializableExtra("item");
+        setContentView(R.layout.activity_restaurant);
 
-        if (savedInstanceState == null) {
-            fragmentItemDetail = RestoDetailFragment.newInstance(r);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.flDetailContainer, fragmentItemDetail);
-            ft.commit();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        /*if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }*/
-
+        r = (Restaurant) getIntent().getSerializableExtra("restaurant");
 
         setTitle(r.getName());
 
         ButterKnife.bind(this);
-        //setRestaurant(r);
-        //getMenus();
+        setRestaurant(r);
+        getMenus();
 
-        /*adapter = new MenuAdapter(getSupportFragmentManager());
+        adapter = new MenuAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabsStrip.setViewPager(viewPager);
 
@@ -155,11 +143,11 @@ public class RestaurantActivity extends FragmentActivity {
         graph.getViewport().setScrollable(true);
         graph.refreshDrawableState();
 
-*/
+
     }
 
     public void getMenus() {
-        /*Retrofit retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -171,9 +159,8 @@ public class RestaurantActivity extends FragmentActivity {
         call.enqueue(new Callback<List<Menu>>() {
             @Override
             public void onResponse(Call<List<Menu>> call, Response<List<Menu>> response) {
-                menusFromApi.clear();
-                //progressBar.setVisibility(View.GONE);
-                //refresh.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
+                refresh.setVisibility(View.GONE);
 
                 dataset = response.body();
 
@@ -208,16 +195,16 @@ public class RestaurantActivity extends FragmentActivity {
 
             @Override
             public void onFailure(Call<List<Menu>> call, Throwable t) {
-                //progressBar.setVisibility(View.GONE);
-                //refresh.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                refresh.setVisibility(View.VISIBLE);
 
                 Toast toast = Toast.makeText(RestaurantActivity.this, R.string.not_connected, Toast.LENGTH_LONG);
                 toast.show();
             }
-        });*/
+        });
     }
 
-    /*private void setRestaurant(Restaurant r) {
+    private void setRestaurant(Restaurant r) {
         Picasso.with(this).load(r.getUrlImage()).into(thumbnail);
         name.setText(r.getName());
         openingHours.setText(r.getOpeningHours());
@@ -238,8 +225,8 @@ public class RestaurantActivity extends FragmentActivity {
     }
 
     public void refresh(View view) {
-        //progressBar.setVisibility(View.VISIBLE);
-        //getMenus();
+        progressBar.setVisibility(View.VISIBLE);
+        getMenus();
     }
 
     private DataPoint[] getCurrentData(){
@@ -644,7 +631,7 @@ public class RestaurantActivity extends FragmentActivity {
         return data;
 
     }
-*/
+
     public static Map<Integer, List<Menu>> getMenusFromApi() {
         return menusFromApi;
     }

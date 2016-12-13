@@ -21,17 +21,6 @@ public class Restaurant implements Serializable {
 
     }
 
-    public Restaurant(Coordinate coordinates, String name, String address, String openingHours, List<Menu> menus, String urlImage, List<OccupancyUnit> forecast, double occupation) {
-        this.coordinates = coordinates;
-        this.name = name;
-        this.address = address;
-        this.openingHours = openingHours;
-        this.menus = menus;
-        this.urlImage = urlImage;
-        this.forecast = forecast;
-        this.occupation = occupation;
-    }
-
     public String getId() {
         return id;
     }
