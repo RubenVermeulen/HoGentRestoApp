@@ -88,6 +88,10 @@ public class RestaurantActivity extends FragmentActivity {
     private List<OccupancyUnit> occupancyData;
     private List<OccupancyUnit> forecastData;
 
+
+    TextView title;
+    TextView description;
+    TextView price;
     RestoDetailFragment fragmentItemDetail;
 
     @Override

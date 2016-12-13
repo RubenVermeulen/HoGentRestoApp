@@ -5,22 +5,16 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,29 +40,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends FragmentActivity implements OnItemSelectedListener {
 
 
-    /*@BindView(R.id.thumbnail)
-    ImageView thumbnail;
-    @BindView(R.id.name)
-    TextView name;
-    @BindView(R.id.openingHours)
-    TextView openingHours;
-    @BindView(R.id.trafficGrade)
-    TextView trafficGrade;
-    @BindView(R.id.trafficIndicator)
-    ImageView trafficIndicator;
-    @BindView(R.id.stats)
-    TableLayout stats;
-    @BindView(R.id.expand)
-    ImageView expand;
-    @BindView(R.id.viewpager)
-    ViewPager viewPager;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-    @BindView(R.id.refresh)
-    TextView refresh;
-    @BindView(R.id.tabs)
-    PagerSlidingTabStrip tabsStrip;*/
-    RestoDetailFragment fragmentItem;
     public static List<Restaurant> restos = new ArrayList<>();
     public List<Restaurant> dataset;
     private RecyclerView recyclerView;
@@ -188,7 +159,7 @@ public class MainActivity extends FragmentActivity implements OnItemSelectedList
     public void onItemSelected(Restaurant item) {
         if (isTwoPane) { // single activity with list and detail
             // Replace frame layout with correct detail fragment
-            fragmentItem = RestoDetailFragment.newInstance(item);
+            RestoDetailFragment fragmentItem = RestoDetailFragment.newInstance(item);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flDetailContainer, fragmentItem);
             ft.commit();
@@ -198,10 +169,6 @@ public class MainActivity extends FragmentActivity implements OnItemSelectedList
             i.putExtra("item", item);
             startActivity(i);
         }
-    }
-    public void expand(View view) {
-
-        fragmentItem.expand(view);
     }
 
     public void setRestos(List<Restaurant> restos) {

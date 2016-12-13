@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,15 +31,23 @@ import resto.android.hogent.be.hogentresto.models.OccupancyUnit;
 import resto.android.hogent.be.hogentresto.models.Restaurant;
 
 public class RestoListFragment extends Fragment {
-
 	private RestoAdapter adapterItems;
 	private ListView lvItems;
+	private String name;
+	private String address;
+	private Coordinate coordinates;
+	private String openingHours;
+	private transient List<Menu> menus;
+	private String urlImage;
+	private double occupation;
+	private List<OccupancyUnit> forecast;
+
 	List<Restaurant> items;
+	View child;
 	private OnItemSelectedListener listener;
 
 	public interface OnItemSelectedListener {
 		public void onItemSelected(Restaurant i);
-
 	}
 
 	@Override
@@ -76,10 +83,12 @@ public class RestoListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate view
-		final View view = inflater.inflate(R.layout.fragment_restaurant_list, container,
+		View view = inflater.inflate(R.layout.fragment_restaurant_list, container,
 				false);
 		// Bind adapter to ListView
 		lvItems = (ListView) view.findViewById(R.id.lvItems);
+
+
 
 		lvItems.setAdapter(adapterItems);
 		lvItems.setOnItemClickListener(new OnItemClickListener() {
@@ -88,7 +97,6 @@ public class RestoListFragment extends Fragment {
 									long rowId) {
 				// Retrieve item based on position
 				Restaurant r = adapterItems.getItem(position);
-
 				// Fire selected event for item
 				listener.onItemSelected(r);
 			}
