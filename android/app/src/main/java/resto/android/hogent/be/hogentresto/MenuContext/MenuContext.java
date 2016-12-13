@@ -55,20 +55,20 @@ public class MenuContext {
     Menu menu14 = new Menu( "Soep", p, 0.60, dec2);
     Menu menu15 = new Menu("Dagschotel" , p, 3.80, dec2);
 
-    public Map<String, List<Menu>> menus = new HashMap<String, List<Menu>>() {
+    public Map<Integer, List<Menu>> menus = new HashMap<Integer, List<Menu>>() {
 
         {
-            put("maandag", Arrays.asList(menu1, menu2, menu3));
-            put("dinsdag", Arrays.asList(menu4, menu5, menu6));
-            put("woensdag", Arrays.asList(menu7, menu8, menu9));
-            put("donderdag", Arrays.asList(menu10, menu11, menu12));
-            put("vrijdag", Arrays.asList(menu13, menu14, menu15));
+            put(2, Arrays.asList(menu1, menu2, menu3));
+            put(3, Arrays.asList(menu4, menu5, menu6));
+            put(4, Arrays.asList(menu7, menu8, menu9));
+            put(5, Arrays.asList(menu10, menu11, menu12));
+            put(6, Arrays.asList(menu13, menu14, menu15));
         }
 
         ;
     };
 
-    public Map<String, List<Menu>> getMenus() {
+    public Map<Integer, List<Menu>> getMenus() {
         return menus;
     }
 }

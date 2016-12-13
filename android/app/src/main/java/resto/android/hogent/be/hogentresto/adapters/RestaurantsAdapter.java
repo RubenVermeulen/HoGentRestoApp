@@ -71,18 +71,18 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.name.setText(restaurant.getName());
-        holder.openingHours.setText(restaurant.getOpeningHours());
-        Picasso.with(context).load(restaurant.getUrlImage()).into(holder.thumbnail);
+                holder.openingHours.setText(restaurant.getOpeningHours());
+                Picasso.with(context).load(restaurant.getUrlImage()).into(holder.thumbnail);
 
-        Traffic.setTraffic(restaurant.getOccupation(), holder.trafficGrade, holder.trafficIndicator);
+                Traffic.setTraffic(restaurant.getOccupation(), holder.trafficGrade, holder.trafficIndicator);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
-                intent.putExtra("restaurant", restaurant);
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
+                        intent.putExtra("restaurant", restaurant);
 
-                v.getContext().startActivity(intent);
+                        v.getContext().startActivity(intent);
             }
         });
     }
