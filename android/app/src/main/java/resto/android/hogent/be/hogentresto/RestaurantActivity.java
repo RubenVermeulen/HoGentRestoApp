@@ -88,10 +88,12 @@ public class RestaurantActivity extends FragmentActivity {
     private List<OccupancyUnit> occupancyData;
     private List<OccupancyUnit> forecastData;
 
+
     TextView title;
     TextView description;
     TextView price;
     RestoDetailFragment fragmentItemDetail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,6 +177,7 @@ public class RestaurantActivity extends FragmentActivity {
                 //progressBar.setVisibility(View.GONE);
                 //refresh.setVisibility(View.GONE);
 
+                menusFromApi.clear();
                 dataset = response.body();
 
                 if (dataset.isEmpty()) {
@@ -182,26 +185,21 @@ public class RestaurantActivity extends FragmentActivity {
                     viewPager.addView(child);
                 }
                 else {
-
                     for (Menu m : dataset) {
                         Calendar c = Calendar.getInstance();
-                        Date d = m.getAvailableAt();
                         c.setTime(m.getAvailableAt());
+
                         int key = c.get(Calendar.DAY_OF_WEEK);
 
-                        if(menusFromApi.containsKey(key))
-                        {
-                            menus = new ArrayList<>();
+                        if (menusFromApi.containsKey(key)) {
                             menus = menusFromApi.get(key);
-
-                            menus.add(m);
-                            menusFromApi.put(key, menus);
                         }
                         else {
                             menus = new ArrayList<>();
-                            menus.add(m);
-                            menusFromApi.put(key, menus);
                         }
+
+                        menus.add(m);
+                        menusFromApi.put(key, menus);
                     }
                 }
             }
@@ -223,23 +221,20 @@ public class RestaurantActivity extends FragmentActivity {
         openingHours.setText(r.getOpeningHours());
 
         Traffic.setTraffic(r.getOccupation(), trafficGrade, trafficIndicator);
-    }
+    }*/
 
     public void expand(View view) {
-        if (stats.getVisibility() == View.GONE) {
-            stats.setVisibility(View.VISIBLE);
-            expand.setImageResource(R.drawable.ic_expand_less_black_32dp);
 
-        }
-        else {
-            stats.setVisibility(View.GONE);
-            expand.setImageResource(R.drawable.ic_expand_more_black_32dp);
-        }
+        fragmentItemDetail.expand(view);
     }
-
+/*
     public void refresh(View view) {
         //progressBar.setVisibility(View.VISIBLE);
         //getMenus();
+    }
+
+    public static Map<Integer, List<Menu>> getMenusFromApi() {
+        return menusFromApi;
     }
 
     private DataPoint[] getCurrentData(){
@@ -643,9 +638,9 @@ public class RestaurantActivity extends FragmentActivity {
 
         return data;
 
-    }
-*/
+    }*/
     public static Map<Integer, List<Menu>> getMenusFromApi() {
         return menusFromApi;
     }
+
 }
