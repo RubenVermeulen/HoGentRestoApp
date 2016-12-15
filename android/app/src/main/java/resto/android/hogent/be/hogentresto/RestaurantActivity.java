@@ -83,10 +83,6 @@ public class RestaurantActivity extends AppCompatActivity {
     private List<OccupancyUnit> occupancyData;
     private List<OccupancyUnit> forecastData;
 
-    TextView title;
-    TextView description;
-    TextView price;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +158,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 refresh.setVisibility(View.GONE);
 
+                menusFromApi.clear();
                 dataset = response.body();
 
                 if (dataset.isEmpty()) {
@@ -169,26 +166,21 @@ public class RestaurantActivity extends AppCompatActivity {
                     viewPager.addView(child);
                 }
                 else {
-
                     for (Menu m : dataset) {
                         Calendar c = Calendar.getInstance();
-                        Date d = m.getAvailableAt();
                         c.setTime(m.getAvailableAt());
+
                         int key = c.get(Calendar.DAY_OF_WEEK);
 
-                        if(menusFromApi.containsKey(key))
-                        {
-                            menus = new ArrayList<>();
+                        if (menusFromApi.containsKey(key)) {
                             menus = menusFromApi.get(key);
-
-                            menus.add(m);
-                            menusFromApi.put(key, menus);
                         }
                         else {
                             menus = new ArrayList<>();
-                            menus.add(m);
-                            menusFromApi.put(key, menus);
                         }
+
+                        menus.add(m);
+                        menusFromApi.put(key, menus);
                     }
                 }
             }
@@ -227,6 +219,10 @@ public class RestaurantActivity extends AppCompatActivity {
     public void refresh(View view) {
         progressBar.setVisibility(View.VISIBLE);
         getMenus();
+    }
+
+    public static Map<Integer, List<Menu>> getMenusFromApi() {
+        return menusFromApi;
     }
 
     private DataPoint[] getCurrentData(){
@@ -630,9 +626,5 @@ public class RestaurantActivity extends AppCompatActivity {
 
         return data;
 
-    }
-
-    public static Map<Integer, List<Menu>> getMenusFromApi() {
-        return menusFromApi;
     }
 }
