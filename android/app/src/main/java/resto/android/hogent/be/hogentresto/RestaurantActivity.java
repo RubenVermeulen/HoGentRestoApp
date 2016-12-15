@@ -18,8 +18,6 @@ import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
@@ -201,7 +199,7 @@ public class RestaurantActivity extends AppCompatActivity {
         name.setText(r.getName());
         openingHours.setText(r.getOpeningHours());
 
-        Traffic.setTraffic(r.getOccupation(), trafficGrade, trafficIndicator);
+        Traffic.setTraffic(r.getOccupancy(), trafficGrade, trafficIndicator);
     }
 
     public void expand(View view) {
