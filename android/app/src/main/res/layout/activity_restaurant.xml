@@ -109,6 +109,31 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/name"
+                        android:layout_marginBottom="12dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/recommended"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/openingHours"
+                        android:text="Aangeraden uur"
+                        android:textSize="20sp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/recommendedValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@+id/recommended"
+                        android:layout_below="@+id/openingHours"
+                        android:text="13u01"
+                        android:textSize="20sp"
+                        android:background="@drawable/rectangle_recommended"
+                        android:padding="6dp"
+                        android:textColor="#fff"
                         />
 
                     <ImageView
@@ -116,9 +141,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_expand_more_black_32dp"
-                        android:layout_alignRight="@+id/name"
-                        android:layout_centerVertical="true"
-                        />
+                        android:layout_alignBottom="@+id/openingHours"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
 
                 </RelativeLayout>
 
@@ -198,15 +223,12 @@
                     android:layout_height="500dp"
                     android:background="@android:color/white" />
 
-            <include layout="@layout/progress_bar" />
-            <include layout="@layout/refresh" />
+                <include layout="@layout/progress_bar" />
+                <include layout="@layout/refresh" />
 
-        </LinearLayout>
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
 </ScrollView>
-
-
-
