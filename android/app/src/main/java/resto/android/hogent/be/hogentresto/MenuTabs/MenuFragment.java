@@ -1,7 +1,9 @@
 package resto.android.hogent.be.hogentresto.MenuTabs;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +117,35 @@ public class MenuFragment extends Fragment {
                 title.setText(m.getTitle());
                 description.setText(m.getProduct().getDescription());
                 price.setText(String.format(Locale.getDefault(), "€ %.2f", m.getPrice()));
+
+                final String allergens;
+
+                if (m.getProduct().getAllergens().size() == 0) {
+                    allergens = "Geen allergenen";
+                }
+                else {
+                    allergens = m.getProduct().getAllergens().toString().replaceAll("[\\[\\](){}]","");
+                }
+
+                child.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                        builder.setMessage(allergens)
+                                .setTitle("Allergenen");
+
+                        builder.setPositiveButton("Sluiten", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
 
                 ll.addView(child);
             }
