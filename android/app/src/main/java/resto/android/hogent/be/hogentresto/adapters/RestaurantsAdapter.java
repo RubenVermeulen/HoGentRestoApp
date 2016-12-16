@@ -74,7 +74,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         holder.openingHours.setText(restaurant.getOpeningHours());
         Picasso.with(context).load(restaurant.getUrlImage()).into(holder.thumbnail);
 
-        Traffic.setTraffic(restaurant.getOccupation(), holder.trafficGrade, holder.trafficIndicator);
+        Traffic.setTraffic(restaurant.getOccupancy(), holder.trafficGrade, holder.trafficIndicator);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

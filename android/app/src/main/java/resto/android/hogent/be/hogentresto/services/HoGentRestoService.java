@@ -12,6 +12,6 @@ public interface HoGentRestoService {
     @GET("restaurants")
     Call<List<Restaurant>> restaurants();
 
-    @GET("restaurants/{id}/menus")
+    @GET("restaurants/{id}/menus/week")
     Call<List<Menu>> menus(@Path("id") String id);
 }

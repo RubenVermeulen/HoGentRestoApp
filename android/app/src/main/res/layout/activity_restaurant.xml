@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
@@ -107,6 +109,31 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/name"
+                        android:layout_marginBottom="12dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/recommended"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/openingHours"
+                        android:text="Aangeraden uur"
+                        android:textSize="20sp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/recommendedValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@+id/recommended"
+                        android:layout_below="@+id/openingHours"
+                        android:text="13u01"
+                        android:textSize="20sp"
+                        android:background="@drawable/rectangle_recommended"
+                        android:padding="6dp"
+                        android:textColor="#fff"
                         />
 
                     <ImageView
@@ -114,22 +141,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_expand_more_black_32dp"
-                        android:layout_alignRight="@+id/name"
-                        android:layout_centerVertical="true"
-                        />
+                        android:layout_alignBottom="@+id/openingHours"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
 
                 </RelativeLayout>
 
                 <TableLayout
                     android:id="@+id/stats"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:paddingTop="0dp"
                     android:paddingBottom="8dp"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
-                    android:visibility="gone"
-                    >
+                    android:visibility="gone">
 
                     <TableRow>
                         <TextView
@@ -141,13 +167,12 @@
                             />
                     </TableRow>
 
-                    <TableRow>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/lipsum"
-                            />
+                    <TableRow android:layout_width="match_parent">
+                        <com.jjoe64.graphview.GraphView
+                            android:layout_width="350dip"
+                            android:layout_height="200dip"
+                            android:id="@+id/graph" />
+
                     </TableRow>
 
                 </TableLayout>
@@ -169,9 +194,10 @@
                 android:id="@+id/menus"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="8dp"
                 >
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -179,6 +205,23 @@
                     android:text="@string/menus"
                     android:textSize="24sp"
                     android:paddingTop="8dp"/>
+
+
+                <com.astuetz.PagerSlidingTabStrip
+                    android:id="@+id/tabs"
+                    android:textSize="14sp"
+                    app:pstsShouldExpand="true"
+                    app:pstsTextAllCaps="true"
+                    android:layout_width="match_parent"
+                    app:pstsDividerColor="@color/cardview_shadow_start_color"
+                    app:pstsIndicatorColor="@color/colorTrafficFull"
+                    android:layout_height="48dp" />
+
+                <resto.android.hogent.be.hogentresto.models.WrapContentViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:background="@android:color/white" />
 
                 <include layout="@layout/progress_bar" />
                 <include layout="@layout/refresh" />
@@ -189,6 +232,3 @@
 
     </LinearLayout>
 </ScrollView>
-
-
-

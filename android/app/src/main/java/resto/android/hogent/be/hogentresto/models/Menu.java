@@ -9,9 +9,16 @@ public class Menu implements Serializable {
     @SerializedName("_id")
     String id;
     String title;
-    String description;
+    Product product;
     double price;
     Date availableAt;
+
+    public Menu(String title, Product product, double price, Date availableAt) {
+        this.availableAt = availableAt;
+        this.price = price;
+        this.product=product;
+        this.title = title;
+    }
 
     public String getId() {
         return id;
@@ -29,14 +36,6 @@ public class Menu implements Serializable {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -52,6 +51,10 @@ public class Menu implements Serializable {
     public void setAvailableAt(Date availableAt) {
         this.availableAt = availableAt;
     }
+
+    public Product getProduct() {        return product;    }
+
+    public void setProduct(Product product) {        this.product = product;    }
 }
 
 
