@@ -14,22 +14,11 @@ public class Restaurant implements Serializable {
     private String openingHours;
     private transient List<Menu> menus;
     private String urlImage;
-    private double occupation;
+    private double occupancy;
     private List<OccupancyUnit> forecast;
 
     public Restaurant() {
 
-    }
-
-    public Restaurant(Coordinate coordinates, String name, String address, String openingHours, List<Menu> menus, String urlImage, List<OccupancyUnit> forecast, double occupation) {
-        this.coordinates = coordinates;
-        this.name = name;
-        this.address = address;
-        this.openingHours = openingHours;
-        this.menus = menus;
-        this.urlImage = urlImage;
-        this.forecast = forecast;
-        this.occupation = occupation;
     }
 
     public String getId() {
@@ -88,12 +77,12 @@ public class Restaurant implements Serializable {
         this.urlImage = urlImage;
     }
 
-    public double getOccupation() {
-        return occupation;
+    public double getOccupancy() {
+        return occupancy;
     }
 
-    public void setOccupation(double occupation) {
-        this.occupation = occupation;
+    public void setOccupancy(double occupancy) {
+        this.occupancy = occupancy;
     }
 
     public List<OccupancyUnit> getForecast() {
