@@ -8,7 +8,7 @@ angular.module('hogentResto').controller('AuthController',
             auth.register(vm.user).error(function(error) {
                 vm.error = error;
             }).then(function() {
-                $state.go('home');
+                $state.go('student-restaurants');
             });
         };
 
@@ -16,7 +16,7 @@ angular.module('hogentResto').controller('AuthController',
             auth.logIn(vm.user).error(function(error) {
                 vm.error = error;
             }).then(function() {
-                $state.go('home');
+                $state.go('student-restaurants');
             });
         };
     }

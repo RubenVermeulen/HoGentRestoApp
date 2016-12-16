@@ -1,0 +1,70 @@
+<script type="text/ng-template" id="/menus.html">
+
+    <ol class="breadcrumb">
+        <li><a href="/#/admin/restaurants">Resto's</a></li>
+        <li>{{vm.restaurant.name}}</li>
+        <li class="active">Menu's</li>
+    </ol>
+
+    <div class="titleflex">
+        <div class="titleflexattr">
+            <h1>{{vm.restaurant.menus.length}} Menu's</h1>
+        </div>
+        <div class="titleflexattr">
+            <p class="titleadd"><a href="/#/admin/restaurants/{{vm.restaurant._id}}/menus/create" class="btn btn-primary">Voeg menu toe</a></p>
+        </div>
+    </div>
+
+    <% include ../../../partials/alert.ejs %>
+
+    <div ng-hide="vm.hasMenus()">
+        <p>Er zijn nog geen menu's.</p>
+    </div>
+
+    <div ng-show="vm.hasMenus()" class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Soort gerecht</th>
+                <th>Product</th>
+                <th>Prijs</th>
+                <th>Datum</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="menu in vm.restaurant.menus | orderBy: ['-availableAt', 'title']">
+                <td>{{menu.title}}</td>
+                <td>{{menu.product.description}}</td>
+                <td>{{menu.price | currency: '€'}}</td>
+                <td>{{menu.availableAt | date:'dd-MM-yyyy'}}</td>
+                <td class="text-right">
+                <td class="text-right">
+                    <a href="/#/admin/restaurants/{{vm.restaurant._id}}/menus/{{menu._id}}" class="btn btn-default">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a href="" type="button" data-toggle="modal" data-target="#myModal" ng-click="vm.menuobj={id: menu._id, title: menu.title}" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade modal-delete" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p>Bent u zeker dat u het menu {{vm.menuobj.title}} wil verwijderen?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuleer</button>
+                    <button type="submit" ng-click="vm.deleteMenu()" class="btn btn-danger">Verwijder menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>

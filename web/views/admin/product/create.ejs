@@ -1,0 +1,46 @@
+<script type="text/ng-template" id="/createProduct.html">
+
+    <ol class="breadcrumb">
+        <li><a href="/#/admin/products">Producten</a></li>
+        <li class="active">Nieuw Product</li>
+    </ol>
+
+    <div ng-show="vm.alertMessage" class="alert alert-{{vm.alertType}} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{vm.alertMessage}}
+    </div>
+
+    <form ng-submit="vm.createProduct()">
+        <div class="titleflex">
+            <div class="titleflexattr">
+                <h1>{{vm.product.description}} <small class="">Product</small> </h1>
+            </div>
+            <div class="titleflexattr">
+                <p class="titleadd">
+                    <a href="/#/admin/products" class="btn btn-default">Terug</a>
+                    <button type="submit" class="btn btn-primary btn-latest">Voeg product toe</button>
+                </p>
+            </div>
+        </div>
+
+        <div class="row form-edit">
+            <div class="col-sm-8">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">Beschrijving</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="description" ng-model="vm.product.description" placeholder="Beschrijving">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="allergens" class="col-sm-2 control-label">Allergenen (scheiden met een komma)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="allergens" ng-model="vm.product.allergens" placeholder="Allergenen">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</script>

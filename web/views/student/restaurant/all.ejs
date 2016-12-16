@@ -1,0 +1,67 @@
+<script type="text/ng-template" id="/student-restaurants.html">
+
+        <ol class="breadcrumb">
+            <li class="active">Restaurants</li>
+        </ol>
+
+        <div class="titleflex">
+            <div class="titleflexattr">
+                <h1>Restaurants</h1>
+            </div>
+        </div>
+
+        <% include ../../partials/alert.ejs %>
+
+        <div ng-hide="vm.hasRestaurants()">
+            <p>Er zijn nog geen restaurants.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6" ng-repeat="restaurant in vm.restaurants | orderBy: 'name'">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <a href="/#/restaurants/{{restaurant._id}}">
+                                <div class="restaurant-cover" style="background-image: url('{{ restaurant.urlImage }}')">
+                                    <div class="circle-traffic {{ vm.getTrafficClass(restaurant.occupancy) }}">
+                                        <div class="circle-traffic-text font-weight-normal">{{ vm.getTrafficText(restaurant.occupancy) }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h3 class="margin-bottom-0">{{ restaurant.name }}</h3>
+                        </div>
+                        <div class="col-sm-4 text-right">
+                            <a href="/#/restaurants/{{restaurant._id}}" class="btn btn-primary" style="margin-top: 15px;">Menu's</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <hr>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4><span class="glyphicon glyphicon-calendar" style="padding-right: 5px; font-size: 0.875em;"></span> Openingsuren</h4>
+                                    <p>{{ restaurant.openingHours }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4><span class="glyphicon glyphicon-map-marker" style="padding-right: 5px; font-size: 0.875em;"></span> Adres</h4>
+                                    <p>{{ restaurant.address }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</script>
