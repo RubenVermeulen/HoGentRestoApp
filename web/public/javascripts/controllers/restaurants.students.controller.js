@@ -6,8 +6,6 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
         vm.forecast = forecast.times;
         vm.recommendedHour = new Date(parseInt(forecast.recommendedHour)*1000);
 
-        console.log(window.forecast);
-        console.log(vm.recommendedHour);
 
         initialize();
 
@@ -103,7 +101,6 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
 
             for (var key in dataset) {
                 var obj = dataset[key];
-                console.log(obj.time);
                 data.push([parseInt(obj.time) * 1000, parseFloat(obj.occupancy)]);
             }
 

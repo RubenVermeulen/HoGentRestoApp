@@ -182,6 +182,9 @@ angular.module('hogentResto').config(
                 }],
                 forecast: ['$stateParams', 'restaurants', function($stateParams, restaurants){
                     return restaurants.getForecast($stateParams.id);
+                }],
+                weekMenus: ['$stateParams', 'restaurants', function($stateParams, restaurants){
+                    return restaurants.getWeekMenus($stateParams.id);
                 }]
             }
         });
