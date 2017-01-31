@@ -45,7 +45,7 @@ router.get('/:restaurant/forecast', function(req, res, next) {
         {"time": "1480935870" , "occupancy": "0.09"},
         {"time": "1480935900" , "occupancy": "0.1"},
         {"time": "1480935930" , "occupancy": "0.09"},
-        {"time": "1480935780" , "occupancy": "0.11"},
+        {"time": "1480935960" , "occupancy": "0.11"},
         {"time": "1480935990" , "occupancy": "0.13"},
         {"time": "1480936020" , "occupancy": "0.13"},
         {"time": "1480936050" , "occupancy": "0.14"},
