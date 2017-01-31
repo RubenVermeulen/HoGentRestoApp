@@ -57,15 +57,29 @@ router.post('/', auth, function(req, res, next) {
     if (!body.description && body.description === '') {
         return res.status(400).json({message: "Please fill in all fields"});
     }
+    // Check if product already exist
+    var descr = body.description;
+    var query = Product.findOne( { 'description' : { $regex : new RegExp(descr, 'i') } } );
 
-    var product = new Product(req.body);
 
-    product.save(function(err, product) {
-        if (err) {
+    query.exec(function(err, product){
+        if(err){
             return next(err);
         }
+        
+        if(product){
+            return res.status(400).json({message: "Er bestaat reeds een product met deze naam."});
+        }
 
-        return res.json(product);
+        var product = new Product(req.body);
+
+        product.save(function(err, product) {
+            if (err) {
+                return next(err);
+            }
+
+            return res.json(product);
+        });
     });
 
 });
@@ -100,16 +114,16 @@ router.delete('/:product', auth, function(req, res, next) {
         }
 
         if (menus.length !== 0) {
-            return res.status(400).json({message: 'Product is used in other menu\'s'});
-        }
-    });
-
-    req.product.remove(function(err, product) {
-        if (err) {
-            return next(err);
+            return res.status(400).json({message: 'Product wordt gebruikt in andere menu\'s'});
         }
 
-        return res.json(product);
+        req.product.remove(function(err, product) {
+            if (err) {
+                return next(err);
+            }
+
+            return res.json(product);
+        });
     });
 
 });

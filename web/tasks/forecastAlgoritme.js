@@ -80,7 +80,7 @@ reports5wekengeleden.sort(compare);
                 }
 
   var voorspelling = [];
-  
+
 
   //de voorspellingdictionary opvullen met data van vandaag
   for(var i=0; i< reportsTodayTillNow.length;i++){
@@ -97,7 +97,7 @@ reports5wekengeleden.sort(compare);
     voorspelling[aantalMetingenVandaag + i]= schalingsfactor * gewogengemiddeldePerTijdslot[aantalMetingenVandaag+i];
   }
 
-  var tijden
+  var tijden;
 
   for (var v in voorspelling){
       ForeCastUnit.findOne({ 'time': 'v.' }
