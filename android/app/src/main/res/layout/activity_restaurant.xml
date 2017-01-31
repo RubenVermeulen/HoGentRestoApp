@@ -213,15 +213,15 @@
                     app:pstsShouldExpand="true"
                     app:pstsTextAllCaps="true"
                     android:layout_width="match_parent"
-                    app:pstsDividerColor="@color/cardview_shadow_start_color"
-                    app:pstsIndicatorColor="@color/colorTrafficFull"
+                    app:pstsIndicatorColor="@color/colorPrimary"
+                    app:pstsTabPaddingLeftRight="0dp"
+                    app:pstsUnderlineHeight="8dp"
                     android:layout_height="48dp" />
 
-                <resto.android.hogent.be.hogentresto.models.WrapContentViewPager
-                    android:id="@+id/viewpager"
+                <resto.android.hogent.be.hogentresto.views.CustomViewPager
+                    android:id="@+id/pager"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:background="@android:color/white" />
+                    android:layout_height="wrap_content" />
 
                 <include layout="@layout/progress_bar" />
                 <include layout="@layout/refresh" />

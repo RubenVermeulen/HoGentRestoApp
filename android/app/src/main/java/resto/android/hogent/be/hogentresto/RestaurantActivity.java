@@ -1,7 +1,5 @@
 package resto.android.hogent.be.hogentresto;
 
-
-
 import android.os.Bundle;
 
 import android.support.v4.view.ViewPager;
@@ -32,7 +30,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import resto.android.hogent.be.hogentresto.adapters.MenuAdapter;
+import resto.android.hogent.be.hogentresto.adapters.MenuPagerAdapter;
 import resto.android.hogent.be.hogentresto.config.Config;
 import resto.android.hogent.be.hogentresto.helpers.Traffic;
 import resto.android.hogent.be.hogentresto.models.Menu;
@@ -48,10 +46,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestaurantActivity extends AppCompatActivity {
 
     private List<Menu> menus;
-    private MenuAdapter adapter;
+    private MenuPagerAdapter adapter;
     private List<Menu> dataset;
     private Restaurant r;
-    public static Map<Integer, List<Menu>> menusFromApi = new HashMap<>();
+    public Map<Integer, List<Menu>> menusFromApi;
 
     @BindView(R.id.cardView)
     CardView cardView;
@@ -69,8 +67,8 @@ public class RestaurantActivity extends AppCompatActivity {
     TableLayout stats;
     @BindView(R.id.expand)
     ImageView expand;
-    @BindView(R.id.viewpager)
-    ViewPager viewPager;
+    @BindView(R.id.pager)
+    ViewPager pager;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.refresh)
@@ -96,11 +94,19 @@ public class RestaurantActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         setRestaurant(r);
+
+        menusFromApi = new HashMap<>();
+
         getMenus();
 
-        adapter = new MenuAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        tabsStrip.setViewPager(viewPager);
+        adapter = new MenuPagerAdapter(getSupportFragmentManager());
+
+        pager.setAdapter(adapter);
+        pager.setCurrentItem(currentBusinessDay());
+        pager.setOffscreenPageLimit(4);
+        pager.destroyDrawingCache();
+
+        tabsStrip.setViewPager(pager);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
 
@@ -159,28 +165,24 @@ public class RestaurantActivity extends AppCompatActivity {
                 menusFromApi.clear();
                 dataset = response.body();
 
-                if (dataset.isEmpty()) {
-                    View child = getLayoutInflater().inflate(R.layout.menus_no_results, null);
-                    viewPager.addView(child);
-                }
-                else {
-                    for (Menu m : dataset) {
-                        Calendar c = Calendar.getInstance();
-                        c.setTime(m.getAvailableAt());
+                for (Menu m : dataset) {
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(m.getAvailableAt());
 
-                        int key = c.get(Calendar.DAY_OF_WEEK);
+                    int key = c.get(Calendar.DAY_OF_WEEK);
 
-                        if (menusFromApi.containsKey(key)) {
-                            menus = menusFromApi.get(key);
-                        }
-                        else {
-                            menus = new ArrayList<>();
-                        }
-
-                        menus.add(m);
-                        menusFromApi.put(key, menus);
+                    if (menusFromApi.containsKey(key)) {
+                        menus = menusFromApi.get(key);
                     }
+                    else {
+                        menus = new ArrayList<>();
+                    }
+
+                    menus.add(m);
+                    menusFromApi.put(key, menus);
                 }
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -219,8 +221,26 @@ public class RestaurantActivity extends AppCompatActivity {
         getMenus();
     }
 
-    public static Map<Integer, List<Menu>> getMenusFromApi() {
-        return menusFromApi;
+    public List<Menu> getMenusFromApi(int position) {
+        return menusFromApi.get(position);
+    }
+
+    /**
+     * Monday: 0
+     * Tuesday: 1
+     * ...
+     *
+     * @return
+     */
+    private int currentBusinessDay() {
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK); // saturday: 0; sunday: 1; ...
+
+        if (dayOfWeek == 0 || dayOfWeek == 1) {
+            dayOfWeek = 1;
+        }
+
+        return dayOfWeek - 2;
     }
 
     private DataPoint[] getCurrentData(){

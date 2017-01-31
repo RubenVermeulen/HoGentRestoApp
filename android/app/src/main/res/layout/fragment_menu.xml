@@ -27,7 +27,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/fragment_list_id"
+        android:id="@+id/menuList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
