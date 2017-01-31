@@ -1,10 +1,14 @@
 package resto.android.hogent.be.hogentresto;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -26,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -50,6 +55,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private List<Menu> dataset;
     private Restaurant r;
     public Map<Integer, List<Menu>> menusFromApi;
+    private Uri gmmIntentUri = null;
 
     @BindView(R.id.cardView)
     CardView cardView;
@@ -146,6 +152,35 @@ public class RestaurantActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_detail, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionLocation:
+                if (gmmIntentUri != null) {
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    startActivity(mapIntent);
+
+                    return true;
+                }
+
+                return super.onOptionsItemSelected(item);
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
     public void getMenus() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.baseUrl)
@@ -202,6 +237,14 @@ public class RestaurantActivity extends AppCompatActivity {
         openingHours.setText(r.getOpeningHours());
 
         Traffic.setTraffic(r.getOccupancy(), trafficGrade, trafficIndicator);
+
+        gmmIntentUri = Uri.parse(String.format(Locale.getDefault(), "geo:%s,%s?q=%s,%s(Hogent resto:+%s)",
+                r.getCoordinates().getLat(),
+                r.getCoordinates().getLon(),
+                r.getCoordinates().getLat(),
+                r.getCoordinates().getLon(),
+                name
+        ));
     }
 
     public void expand(View view) {

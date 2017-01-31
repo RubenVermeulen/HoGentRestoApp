@@ -17,4 +17,5 @@
     <string name="wednesday">Woensdag</string>
     <string name="thursday">Donderdag</string>
     <string name="friday">Vrijdag</string>
+    <string name="show_map">Open kaart</string>
 </resources>
