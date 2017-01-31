@@ -100,6 +100,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         adapter = new MenuAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(berekenDag());
         tabsStrip.setViewPager(viewPager);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
@@ -138,6 +139,21 @@ public class RestaurantActivity extends AppCompatActivity {
         graph.refreshDrawableState();
 
 
+    }
+
+    private int berekenDag() {
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_WEEK);
+        switch (day){
+            case 1: return 0;//sunday
+            case 2: return 0;//monday
+            case 3: return 1;//tuesday
+            case 4: return 2;//wednesday
+            case 5: return 3;//thursday;
+            case 6: return 4;//friday
+            case 7: return 0;//saturday
+            default: return 0;
+        }
     }
 
     public void getMenus() {
