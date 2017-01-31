@@ -1,6 +1,7 @@
 package resto.android.hogent.be.hogentresto;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
@@ -83,9 +85,6 @@ public class RestaurantActivity extends AppCompatActivity {
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
 
-    private List<OccupancyUnit> occupancyData;
-    private List<OccupancyUnit> forecastData;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,40 +114,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         tabsStrip.setViewPager(pager);
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-
-        LineGraphSeries<DataPoint> forecastSeries = new LineGraphSeries<>(DummyData.getForecastData());
-        graph.addSeries(forecastSeries);
-
-
-        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
-            @Override
-            public String formatLabel(double value, boolean isValueX) {
-                if(isValueX) {
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTimeInMillis((long) value);
-                    return cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
-                } else {
-                    return super.formatLabel(value,isValueX);
-                }
-
-            }
-        });
-        graph.getGridLabelRenderer().setNumHorizontalLabels(5);
-        graph.getViewport().setMinX(occupancyData.get(0).getTime().getTime());
-        graph.getViewport().setMaxX(occupancyData.get(0).getTime().getTime()+1200000);
-        graph.getGridLabelRenderer().setNumVerticalLabels(5);
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(1);
-
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getGridLabelRenderer().setHumanRounding(false);
-
-        graph.getViewport().setScrollable(true);
-        graph.refreshDrawableState();
-
-
+        initializeGraph();
     }
 
     @Override
@@ -283,5 +249,55 @@ public class RestaurantActivity extends AppCompatActivity {
         }
 
         return dayOfWeek - 2;
+    }
+
+    private void initializeGraph() {
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+
+        LineGraphSeries<DataPoint> forecastSeries = new LineGraphSeries<>(DummyData.getForecastData());
+        graph.addSeries(forecastSeries);
+
+        LineGraphSeries<DataPoint> currentPosition = new LineGraphSeries<>(DummyData.getCurrentPosition());
+
+        Paint paint = new Paint();
+        paint.setColor(getResources().getColor(R.color.colorTrafficFull));
+        paint.setStrokeWidth(8);
+
+        currentPosition.setCustomPaint(paint);
+
+        graph.addSeries(currentPosition);
+
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                SimpleDateFormat format = new SimpleDateFormat("kk:mm", Locale.getDefault());
+
+                if(isValueX) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTimeInMillis((long) value);
+
+                    return format.format(cal.getTime());
+                }
+
+                return super.formatLabel(value,isValueX);
+            }
+        });
+
+        //
+        graph.getGridLabelRenderer().setNumHorizontalLabels(5);
+
+        graph.getViewport().setMinX(DummyData.getForecastData()[0].getX());
+        graph.getViewport().setMaxX(DummyData.getForecastData()[DummyData.getForecastData().length - 1].getX());
+
+        graph.getGridLabelRenderer().setNumVerticalLabels(5);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(1);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getGridLabelRenderer().setHumanRounding(false);
+
+        graph.getViewport().setScrollable(false);
+        graph.refreshDrawableState();
     }
 }

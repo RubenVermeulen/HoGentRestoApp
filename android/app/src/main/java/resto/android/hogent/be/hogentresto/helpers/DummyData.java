@@ -10,9 +10,18 @@ import resto.android.hogent.be.hogentresto.models.OccupancyUnit;
 
 public class DummyData {
 
+    public static DataPoint[] getCurrentPosition() {
+        return new DataPoint[] {
+            new DataPoint(1479123060000L, 0),
+            new DataPoint(1479123060000L, 1)
+        };
+    }
+
+
     public static DataPoint[] getForecastData(){
         List<OccupancyUnit> forecastData = new ArrayList<>();
 
+        forecastData.add(new OccupancyUnit(new Date(1479119400000L),0));
         forecastData.add(new OccupancyUnit(new Date(1479119400000L),0));
         forecastData.add(new OccupancyUnit(new Date(1479119430000L),0));
         forecastData.add(new OccupancyUnit(new Date(1479119460000L),0));
@@ -287,10 +296,9 @@ public class DummyData {
 
         DataPoint[] data = new DataPoint[forecastData.size()];
         for(int i=0;i<forecastData.size();i++){
-            data[i]=new DataPoint(forecastData.get(i).getTime(), forecastData.get(i).getOccupancy());
+            data[i] = new DataPoint(forecastData.get(i).getTime(), forecastData.get(i).getOccupancy());
         }
 
         return data;
-
     }
 }
