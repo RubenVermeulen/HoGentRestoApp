@@ -53,13 +53,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestaurantActivity extends AppCompatActivity {
 
-    private List<Menu> menus;
-    private MenuPagerAdapter adapter;
-    private List<Menu> dataset;
-    private Restaurant r;
-    public Map<Integer, List<Menu>> menusFromApi;
-    private Uri gmmIntentUri = null;
-
     @BindView(R.id.cardView)
     CardView cardView;
     @BindView(R.id.thumbnail)
@@ -85,6 +78,16 @@ public class RestaurantActivity extends AppCompatActivity {
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
 
+
+    private List<Menu> menus;
+    private MenuPagerAdapter adapter;
+    private List<Menu> dataset;
+    private Restaurant r;
+    public Map<Integer, List<Menu>> menusFromApi;
+    private Uri gmmIntentUri = null;
+    private Retrofit retrofit;
+    private HoGentRestoService service;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +106,13 @@ public class RestaurantActivity extends AppCompatActivity {
 
         menusFromApi = new HashMap<>();
 
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Config.baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        service = retrofit.create(HoGentRestoService.class);
+
         getMenus();
 
         adapter = new MenuPagerAdapter(getSupportFragmentManager());
@@ -114,7 +124,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         tabsStrip.setViewPager(pager);
 
-        initializeGraph();
+        getForecast();
     }
 
     @Override
@@ -147,13 +157,6 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     public void getMenus() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Config.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        HoGentRestoService service = retrofit.create(HoGentRestoService.class);
-
         Call<List<Menu>> call = service.menus(r.getId());
 
         call.enqueue(new Callback<List<Menu>>() {
@@ -192,6 +195,31 @@ public class RestaurantActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(RestaurantActivity.this, R.string.not_connected, Toast.LENGTH_LONG);
                 toast.show();
+            }
+        });
+    }
+
+    public void getForecast() {
+        Call<List<OccupancyUnit>> call = service.forecast(r.getId());
+
+        call.enqueue(new Callback<List<OccupancyUnit>>() {
+            @Override
+            public void onResponse(Call<List<OccupancyUnit>> call, Response<List<OccupancyUnit>> response) {
+                List<OccupancyUnit> occupancyUnitList = response.body();
+                DataPoint[] dataPoints = new DataPoint[occupancyUnitList.size()];
+
+                for (int i = 0; i < occupancyUnitList.size(); i++) {
+                    dataPoints[i] = new DataPoint(
+                            occupancyUnitList.get(i).getMilliseconds(),
+                            occupancyUnitList.get(i).getOccupancy()
+                    );
+                }
+
+                initializeGraph(dataPoints);
+            }
+
+            @Override
+            public void onFailure(Call<List<OccupancyUnit>> call, Throwable t) {
             }
         });
     }
@@ -251,10 +279,10 @@ public class RestaurantActivity extends AppCompatActivity {
         return dayOfWeek - 2;
     }
 
-    private void initializeGraph() {
+    private void initializeGraph(DataPoint[] dataPoints) {
         GraphView graph = (GraphView) findViewById(R.id.graph);
 
-        LineGraphSeries<DataPoint> forecastSeries = new LineGraphSeries<>(DummyData.getForecastData());
+        LineGraphSeries<DataPoint> forecastSeries = new LineGraphSeries<>(dataPoints);
         graph.addSeries(forecastSeries);
 
         LineGraphSeries<DataPoint> currentPosition = new LineGraphSeries<>(DummyData.getCurrentPosition());
@@ -286,8 +314,8 @@ public class RestaurantActivity extends AppCompatActivity {
         //
         graph.getGridLabelRenderer().setNumHorizontalLabels(5);
 
-        graph.getViewport().setMinX(DummyData.getForecastData()[0].getX());
-        graph.getViewport().setMaxX(DummyData.getForecastData()[DummyData.getForecastData().length - 1].getX());
+        graph.getViewport().setMinX(dataPoints[0].getX());
+        graph.getViewport().setMaxX(dataPoints[dataPoints.length - 1].getX());
 
         graph.getGridLabelRenderer().setNumVerticalLabels(5);
         graph.getViewport().setMinY(0);

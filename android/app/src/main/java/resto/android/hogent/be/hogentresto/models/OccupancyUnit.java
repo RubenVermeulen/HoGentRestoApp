@@ -8,20 +8,21 @@ import java.util.Date;
 public class OccupancyUnit implements Serializable {
 
     @SerializedName("_id")
-    String id;
-    Date time;
-    double occupancy;
+    private String id;
 
-    public OccupancyUnit(Date time, double occupancy) {
+    private long time;
+    private double occupancy;
+
+    public OccupancyUnit(long time, double occupancy) {
         this.time = time;
         this.occupancy = occupancy;
     }
 
-    public Date getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -31,5 +32,9 @@ public class OccupancyUnit implements Serializable {
 
     public void setOccupancy(double occupancy) {
         this.occupancy = occupancy;
+    }
+
+    public long getMilliseconds() {
+        return time * 1000;
     }
 }
