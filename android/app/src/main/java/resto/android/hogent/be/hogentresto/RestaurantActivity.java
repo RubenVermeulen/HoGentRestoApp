@@ -41,6 +41,7 @@ import resto.android.hogent.be.hogentresto.adapters.MenuPagerAdapter;
 import resto.android.hogent.be.hogentresto.config.Config;
 import resto.android.hogent.be.hogentresto.helpers.DummyData;
 import resto.android.hogent.be.hogentresto.helpers.Traffic;
+import resto.android.hogent.be.hogentresto.models.Forecast;
 import resto.android.hogent.be.hogentresto.models.Menu;
 import resto.android.hogent.be.hogentresto.models.OccupancyUnit;
 import resto.android.hogent.be.hogentresto.models.Restaurant;
@@ -77,6 +78,8 @@ public class RestaurantActivity extends AppCompatActivity {
     TextView refresh;
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabsStrip;
+    @BindView(R.id.recommendedValue)
+    TextView tvRecommendedValue;
 
 
     private List<Menu> menus;
@@ -87,6 +90,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private Uri gmmIntentUri = null;
     private Retrofit retrofit;
     private HoGentRestoService service;
+    private final SimpleDateFormat format = new SimpleDateFormat("kk:mm", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +119,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         getMenus();
 
-        adapter = new MenuPagerAdapter(getSupportFragmentManager());
+        adapter = new MenuPagerAdapter(this, getSupportFragmentManager());
 
         pager.setAdapter(adapter);
         pager.setCurrentItem(currentBusinessDay());
@@ -200,12 +204,13 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     public void getForecast() {
-        Call<List<OccupancyUnit>> call = service.forecast(r.getId());
+        Call<Forecast> call = service.forecast(r.getId());
 
-        call.enqueue(new Callback<List<OccupancyUnit>>() {
+        call.enqueue(new Callback<Forecast>() {
             @Override
-            public void onResponse(Call<List<OccupancyUnit>> call, Response<List<OccupancyUnit>> response) {
-                List<OccupancyUnit> occupancyUnitList = response.body();
+            public void onResponse(Call<Forecast> call, Response<Forecast> response) {
+                Forecast forecast = response.body();
+                List<OccupancyUnit> occupancyUnitList = forecast.getTimes();
                 DataPoint[] dataPoints = new DataPoint[occupancyUnitList.size()];
 
                 for (int i = 0; i < occupancyUnitList.size(); i++) {
@@ -216,10 +221,13 @@ public class RestaurantActivity extends AppCompatActivity {
                 }
 
                 initializeGraph(dataPoints);
+
+                tvRecommendedValue.setText(format.format(new Date((long) forecast.getRecommendedHour() * 1000)));
+                tvRecommendedValue.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onFailure(Call<List<OccupancyUnit>> call, Throwable t) {
+            public void onFailure(Call<Forecast> call, Throwable t) {
             }
         });
     }
@@ -298,8 +306,6 @@ public class RestaurantActivity extends AppCompatActivity {
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
-                SimpleDateFormat format = new SimpleDateFormat("kk:mm", Locale.getDefault());
-
                 if(isValueX) {
                     Calendar cal = Calendar.getInstance();
                     cal.setTimeInMillis((long) value);
@@ -311,7 +317,6 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        //
         graph.getGridLabelRenderer().setNumHorizontalLabels(5);
 
         graph.getViewport().setMinX(dataPoints[0].getX());

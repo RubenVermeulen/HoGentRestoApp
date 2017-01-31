@@ -1,5 +1,6 @@
 package resto.android.hogent.be.hogentresto.adapters;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,21 +9,25 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import resto.android.hogent.be.hogentresto.R;
 import resto.android.hogent.be.hogentresto.fragments.MenuFragment;
 
 public class MenuPagerAdapter extends FragmentPagerAdapter {
 
     private List<MenuFragment> fragments;
-    private final String[] titlesShort = new String[] { "MA", "DI", "WO", "DO", "VR" };
-    private final String[] titlesLong = new String[] { "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag" };
+    private String[] titlesShort;
+    private String[] titlesLong;
 
     public static final String PAGE = "page";
     public static final String TITLE_LONG = "titleLong";
 
-    public MenuPagerAdapter(FragmentManager fm) {
+    public MenuPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
 
         fragments = new ArrayList<>();
+
+        setTitlesShort(context);
+        setTitlesLong(context);
 
         for (int i = 0; i < 5; i++) {
             MenuFragment fragment = new MenuFragment();
@@ -60,5 +65,27 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
         }
 
         return super.getItemPosition(object);
+    }
+
+    public void setTitlesShort(Context context) {
+        titlesShort = new String[] {
+                context.getResources().getString(R.string.monday_short),
+                context.getResources().getString(R.string.tuesday_short),
+                context.getResources().getString(R.string.wednesday_short),
+                context.getResources().getString(R.string.thursday_short),
+                context.getResources().getString(R.string.friday_short),
+        };
+
+
+    }
+
+    public void setTitlesLong(Context context) {
+        titlesLong = new String[] {
+                context.getResources().getString(R.string.monday),
+                context.getResources().getString(R.string.tuesday),
+                context.getResources().getString(R.string.wednesday),
+                context.getResources().getString(R.string.thursday),
+                context.getResources().getString(R.string.friday),
+        };
     }
 }

@@ -117,7 +117,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/openingHours"
-                        android:text="Aangeraden uur"
+                        android:text="@string/recommend_hour"
                         android:textSize="20sp"
                         android:paddingTop="6dp"
                         android:paddingBottom="6dp"
@@ -129,11 +129,14 @@
                         android:layout_height="wrap_content"
                         android:layout_alignRight="@+id/recommended"
                         android:layout_below="@+id/openingHours"
-                        android:text="12u58"
                         android:textSize="20sp"
                         android:background="@drawable/rectangle_recommended"
-                        android:padding="6dp"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
                         android:textColor="#fff"
+                        android:visibility="gone"
                         />
 
                     <ImageView
@@ -175,6 +178,7 @@
                             android:layout_weight="1"
                             android:text="@string/traffic"
                             android:textSize="20sp"
+                            android:layout_marginBottom="8dp"
                             />
                     </TableRow>
 

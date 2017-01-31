@@ -62,7 +62,7 @@ public class MenuFragment extends Fragment implements Updateable {
             TextView description;
             TextView price;
 
-            for (Menu m : menus) {
+            for (final Menu m : menus) {
                 child = getActivity().getLayoutInflater().inflate(R.layout.menus_list_item, null);
 
                 title = (TextView) child.findViewById(R.id.title);
@@ -75,7 +75,7 @@ public class MenuFragment extends Fragment implements Updateable {
                 final String allergens;
 
                 if (m.getProduct().getAllergens().size() == 0) {
-                    allergens = "Geen allergenen";
+                    allergens = "Geen allergenen.";
                 } else {
                     allergens = m.getProduct().getAllergens().toString().replaceAll("[\\[\\](){}]", "");
                 }
@@ -85,7 +85,11 @@ public class MenuFragment extends Fragment implements Updateable {
                     public void onClick(View v) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                        builder.setMessage(allergens)
+                        builder.setMessage(String.format(Locale.getDefault(), "%s%s.%n%n%s",
+                                "Volgende allergenen zitten in ",
+                                m.getProduct().getDescription(),
+                                allergens
+                                ))
                                 .setTitle("Allergenen");
 
                         builder.setPositiveButton("Sluiten", new DialogInterface.OnClickListener() {
