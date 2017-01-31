@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">HoGent Resto</string>
+    <string name="title_homescreen">Restaurants</string>
+    <string name="kitchen">Keuken</string>
+    <string name="eating_area">Zaal</string>
+    <string name="traffic">Drukte</string>
+    <string name="calm">Rustig</string>
+    <string name="doable">Druk</string>
+    <string name="full">Heel druk</string>
+    <string name="menus">Menu\'s</string>
+    <string name="not_connected">Je bent niet verbonden met het internet.</string>
+    <string name="refresh">Refresh</string>
+    <string name="monday">Maandag</string>
+    <string name="monday_short">MA</string>
+    <string name="tuesday">Dinsdag</string>
+    <string name="tuesday_short">DI</string>
+    <string name="wednesday">Woensdag</string>
+    <string name="wednesday_short">WO</string>
+    <string name="thursday">Donderdag</string>
+    <string name="thursday_short">DO</string>
+    <string name="friday">Vrijdag</string>
+    <string name="friday_short">VR</string>
+    <string name="show_map">Open kaart</string>
+    <string name="recommend_hour">Aangeraden uur</string>
+    <string name="no_menus_available">Er zijn geen menu\'s beschikbaar.</string>
+</resources>

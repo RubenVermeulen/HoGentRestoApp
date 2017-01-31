@@ -115,7 +115,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         getMenus();
 
-        adapter = new MenuPagerAdapter(getSupportFragmentManager());
+        adapter = new MenuPagerAdapter(this, getSupportFragmentManager());
 
         pager.setAdapter(adapter);
         pager.setCurrentItem(currentBusinessDay());
