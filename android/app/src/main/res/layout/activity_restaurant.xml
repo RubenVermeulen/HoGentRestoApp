@@ -129,7 +129,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignRight="@+id/recommended"
                         android:layout_below="@+id/openingHours"
-                        android:text="12:58"
                         android:textSize="20sp"
                         android:background="@drawable/rectangle_recommended"
                         android:paddingTop="3dp"
@@ -137,6 +136,7 @@
                         android:paddingLeft="6dp"
                         android:paddingRight="6dp"
                         android:textColor="#fff"
+                        android:visibility="gone"
                         />
 
                     <ImageView

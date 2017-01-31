@@ -2,6 +2,7 @@ package resto.android.hogent.be.hogentresto.services;
 
 import java.util.List;
 
+import resto.android.hogent.be.hogentresto.models.Forecast;
 import resto.android.hogent.be.hogentresto.models.Menu;
 import resto.android.hogent.be.hogentresto.models.OccupancyUnit;
 import resto.android.hogent.be.hogentresto.models.Restaurant;
@@ -17,5 +18,5 @@ public interface HoGentRestoService {
     Call<List<Menu>> menus(@Path("id") String id);
 
     @GET("restaurants/{id}/forecast")
-    Call<List<OccupancyUnit>> forecast(@Path("id") String id);
+    Call<Forecast> forecast(@Path("id") String id);
 }
