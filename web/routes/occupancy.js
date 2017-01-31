@@ -34,6 +34,14 @@ router.get('/:restaurant/occupancies', function(req, res, next) {
 
 });
 
+router.get('/:restaurant/forecast', function(req, res, next) {
+
+    Occupancy.find({restaurantId: req.restaurant._id}, function(err, occupancies) {
+        return res.json(occupancies);
+    });
+
+});
+
 router.get('/:restaurant/occupancies/generate', function(req, res, next) {
 
     var restaurant = req.restaurant;

@@ -1,5 +1,10 @@
 var schedule = require('node-schedule');
 
+var express = require('express');
+var router = express.Router();
+var mongoose = require('mongoose');
+
+
 var SensorReport = mongoose.model('SensorReport');
 var ForeCast = mongoose.model('ForeCast');
 var ForecastUnit = mongoose.model('ForeCastUnit');
@@ -31,7 +36,7 @@ var j = schedule.scheduleJob(rule, function(){
   for (i = 0; i < reportsOfThisWeekDay.length; i++) {
 
     switch (reportsOfThisWeekDay[i].time.getDate()) {
-      case today.getDate()-7*1;
+      case today.getDate()-7*1:
       reports1weekgeleden.push(reportsOfThisWeekDay[i]);
       break;
       case today.getDate()-7*2:
@@ -64,42 +69,6 @@ reports3wekengeleden.sort(compare);
 reports4wekengeleden.sort(compare);
 reports5wekengeleden.sort(compare);
 
-/*
-  //dictionaries aanmaken met key= tijdstip en de value= drukte
-  var reportsTodayTillNowDic = {};
-  for(i = 0; i< reportsTodayTillNow.length;i++){
-    reportsTodayTillNowDic[reportsTodayTillNow[i].time] = reportsTodayTillNow[i].occupancy;
-  }
-
-  var reports1weekgeledendic = {};
-  for(i= 0; i<reports1weekgeleden.length;i++){
-    reports1weekgeledendic[reports1weekgeleden[i].time]= reports1weekgeleden[i].occupancy;
-  }
-
-  var reports2wekengeledendic = {};
-  for(i= 0; i<reports2wekengeleden.length;i++){
-    reports2wekengeledendic[reports2wekengeleden[i].time]= reports2wekengeleden[i].occupancy;
-  }
-
-  var reports3wekengeledendic = {};
-  for(i= 0; i<reports3wekengeleden.length;i++){
-    reports3wekengeledendic[reports3wekengeleden[i].time]= reports3wekengeleden[i].occupancy;
-  }
-
-  var reports4wekengeledendic = {};
-  for(i= 0; i<reports4wekengeleden.length;i++){
-    reports4wekengeledendic[reports4wekengeleden[i].time]= reports4wekengeleden[i].occupancy;
-  }
-
-  var reports5wekengeledendic = {};
-  for(i= 0; i<reports3wekengeleden.length;i++){
-    reports5wekengeledendic[reports5wekengeleden[i].time]= reports5wekengeleden[i].occupancy;
-  }
-
-
-  var aantalReports = Object.keys(reports1weekgeledendic).length
-*/
-
 
   var gewogengemiddeldePerTijdslot = [];
 
@@ -111,7 +80,7 @@ reports5wekengeleden.sort(compare);
                 }
 
   var voorspelling = [];
-
+  
 
   //de voorspellingdictionary opvullen met data van vandaag
   for(var i=0; i< reportsTodayTillNow.length;i++){
@@ -122,28 +91,18 @@ reports5wekengeleden.sort(compare);
 
   var schalingsfactor= (reportsTodayTillNow[aantalMetingenVandaag -1 ]/gewogengemiddeldePerTijdslot[aantalMetingenVandaag -1]+reportsTodayTillNow[aantalMetingenVandaag -2 ]/gewogengemiddeldePerTijdslot[aantalMetingenVandaag -2])/2;
 
-/*
   var aantalNodigeVoorspellingen = gewogengemiddeldePerTijdslot.length - reportsTodayTillNow.length;
-
-  var vorigData = reportsTodayTillNow[reportsTodayTillNow.length -1].occupancy;
-*/
 
   for (var i = 0; i<aantalNodigeVoorspellingen;i++){
     voorspelling[aantalMetingenVandaag + i]= schalingsfactor * gewogengemiddeldePerTijdslot[aantalMetingenVandaag+i];
   }
-/*
-    for (i=0; i<aantalNodigeVoorspellingen; i++){
 
-      //het gemiddelde van nu in functie van aantal nodigevoorspellingen en i
-      var gemiddeldeNu =  gewogengemiddeldePerTijdslot[reportsTodayTillNow[reportsTodayTillNow.length + i].time];
+  var tijden
 
-      var gemiddeldeVorig = gewogengemiddeldePerTijdslot[reportsTodayTillNow[reportsTodayTillNow.length -1 + i].time];
-
-      var voorspellingNu = gemiddeldeNu * (vorigData / gemiddeldeVorig);
-
-      forecast[i] = voorspellingNu;
-
-      vorigData = voorspellingNu;
+  for (var v in voorspelling){
+      ForeCastUnit.findOne({ 'time': 'v.' }
   }
-  */
+
+
+
 });
