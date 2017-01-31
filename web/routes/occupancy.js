@@ -36,7 +36,7 @@ router.get('/:restaurant/occupancies', function(req, res, next) {
 
 router.get('/:restaurant/forecast', function(req, res, next) {
 
-    var dataset = {"recommendedHour":"1463057880",
+    var dataset = {"recommendedHour":"1463054280",
         "times":[
         {"time": "1480935750" , "occupancy": "0.07"},
         {"time": "1480935780" , "occupancy": "0.07"},
