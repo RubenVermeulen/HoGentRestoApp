@@ -311,7 +311,6 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        //
         graph.getGridLabelRenderer().setNumHorizontalLabels(5);
 
         graph.getViewport().setMinX(dataPoints[0].getX());
