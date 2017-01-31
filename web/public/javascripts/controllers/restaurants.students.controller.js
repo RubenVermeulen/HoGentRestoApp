@@ -1,8 +1,13 @@
 angular.module('hogentResto').controller('RestaurantsStudentsController',
-    function($state, restaurants, restaurant) {
+    function($state, restaurants, restaurant, forecast) {
         var vm = this;
 
         vm.restaurant = restaurant;
+        vm.forecast = forecast.times;
+        vm.recommendedHour = new Date(parseInt(forecast.recommendedHour)*1000);
+
+        console.log(window.forecast);
+        console.log(vm.recommendedHour);
 
         initialize();
 
@@ -21,6 +26,8 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
                     angular.element("#menu-day-" + i).attr('disabled', 'disabled');
                 }
             }
+
+            generateChart();
 
         }
 
@@ -87,6 +94,91 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
 
             angular.element("#menu-days a").removeClass('btn-primary');
             angular.element("#menu-day-" + day).addClass('btn-primary');
+        }
+
+        function generateChart(){
+            var dataset = vm.forecast;
+
+            var data = [];
+
+            for (var key in dataset) {
+                var obj = dataset[key];
+                console.log(obj.time);
+                data.push([parseInt(obj.time) * 1000, parseFloat(obj.occupancy)]);
+            }
+
+            Highcharts.setOptions({
+                global: {
+                    useUTC: false
+                }
+            });
+
+            Highcharts.chart('graph', {
+                chart: {
+                    zoomType: 'x'
+                },
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                xAxis: {
+                    title: {
+                        text: 'Tijdstip'
+                    },
+                    type: 'datetime',
+                    plotLines: [{
+                        color: '#0113ff', // Red
+                        width: 2,
+                        value: 1480937460 * 1000,
+                        zIndex: 10
+                    }]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Bezettingsgraad'
+                    },
+                    min: 0,
+                    max: 1,
+                    tickInterval: 0.1
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    area: {
+                        fillColor: {
+                            linearGradient: {
+                                x1: 0,
+                                y1: 0.4,
+                                x2: 0,
+                                y2: 1
+                            },
+                            stops: [
+                                [0, Highcharts.getOptions().colors[3]],
+                                [1, Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(0.8).get('rgba')]
+                            ]
+                        },
+                        marker: {
+                            radius: 2
+                        },
+                        lineWidth: 1,
+                        states: {
+                            hover: {
+                                lineWidth: 1
+                            }
+                        },
+                        threshold: null
+                    }
+                },
+
+                series: [{
+                    type: 'area',
+                    name: 'Bezettingsgraad keuken',
+                    data: data
+                }]
+            });
         }
     }
 );

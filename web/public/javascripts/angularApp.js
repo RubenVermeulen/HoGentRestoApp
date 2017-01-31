@@ -180,8 +180,8 @@ angular.module('hogentResto').config(
                 restaurant: ['$stateParams', 'restaurants', function($stateParams, restaurants) {
                     return restaurants.get($stateParams.id);
                 }],
-                getWeekMenus: ['$stateParams', 'restaurants', function($stateParams, restaurants){
-                    return restaurants.getWeekMenus($stateParams.id);
+                forecast: ['$stateParams', 'restaurants', function($stateParams, restaurants){
+                    return restaurants.getForecast($stateParams.id);
                 }]
             }
         });

@@ -12,7 +12,8 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
         createMenu: createMenu,
         deleteRestaurant: deleteRestaurant,
         deleteMenu: deleteMenu,
-        getOccupancy: getOccupancy
+        getOccupancy: getOccupancy,
+        getForecast: getForecast
     };
 
     function getAll() {
@@ -83,6 +84,12 @@ angular.module('hogentResto').factory('restaurants', function ($http, auth) {
 
     function getOccupancy(id){
         return $http.get('/restaurants/' + id + '/sensors/selfservice/latest').then(function (res){
+            return res.data;
+        });
+    }
+
+    function getForecast(id){
+        return $http.get('/restaurants/' + id + '/forecast').then(function (res){
             return res.data;
         });
     }
