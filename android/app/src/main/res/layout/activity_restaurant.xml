@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignRight="@+id/recommended"
                         android:layout_below="@+id/openingHours"
-                        android:text="13u01"
+                        android:text="12u58"
                         android:textSize="20sp"
                         android:background="@drawable/rectangle_recommended"
                         android:padding="6dp"
@@ -158,6 +158,17 @@
                     android:visibility="gone">
 
                     <TableRow>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/colorSeparator"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="12dp"
+                            />
+                    </TableRow>
+
+                    <TableRow>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -167,11 +178,13 @@
                             />
                     </TableRow>
 
-                    <TableRow android:layout_width="match_parent">
+                    <TableRow>
                         <com.jjoe64.graphview.GraphView
-                            android:layout_width="350dip"
-                            android:layout_height="200dip"
-                            android:id="@+id/graph" />
+                            android:id="@+id/graph"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            />
 
                     </TableRow>
 
@@ -213,15 +226,15 @@
                     app:pstsShouldExpand="true"
                     app:pstsTextAllCaps="true"
                     android:layout_width="match_parent"
-                    app:pstsDividerColor="@color/cardview_shadow_start_color"
-                    app:pstsIndicatorColor="@color/colorTrafficFull"
+                    app:pstsIndicatorColor="@color/colorPrimary"
+                    app:pstsTabPaddingLeftRight="0dp"
+                    app:pstsUnderlineHeight="8dp"
                     android:layout_height="48dp" />
 
-                <resto.android.hogent.be.hogentresto.models.WrapContentViewPager
-                    android:id="@+id/viewpager"
+                <resto.android.hogent.be.hogentresto.views.CustomViewPager
+                    android:id="@+id/pager"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:background="@android:color/white" />
+                    android:layout_height="wrap_content" />
 
                 <include layout="@layout/progress_bar" />
                 <include layout="@layout/refresh" />
