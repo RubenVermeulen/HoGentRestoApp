@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignRight="@+id/recommended"
                         android:layout_below="@+id/openingHours"
-                        android:text="13u01"
+                        android:text="12u58"
                         android:textSize="20sp"
                         android:background="@drawable/rectangle_recommended"
                         android:padding="6dp"
