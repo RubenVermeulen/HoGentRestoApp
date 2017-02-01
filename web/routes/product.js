@@ -58,7 +58,7 @@ router.post('/', auth, function(req, res, next) {
         return res.status(400).json({message: "Please fill in all fields"});
     }
     // Check if product already exist
-    var descr = body.description;
+    var descr = '^' + body.description + '$';
     var query = Product.findOne( { 'description' : { $regex : new RegExp(descr, 'i') } } );
 
 
@@ -66,7 +66,7 @@ router.post('/', auth, function(req, res, next) {
         if(err){
             return next(err);
         }
-        
+
         if(product){
             return res.status(400).json({message: "Er bestaat reeds een product met deze naam."});
         }
