@@ -73,8 +73,6 @@ angular.module('hogentResto').controller('MainController',
         }
 
         function getTrafficGrade(occupancy) {
-            console.log(occupancy);
-
             if (occupancy < 0.30) {
                 return 0
             }
