@@ -99,10 +99,34 @@ reports5wekengeleden.sort(compare);
 
   var tijden;
 
-  for (var v in voorspelling){
-      ForeCastUnit.findOne({ 'time': 'v.' }
-  }
+  var twelveOClock = reportsTodayTillNow[0].time;
 
+  for (var i = 0; i++; i<voorspelling.length){
+      var match = twelveOClock + 30*i;
+      var query = ForeCastUnit.findOne({ 'time': match });
 
+      query.exec(function(err, foreCastUnit){
+          if(err){
+              return next(err);
+          }
+          if(foreCastUnit){
+              foreCastUnit.occupancy = voorspelling[i];
+          }
+          if(!foreCastUnit){
+              var foreCastUnit = new foreCastUnit({
+                  time : match,
+                  occupancy : voorspelling[i]
+              });
+          }
 
+          foreCastUnit.save(function(err, foreCastUnit) {
+              if (err) {
+                  return next(err);
+              }
+
+              return;
+          });
+
+  });
+}
 });
