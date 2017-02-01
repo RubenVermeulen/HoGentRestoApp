@@ -14,6 +14,9 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
+// utils
+var util = require('../utils/forecastAlgorithm');
+
 router.param('restaurant', function(req, res, next, id) {
   var query = Restaurant.findById(id);
 
@@ -202,6 +205,8 @@ router.post('/:restaurant/sensors/:sensor/reports', function(req, res, next) {
             if (err) {
                 return next(err);
             }
+
+            util.updateForecasts();
 
             res.json(sensor);
         });
