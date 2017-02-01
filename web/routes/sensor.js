@@ -215,7 +215,6 @@ router.post('/:restaurant/sensors/:sensor/reportset', function(req, res, next) {
     var reports = req.body.reportSet;
 
     for(var i=0;i<reports.length;i++){
-        console.log(i);
         var report = new SensorReport();
 
         report.time = new Date(parseInt(reports[i].time)*1000); //convert unix timestamp to Date
@@ -234,9 +233,8 @@ router.post('/:restaurant/sensors/:sensor/reportset', function(req, res, next) {
             });
         });
     }
-    console.log("looped");
+
     res.json(req.sensor);
-    console.log("responded");
 });
 
 

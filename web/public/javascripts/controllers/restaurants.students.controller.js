@@ -60,8 +60,6 @@ angular.module('hogentResto').controller('RestaurantsStudentsController',
         function isDayDisabled(day) {
             var attr = angular.element("#menu-day-" + day).attr('disabled');
 
-            console.log(attr);
-
             if (attr !== undefined && attr !== false) {
                 return true;
             }
