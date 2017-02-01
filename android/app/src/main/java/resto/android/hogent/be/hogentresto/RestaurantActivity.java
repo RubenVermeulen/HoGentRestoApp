@@ -239,7 +239,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         Traffic.setTraffic(r.getOccupancy(), trafficGrade, trafficIndicator);
 
-        gmmIntentUri = Uri.parse(String.format(Locale.getDefault(), "geo:%f,%f?q=%f,%f(HoGent+Resto:+%s)",
+        gmmIntentUri = Uri.parse(String.format(Locale.UK, "geo:%f,%f?q=%f,%f(HoGent+Resto:+%s)",
                 r.getCoordinates().getLat(),
                 r.getCoordinates().getLon(),
                 r.getCoordinates().getLat(),
