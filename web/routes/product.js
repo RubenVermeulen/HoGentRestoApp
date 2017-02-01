@@ -94,7 +94,13 @@ router.put('/:product', auth, function(req, res, next) {
     }
 
     product.description = body.description;
-    product.allergens = body.allergens;
+
+    if (!body.allergens || body.allergens.length < 1 || body.allergens == ''){
+        product.allergens = [];
+    }
+    else {
+        product.allergens = body.allergens;
+    }
 
     product.save(function(err, product) {
         if (err) {
