@@ -43,7 +43,9 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <h4><span class="glyphicon glyphicon-map-marker restaurant-glyphicon"></span> Adres</h4>
-                                        <p>{{ vm.restaurant.address }}</p>
+                                        <a href="http://maps.google.com/maps?q=loc:{{ vm.restaurant.coordinates.lat }},{{ vm.restaurant.coordinates.long }}" target="_blank">
+                                            {{ vm.restaurant.address }}
+                                        </a>
                                     </div>
                                 </div>
                             </div>
